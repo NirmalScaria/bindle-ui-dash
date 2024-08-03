@@ -35,7 +35,7 @@ export default function ContributeSidebar() {
             </button>
             <div className="flex flex-row gap-2 py-3">
                 <h1 className="text-lg flex flex-row gap-2 font-semibold text-white/80 items-center">
-                    <Image alt="bindle-ui logo" width={30} height={30} src="/logo.png" />Bindle UI
+                    <Image alt="bindle-ui logo" width={30} className="rounded-md" height={30} src="/logo.png" />Bindle UI
                 </h1>
             </div>
         </div>
