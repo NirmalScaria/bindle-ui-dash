@@ -54,16 +54,24 @@ export async function analyseCodeOnServer(sourceCode: string) {
 
     // Start the AST traversal
     visit(sourceFile);
+    var remoteImports = new Set()
+    var localImports = new Set()
 
-    imports = imports.map(dep => {
-        if (dep.startsWith('@')) {
-            return dep.split('/')[0] + '/' + dep.split('/')[1];
+    imports.forEach(dep => {
+        if (dep.startsWith('@/') || dep.startsWith('./') || dep.startsWith('../') || dep.startsWith('/')) {
+            localImports.add(dep);
+            return;
         }
-        return dep.split('/')[0];
+        if (dep.startsWith('@')) {
+            remoteImports.add(dep.split('/')[0] + '/' + dep.split('/')[1]);
+            return
+        }
+        remoteImports.add(dep.split('/')[0]);
     });
+    // convert the Set to Array
+    const remoteImportsArray = Array.from(remoteImports);
+    const localImportsArray = Array.from(localImports);
 
-    // remove duplicates
-    imports = imports.filter((value, index, self) => self.indexOf(value) === index);
 
-    return { imports, exports };
+    return { remoteImports: remoteImportsArray, localImports: localImportsArray, exports };
 }
