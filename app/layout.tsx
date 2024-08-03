@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { FirebaseNextJSProvider } from "firebase-nextjs/client/auth";
+import BottomBar from "@/components/bottomBar";
+import { GoogleAnalytics } from '@next/third-parties/google'
+import { cn } from "@/lib/utils";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +21,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <Head>
+        <meta
+          property="og:image"
+          content="/ogpreview.png"
+        />
+      </Head>
+      <FirebaseNextJSProvider>
+        <body className={cn(inter.className, "text-white")}>{children}</body>
+        <GoogleAnalytics gaId="G-7DVTHM9915" />
+      </FirebaseNextJSProvider>
     </html>
   );
 }
