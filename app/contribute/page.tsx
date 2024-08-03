@@ -1,8 +1,6 @@
-import ContributeTopBar from "@/components/contributeTopbar";
 import { BookAIcon, Component, Library, User2 } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
-import { FcAddDatabase } from "react-icons/fc";
 import { MdAddBox } from "react-icons/md";
 
 interface MainLink {
@@ -46,16 +44,13 @@ const mainLinks = [
 ]
 
 export default function ContributePage() {
-    return <main className="bg-[#031525] flex flex-col pb-10 p-4 md:p-8 items-center">
-        <ContributeTopBar />
-        <div className="flex flex-col h-full justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 my-6">
-                {
-                    mainLinks.map((link, i) => <MainLink key={i} link={link} />)
-                }
-            </div>
+    return <div className="flex flex-col h-full justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 my-6">
+            {
+                mainLinks.map((link, i) => <MainLink key={i} link={link} />)
+            }
         </div>
-    </main>
+    </div>
 }
 
 function MainLink({ link }: { link: MainLink }) {
