@@ -6,6 +6,7 @@ import BottomBar from "@/components/bottomBar";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { cn } from "@/lib/utils";
 import Head from "next/head";
+import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +29,10 @@ export default function RootLayout({
         />
       </Head>
       <FirebaseNextJSProvider>
-        <body className={cn(inter.className, "text-white")}>{children}</body>
+        <body className={cn(inter.className, "text-white")}>
+          {children}
+          <Toaster />
+        </body>
         <GoogleAnalytics gaId="G-7DVTHM9915" />
       </FirebaseNextJSProvider>
     </html>

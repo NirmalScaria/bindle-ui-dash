@@ -2,41 +2,60 @@
 import { Description, Heading } from "@/components/design/Texts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import { analyseCodeOnServer } from "@/lib/analyseCode";
 import { cn } from "@/lib/utils";
-import { Roboto_Mono, Space_Mono } from "next/font/google";
-import React from "react";
+import { Loader2 } from "lucide-react";
+import { Roboto_Mono } from "next/font/google";
+import React, { useState } from "react";
+
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function NewComponentPage() {
-    const [code, setCode] = React.useState("");
-    async function analyseCode() {
-        const res = await analyseCodeOnServer(code);
-        console.log(res)
+  const { toast } = useToast()
+  const [code, setCode] = useState("");
+  const [analysing, setAnalysing] = useState(false);
+
+  async function analyseCode() {
+    setAnalysing(true);
+    const { exports, imports } = await analyseCodeOnServer(code);
+    console.log("Exports : ", exports)
+    console.log("Imports : ", imports)
+    if (exports.length === 0) {
+      toast({
+        title: "No exports found",
+        description: "Please make sure you have atleast one export in your component",
+      })
     }
-    function onCodeChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-        setCode(e.target.value);
-    }
-    return <div className="flex flex-col h-full w-full items-start pt-4">
-        <Heading>Create a new component</Heading>
-        <Description>Add the component details below and it will be published to bindle-ui. Users will be able to directly install and use it.</Description>
-        <div className="flex flex-col w-full gap-5 mt-3 max-w-[55rem]">
-            <div className="flex flex-col gap-1.5">
-                <span className="text-lg text-white font-bold">Component Id</span>
-                <Input placeholder="button" className="bg-transparent max-w-[55rem] border border-white/30" />
-                <span className="text-sm text-gray-400">This will be the unique identification name for the component. Users will use this name to install the component.</span>
-            </div>
-            <div className="flex flex-col gap-1.5">
-                <span className="text-lg text-white font-bold">Component Source Code</span>
-                <Textarea rows={10} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} onChange={onCodeChange} placeholder={placeHolderComponent} />
-                <span className="text-sm text-gray-400">This will be the identification name for the component. Users will use this name to install the component.</span>
-                <Button variant="secondary" className="mt-3" onClick={analyseCode}>Analyse Source Code</Button>
-            </div>
-        </div>
+    setAnalysing(false);
+  }
+
+  function onCodeChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    setCode(e.target.value);
+  }
+
+  return <div className="flex flex-col h-full w-full items-start pt-4">
+    <Heading>Create a new component</Heading>
+    <Description>Add the component details below and it will be published to bindle-ui. Users will be able to directly install and use it.</Description>
+    <div className="flex flex-col w-full gap-5 mt-3 max-w-[55rem]">
+      <div className="flex flex-col gap-1.5">
+        <span className="text-lg text-white font-bold">Component Id</span>
+        <Input placeholder="button" className="bg-transparent max-w-[55rem] border border-white/30" />
+        <span className="text-sm text-gray-400">This will be the unique identification name for the component. Users will use this name to install the component.</span>
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <span className="text-lg text-white font-bold">Component Source Code</span>
+        <Textarea rows={14} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} onChange={onCodeChange} placeholder={placeHolderComponent} />
+        <span className="text-sm text-gray-400">This code will be copied to the users project upon installation. Try to keep imports and dependancies to minimum.</span>
+        <Button variant="secondary" className="mt-3" disabled={analysing} onClick={analyseCode}>
+          {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
+          Analyse Source Code
+        </Button>
+      </div>
     </div>
+  </div>
 }
 
 

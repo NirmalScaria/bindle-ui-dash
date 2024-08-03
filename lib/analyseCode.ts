@@ -6,7 +6,7 @@ export async function analyseCodeOnServer(sourceCode: string) {
     const sourceFile = ts.createSourceFile('temp.ts', sourceCode, ts.ScriptTarget.ESNext, true);
 
     // Containers for results
-    const imports: string[] = [];
+    var imports: string[] = [];
     const exports: string[] = [];
 
     // Helper function to collect information
@@ -54,6 +54,16 @@ export async function analyseCodeOnServer(sourceCode: string) {
 
     // Start the AST traversal
     visit(sourceFile);
+
+    imports = imports.map(dep => {
+        if (dep.startsWith('@')) {
+            return dep.split('/')[0] + '/' + dep.split('/')[1];
+        }
+        return dep.split('/')[0];
+    });
+
+    // remove duplicates
+    imports = imports.filter((value, index, self) => self.indexOf(value) === index);
 
     return { imports, exports };
 }
