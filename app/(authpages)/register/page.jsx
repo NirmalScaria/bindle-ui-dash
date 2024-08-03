@@ -24,8 +24,8 @@ export default function LoginPage() {
         <div className="flex flex-col shadow-lg border rounded-xl w-full bg-gray-100/40">
             <div className="flex flex-col border-b rounded-xl w-full  p-4 md:p-8 lg:p-10 py-10 items-center bg-white">
                 {!currentUser ? <>
-                    <h1 className="text-lg font-semibold">Sign Up With Your App</h1>
-                    <h2 className="text-sm text-gray-500 mb-8 text-center">Create an account to access your awesome tool!</h2>
+                    <h1 className="text-lg font-semibold">Sign Up With Bindle-UI Dashboard</h1>
+                    <h2 className="text-sm text-gray-500 mb-8 text-center">Create an account to create libraries and components!</h2>
                     <input type="email" placeholder="Email" className="w-full p-1.5 rounded-md mb-2 border text-sm focus:border-purple-400 focus:border-2 focus:outline-none" onChange={handleChange} />
                     <input type="password" placeholder="Password" className="w-full p-1.5 rounded-md mb-2 border text-sm focus:border-purple-400 focus:border-2 focus:outline-none" onChange={handleChange} />
                     {
