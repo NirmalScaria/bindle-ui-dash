@@ -7,18 +7,18 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { BsGithub } from "react-icons/bs";
 import { CgNpm } from "react-icons/cg";
-import LoginButton from "./login";
+import ContributeButton from "./contribute";
 
 export default function TopBar() {
   const { currentUser: user } = getUserCS();
-  return <div className="flex flex-row w-full justify-end items-center mb-4">
+  return <div className="flex flex-row w-full justify-between items-center mb-4">
     <div className="flex flex-row gap-2">
       <div className="md:flex flex-row gap-2 hidden">
         <LinkItem href='https://github.com/NirmalScaria/bindle-ui' text='GitHub' image={<BsGithub size={16} />} />
         <LinkItem href='https://npmjs.com/package/bindle-ui' text='NPM' image={<CgNpm size={16} />} />
       </div>
-      {user ? <ProfileButton /> : <LoginButton />}
     </div>
+    <ContributeButton />
   </div>
 }
 
