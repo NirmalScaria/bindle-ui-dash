@@ -33,10 +33,10 @@ export async function GET(req: NextRequest, res: NextApiResponse<ResponseData>) 
     const componentId: string | null = params.get('componentId')
     const useTypescript: boolean = params.get('useTypescript') === 'true'
     if (!componentId) {
-        return NextResponse.json({ message: "Component ID is required", success: false })
+        return NextResponse.json({ message: "Component name is required", success: false })
     }
     if (componentId in knownComponents === false) {
-        return NextResponse.json({ message: "Component ID is not recognized", success: false })
+        return NextResponse.json({ message: `Component ${componentId} not found. Make sure the name is correct.`, success: false })
     }
-    return NextResponse.json({ message: "Component found", success: true, component: JSON.stringify(knownComponents[componentId]) })
+    return NextResponse.json({ message: "OK", success: true, component: JSON.stringify(knownComponents[componentId]) })
 }
