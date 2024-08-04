@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { analyseCodeOnServer } from "@/lib/analyseCode";
 import { cn } from "@/lib/utils";
+import validateFileLocation from "@/lib/validateFileLocation";
 import validateTWConfig from "@/lib/validateTWConfig";
 import validateVersions from "@/lib/validateVersions";
 import { Loader2 } from "lucide-react";
@@ -30,6 +31,8 @@ export default function NewComponentPage() {
   const [importVersions, setImportVersions] = useState<ImportVersion[]>([]);
   const [dependancyConfirmed, setDependancyConfirmed] = useState(false);
   const [configValidated, setConfigValidated] = useState(false);
+  const [fileLocation, setFileLocation] = useState("");
+  const [fileLocationValidated, setFileLocationValidated] = useState(false);
 
   async function analyseCode() {
     setAnalysing(true);
@@ -109,6 +112,10 @@ export default function NewComponentPage() {
     setConfigValidated(false);
   }
 
+  function onFileLocationChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFileLocation(e.target.value);
+  }
+
   return <div className="flex flex-col h-full w-full items-start pt-4">
     <Heading>Create a new component</Heading>
     <Description>Add the component details below and it will be published to bindle-ui. Users will be able to directly install and use it.</Description>
@@ -140,7 +147,7 @@ export default function NewComponentPage() {
           </Button>}
         {
           codeIsValid && <>
-            <VersionSelection importVersions={importVersions} setDependancyConfirmed={setDependancyConfirmed} setConfigValidated={setConfigValidated}/>
+            <VersionSelection importVersions={importVersions} setDependancyConfirmed={setDependancyConfirmed} setConfigValidated={setConfigValidated} />
             {!dependancyConfirmed && <Button variant="secondary" className="mt-3" disabled={analysing} onClick={setDependancyVersions}>
               {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
               Confirm Dependancy Versions
@@ -156,6 +163,42 @@ export default function NewComponentPage() {
                   {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
                   Validate Tailwind Config
                 </Button>
+              }
+              {
+                configValidated &&
+                <>
+                  <span className="text-lg text-white font-bold mt-5">File Location</span>
+                  <Input placeholder="components/ui/Button.tsx" className="bg-transparent max-w-[55rem] border border-white/30" onChange={onFileLocationChange} />
+                  <span className="text-sm text-gray-400">The location to which the file will be copied. Must belong to either components/ or lib/ directory.</span>
+                  {
+                    !fileLocationValidated &&
+                    <Button variant="secondary" className="mt-3" disabled={analysing} onClick={() => {
+                      setAnalysing(true);
+                      validateFileLocation({ location: fileLocation }).then((errors) => {
+                        if (errors.length > 0) {
+                          toast({
+                            title: "Invalid File Location",
+                            description: errors[0],
+                          })
+                          setAnalysing(false);
+                          return;
+                        }
+                        setFileLocationValidated(true);
+                        setAnalysing(false);
+                      }
+                      )
+                    }}>
+                      {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
+                      Validate File Location
+                    </Button>
+                  }
+                  {
+                    fileLocationValidated &&
+                    <Button variant="secondary" className="mt-3">
+                      Save and Preview
+                    </Button>
+                  }
+                </>
               }
             </>
             }
