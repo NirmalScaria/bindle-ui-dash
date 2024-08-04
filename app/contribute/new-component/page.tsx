@@ -60,7 +60,7 @@ export default function NewComponentPage() {
     remoteImports.forEach(async (imp) => {
       const res = await fetch(`https://registry.npmjs.org/${imp}`);
       const data = await res.json();
-      const version = data["dist-tags"].latest;
+      const version = "^" + data["dist-tags"].latest;
       setImportVersions((prev) => [...prev, { name: imp as string, version }]);
     })
     setCodeIsValid(true);

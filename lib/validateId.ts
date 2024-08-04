@@ -6,8 +6,8 @@ export default async function validateId({ id }: { id: string }) {
     const app = await getAppSS();
     const db = app.firestore();
     const errors: string[] = [];
-    if (id.length < 3) {
-        errors.push("ID must be at least 3 characters long");
+    if (id.length < 2) {
+        errors.push("ID must be at least 2 characters long");
     }
     else if (id.length > 50) {
         errors.push("ID must be at most 50 characters long");
