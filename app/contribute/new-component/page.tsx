@@ -1,4 +1,5 @@
 "use client";
+import saveComponent from "@/actions/saveComponent";
 import { Description, Heading } from "@/components/design/Texts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,10 +11,12 @@ import validateFileLocation from "@/lib/validateFileLocation";
 import validateId from "@/lib/validateId";
 import validateTWConfig from "@/lib/validateTWConfig";
 import validateVersions from "@/lib/validateVersions";
+import { Component } from "@/models/component";
 import { Loader2 } from "lucide-react";
 import { Roboto_Mono } from "next/font/google";
 import Link from "next/link";
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
@@ -37,6 +40,8 @@ export default function NewComponentPage() {
   const [nameValidated, setNameValidated] = useState(false);
   const [nameValidityMessage, setNameValidityMessage] = useState<string | null>(null);
   const [componentId, setComponentId] = useState("");
+
+  const router = useRouter()
 
   async function analyseCode() {
     setAnalysing(true);
@@ -82,6 +87,25 @@ export default function NewComponentPage() {
     setDependancyConfirmed(false);
     setConfigValidated(false);
     setCode(e.target.value);
+  }
+
+  async function uploadComponent() {
+    setAnalysing(true);
+    const component: Component = {
+      id: componentId,
+      content: code,
+      owner: null,
+      location: fileLocation,
+      remoteDependancies: importVersions,
+      relativeImports: [],
+      tailwindConfig: (document.getElementById("additional-tailwind-config") as HTMLTextAreaElement).value || "",
+    }
+    const docId = await saveComponent({ component });
+    toast({
+      title: "Component saved",
+      description: `Component saved successfully to drafts.`,
+    })
+    router.push(`/contribute/preview-component/${docId}`);
   }
 
   async function setDependancyVersions() {
@@ -234,7 +258,8 @@ export default function NewComponentPage() {
                   }
                   {
                     fileLocationValidated &&
-                    <Button variant="secondary" className="mt-3">
+                    <Button variant="secondary" className="mt-3" onClick={uploadComponent} disabled={analysing}>
+                      {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
                       Save and Preview
                     </Button>
                   }
