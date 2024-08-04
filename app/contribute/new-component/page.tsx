@@ -65,6 +65,7 @@ export default function NewComponentPage() {
     setCodeIsValid(false);
     setImportVersions([]);
     setDependancyConfirmed(false);
+    setConfigValidated(false);
     setCode(e.target.value);
   }
 
@@ -100,7 +101,12 @@ export default function NewComponentPage() {
       setAnalysing(false);
       return;
     }
+    setConfigValidated(true);
     setAnalysing(false);
+  }
+
+  function onConfigChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    setConfigValidated(false);
   }
 
   return <div className="flex flex-col h-full w-full items-start pt-4">
@@ -134,7 +140,7 @@ export default function NewComponentPage() {
           </Button>}
         {
           codeIsValid && <>
-            <VersionSelection importVersions={importVersions} setDependancyConfirmed={setDependancyConfirmed} />
+            <VersionSelection importVersions={importVersions} setDependancyConfirmed={setDependancyConfirmed} setConfigValidated={setConfigValidated}/>
             {!dependancyConfirmed && <Button variant="secondary" className="mt-3" disabled={analysing} onClick={setDependancyVersions}>
               {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
               Confirm Dependancy Versions
@@ -142,7 +148,7 @@ export default function NewComponentPage() {
             {dependancyConfirmed && <><div className="flex flex-col gap-1.5 mt-6">
               <span className="text-lg text-white font-bold">Additional Tailwind Configurations (Optional)</span>
               <span className="text-sm text-gray-400">Only add the fields that you want to add (like animations and keyframes). Leave other fields empty.</span>
-              <Textarea rows={10} id="additional-tailwind-config" spellCheck={false} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} placeholder={placeHolderConfig} />
+              <Textarea rows={10} id="additional-tailwind-config" onChange={onConfigChange} spellCheck={false} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} placeholder={placeHolderConfig} />
             </div>
               {
                 !configValidated &&
@@ -160,7 +166,8 @@ export default function NewComponentPage() {
   </div >
 }
 
-function VersionSelection({ importVersions, setDependancyConfirmed }: { importVersions: ImportVersion[], setDependancyConfirmed: (val: boolean) => void }) {
+function VersionSelection({ importVersions, setDependancyConfirmed, setConfigValidated }
+  : { importVersions: ImportVersion[], setDependancyConfirmed: (val: boolean) => void, setConfigValidated: (val: boolean) => void }) {
   return <div className="flex flex-col gap-1.5 mt-4">
     <span className="text-lg text-white font-bold">Specify Dependency Versions</span>
     <span className="text-sm text-gray-400">Follow the same format as specified in package.json. (ex: ^1.0.0, ~1.0.0)</span>
@@ -169,7 +176,7 @@ function VersionSelection({ importVersions, setDependancyConfirmed }: { importVe
         <div className="w-1/2">
           {imp.name}
         </div>
-        <Input onChange={() => { setDependancyConfirmed(false) }} id={`version-for-${imp.name}`} defaultValue={imp.version} className="bg-transparent inline max-w-[55rem] border border-white/30" />
+        <Input onChange={() => { setDependancyConfirmed(false); setConfigValidated(false); }} id={`version-for-${imp.name}`} defaultValue={imp.version} className="bg-transparent inline max-w-[55rem] border border-white/30" />
       </span>)}
     </div>
   </div>
