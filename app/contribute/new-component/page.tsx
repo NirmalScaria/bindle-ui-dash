@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
 import { analyseCodeOnServer } from "@/lib/analyseCode";
 import { cn } from "@/lib/utils";
+import validateTWConfig from "@/lib/validateTWConfig";
 import validateVersions from "@/lib/validateVersions";
 import { Loader2 } from "lucide-react";
 import { Roboto_Mono } from "next/font/google";
@@ -87,9 +88,19 @@ export default function NewComponentPage() {
   }
 
   async function validateConfig() {
+    setAnalysing(true);
     const config = document.getElementById("additional-tailwind-config") as HTMLTextAreaElement;
     const configText = config.value;
-    
+    const errors = await validateTWConfig({ config: configText });
+    if (errors.length > 0) {
+      toast({
+        title: "Invalid Tailwind Config",
+        description: errors[0],
+      })
+      setAnalysing(false);
+      return;
+    }
+    setAnalysing(false);
   }
 
   return <div className="flex flex-col h-full w-full items-start pt-4">
@@ -131,11 +142,12 @@ export default function NewComponentPage() {
             {dependancyConfirmed && <><div className="flex flex-col gap-1.5 mt-6">
               <span className="text-lg text-white font-bold">Additional Tailwind Configurations (Optional)</span>
               <span className="text-sm text-gray-400">Only add the fields that you want to add (like animations and keyframes). Leave other fields empty.</span>
-              <Textarea rows={10} id="additional-tailwind-config" spellCheck={false} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} onChange={onCodeChange} placeholder={placeHolderConfig} />
+              <Textarea rows={10} id="additional-tailwind-config" spellCheck={false} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} placeholder={placeHolderConfig} />
             </div>
               {
                 !configValidated &&
                 <Button variant="secondary" className="mt-3" disabled={analysing} onClick={validateConfig}>
+                  {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
                   Validate Tailwind Config
                 </Button>
               }
