@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { analyseCodeOnServer } from "@/lib/analyseCode";
 import { cn } from "@/lib/utils";
 import validateFileLocation from "@/lib/validateFileLocation";
+import validateId from "@/lib/validateId";
 import validateTWConfig from "@/lib/validateTWConfig";
 import validateVersions from "@/lib/validateVersions";
 import { Loader2 } from "lucide-react";
@@ -33,6 +34,9 @@ export default function NewComponentPage() {
   const [configValidated, setConfigValidated] = useState(false);
   const [fileLocation, setFileLocation] = useState("");
   const [fileLocationValidated, setFileLocationValidated] = useState(false);
+  const [nameValidated, setNameValidated] = useState(false);
+  const [nameValidityMessage, setNameValidityMessage] = useState<string | null>(null);
+  const [componentId, setComponentId] = useState("");
 
   async function analyseCode() {
     setAnalysing(true);
@@ -61,6 +65,14 @@ export default function NewComponentPage() {
     })
     setCodeIsValid(true);
     setAnalysing(false);
+  }
+
+  function onComponentIdChange(e: React.ChangeEvent<HTMLInputElement>) {
+    // const lowercaseValue = e.target.value.toLowerCase();
+    // setValue(lowercaseValue);
+    setComponentId(e.target.value.toLowerCase());
+    setNameValidityMessage(null);
+    setNameValidated(false);
   }
 
   function onCodeChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
@@ -116,16 +128,44 @@ export default function NewComponentPage() {
     setFileLocation(e.target.value);
   }
 
+  async function checkNameValidity() {
+    setAnalysing(true);
+    const errors = await validateId({ id: componentId });
+    if (errors.length > 0) {
+      setNameValidityMessage(errors[0]);
+      setAnalysing(false);
+      return;
+    }
+    else {
+      setNameValidated(true);
+      setNameValidityMessage("Id is available");
+      setAnalysing(false);
+    }
+  }
+
   return <div className="flex flex-col h-full w-full items-start pt-4">
     <Heading>Create a new component</Heading>
     <Description>Add the component details below and it will be published to bindle-ui. Users will be able to directly install and use it.</Description>
     <div className="flex flex-col w-full gap-5 mt-3 max-w-[55rem]">
       <div className="flex flex-col gap-1.5">
         <span className="text-lg text-white font-bold">Component Id</span>
-        <Input placeholder="button" className="bg-transparent max-w-[55rem] border border-white/30" />
+        <Input placeholder="button" value={componentId} className="bg-transparent max-w-[55rem] border border-white/30" onChange={onComponentIdChange} />
         <span className="text-sm text-gray-400">This will be the unique identification name for the component. Users will use this name to install the component.</span>
+        {
+          nameValidityMessage && <div className="flex flex-row gap-2">
+            <span className={cn("text-sm", nameValidated ? "text-green-700" : "text-red-500")}>{nameValidityMessage}</span>
+          </div>
+        }
+        {
+          !nameValidated &&
+          <Button variant="secondary" className="mt-3" disabled={analysing} onClick={checkNameValidity}>
+            {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
+            Check Availability
+          </Button>
+        }
+
       </div>
-      <div className="flex flex-col gap-1.5">
+      {nameValidated && <div className="flex flex-col gap-1.5">
         <span className="text-lg text-white font-bold">Component Source Code</span>
         <Textarea rows={14} spellCheck={false} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} onChange={onCodeChange} placeholder={placeHolderComponent} />
         <span className="text-sm text-gray-400">This code will be copied to the users project upon installation. Try to keep imports and dependancies to minimum.</span>
@@ -204,7 +244,7 @@ export default function NewComponentPage() {
             }
           </>
         }
-      </div>
+      </div>}
     </div>
   </div >
 }
