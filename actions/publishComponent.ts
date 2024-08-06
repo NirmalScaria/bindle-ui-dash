@@ -13,5 +13,6 @@ export default async function publishComponentAction({ componentId }: { componen
         return { error: "You are not the owner of this component" };
     }
     const response = await db.collection("Components").doc(draftContent.id).set(draftContent);
+    await draft.delete();
     return { success: true };
 }
