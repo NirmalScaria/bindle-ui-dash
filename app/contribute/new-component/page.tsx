@@ -132,7 +132,19 @@ export default function NewComponentPage() {
   async function validateConfig() {
     setAnalysing(true);
     const config = document.getElementById("additional-tailwind-config") as HTMLTextAreaElement;
-    const configText = config.value;
+    var configText = config.value == "" ? "{}" : config.value;
+    try {
+      var configObject = eval(`(${configText})`);
+    }
+    catch(e) {
+      toast({
+        title: "Invalid Tailwind Config",
+        description: "Make sure the config is a valid JSON object.",
+      })
+      setAnalysing(false);
+      return
+    }
+    configText = JSON.stringify(configObject);
     const errors = await validateTWConfig({ config: configText });
     if (errors.length > 0) {
       toast({
