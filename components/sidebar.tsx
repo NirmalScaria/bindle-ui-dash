@@ -23,7 +23,6 @@ export default function MySidebar() {
     const pathname = usePathname()
     const [open, setOpen] = useState(false);
 
-    console.log(pathname)
     var openClass = "hidden"
     if (open) {
         openClass = "flex"
@@ -47,7 +46,7 @@ export default function MySidebar() {
                             <Image alt="bindle-ui logo" className="rounded-md" width={35} height={35} src="/logo.png" />
                             Bindle UI
                         </div>
-                        <div className="p-1 rounded-md border-white/20 border md:hidden" onClick={() => { setOpen(false); console.log("Closed") }}>
+                        <div className="p-1 rounded-md border-white/20 border md:hidden" onClick={() => { setOpen(false); }}>
                             <X onClick={() => setOpen(false)} className="cursor-pointer" />
                         </div>
                     </h1>

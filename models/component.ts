@@ -1,4 +1,4 @@
-interface DependancyItem {
+export interface DependancyItem {
     name: string;
     version: string;
 }

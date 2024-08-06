@@ -46,9 +46,6 @@ export default function NewComponentPage() {
   async function analyseCode() {
     setAnalysing(true);
     const { exports, remoteImports, localImports } = await analyseCodeOnServer(code);
-    console.log("Exports : ", exports)
-    console.log("Remote Imports : ", remoteImports)
-    console.log("Local Imports : ", localImports)
     if (exports.length === 0) {
       toast({
         title: "No exports found",
