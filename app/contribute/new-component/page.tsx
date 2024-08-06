@@ -92,6 +92,21 @@ export default function NewComponentPage() {
 
   async function uploadComponent() {
     setAnalysing(true);
+    const twConfig = (document.getElementById("additional-tailwind-config") as HTMLTextAreaElement).value;
+    const twConfigString = twConfig == "" ? "{}" : twConfig;
+    var configText: string;
+    try {
+      var configObject = eval(`(${twConfigString})`);
+      configText = JSON.stringify(configObject);
+    }
+    catch (e) {
+      toast({
+        title: "Invalid Tailwind Config",
+        description: "Make sure the config is a valid JSON object.",
+      })
+      setAnalysing(false);
+      return
+    }
     const component: Component = {
       id: componentId,
       content: code,
@@ -100,7 +115,7 @@ export default function NewComponentPage() {
       remoteDependancies: importVersions,
       relativeImports: relativeImports,
       exports: finalExports,
-      tailwindConfig: (document.getElementById("additional-tailwind-config") as HTMLTextAreaElement).value || "",
+      tailwindConfig: configText,
     }
     const docId = await saveComponent({ component });
     toast({
@@ -136,7 +151,7 @@ export default function NewComponentPage() {
     try {
       var configObject = eval(`(${configText})`);
     }
-    catch(e) {
+    catch (e) {
       toast({
         title: "Invalid Tailwind Config",
         description: "Make sure the config is a valid JSON object.",
