@@ -11,4 +11,5 @@ export interface Component {
     remoteDependancies: DependancyItem[];
     relativeImports: string[];
     tailwindConfig: string;
+    exports: string[]
 }

@@ -23,7 +23,15 @@ export default async function PreviewComponentPage({ params }: { params: { compo
 
   await parseTree({ currentComponent: component });
   await decodeLocations();
+
+  var importDeclarations = ""
+  for(const exportItem of component.exports) {
+    importDeclarations += `import { ${exportItem} } from "./${component.location}"\n`
+  }
+  filesToAdd["/App.tsx"] = importDeclarations + appCode;
+
   filesToAdd = { ...defaultFiles, ...filesToAdd };
+
   return <div className="flex flex-col h-full w-full items-start pt-4">
     <Heading>Preview Draft Component</Heading>
     <Description>This component is saved to draft and not published yet. You can publish it from here.</Description>
@@ -83,10 +91,7 @@ export default async function PreviewComponentPage({ params }: { params: { compo
 
 }
 
-
-const appCode = `import { Button } from "./components/ui/Button"
-import "./tailwind.config.ts"
-export default function App() {
+var appCode = `export default function App() {
   return (
     <div className="flex flex-col items-center justify-center h-screen text-center">
       Your components have been imported. <br/>
@@ -220,7 +225,6 @@ body {
 }`
 
 const defaultFiles: any = {
-  "/App.tsx": appCode,
   "/tailwind.config.ts": twconig,
   "/styles.css": stylesText,
   "/public/index.html": `<!DOCTYPE html>

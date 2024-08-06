@@ -41,6 +41,7 @@ export default function NewComponentPage() {
   const [nameValidityMessage, setNameValidityMessage] = useState<string | null>(null);
   const [componentId, setComponentId] = useState("");
   const [relativeImports, setRelativeImports] = useState<string[]>([]);
+  const [finalExports, setFinalExports] = useState<string[]>([]);
 
   const router = useRouter()
 
@@ -56,6 +57,7 @@ export default function NewComponentPage() {
       setAnalysing(false);
       return;
     }
+    setFinalExports(exports);
     if (localImports.length > 0) {
       setLocalImportError(`You have a relative import for ${localImports[0]}. Relative imports need some configuration.`);
       setAnalysing(false);
@@ -97,6 +99,7 @@ export default function NewComponentPage() {
       location: fileLocation,
       remoteDependancies: importVersions,
       relativeImports: relativeImports,
+      exports: finalExports,
       tailwindConfig: (document.getElementById("additional-tailwind-config") as HTMLTextAreaElement).value || "",
     }
     const docId = await saveComponent({ component });
