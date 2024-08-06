@@ -5,6 +5,8 @@ import { getAppSS } from "firebase-nextjs/server/auth";
 import { Roboto_Mono } from "next/font/google";
 import { Sandpack } from "@codesandbox/sandpack-react";
 import { decodeImports } from "@/lib/decodeImports";
+import { Button } from "@/components/ui/button";
+import PublishButton from "@/components/preview-components/publishButton";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -25,7 +27,7 @@ export default async function PreviewComponentPage({ params }: { params: { compo
   await decodeLocations();
 
   var importDeclarations = ""
-  for(const exportItem of component.exports) {
+  for (const exportItem of component.exports) {
     importDeclarations += `import { ${exportItem} } from "./${component.location}"\n`
   }
   filesToAdd["/App.tsx"] = importDeclarations + appCode;
@@ -63,6 +65,7 @@ export default async function PreviewComponentPage({ params }: { params: { compo
         }}
       />
     </div>
+    <PublishButton componentId={componentId} />
   </div>
 
   async function parseTree({ currentComponent }: { currentComponent: Component }) {
