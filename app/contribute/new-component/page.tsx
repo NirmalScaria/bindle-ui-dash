@@ -40,12 +40,14 @@ export default function NewComponentPage() {
   const [nameValidated, setNameValidated] = useState(false);
   const [nameValidityMessage, setNameValidityMessage] = useState<string | null>(null);
   const [componentId, setComponentId] = useState("");
+  const [relativeImports, setRelativeImports] = useState<string[]>([]);
 
   const router = useRouter()
 
   async function analyseCode() {
     setAnalysing(true);
-    const { exports, remoteImports, localImports } = await analyseCodeOnServer(code);
+    const { exports, remoteImports, localImports, relativeImports: relativeImportsTemp } = await analyseCodeOnServer(code);
+    setRelativeImports(relativeImportsTemp as string[]);
     if (exports.length === 0) {
       toast({
         title: "No exports found",
@@ -94,7 +96,7 @@ export default function NewComponentPage() {
       owner: null,
       location: fileLocation,
       remoteDependancies: importVersions,
-      relativeImports: [],
+      relativeImports: relativeImports,
       tailwindConfig: (document.getElementById("additional-tailwind-config") as HTMLTextAreaElement).value || "",
     }
     const docId = await saveComponent({ component });

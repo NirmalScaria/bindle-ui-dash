@@ -56,8 +56,13 @@ export async function analyseCodeOnServer(sourceCode: string) {
     visit(sourceFile);
     var remoteImports = new Set()
     var localImports = new Set()
+    var relativeImports = new Set()
 
     imports.forEach(dep => {
+        if (dep.startsWith("@@/")) {
+            relativeImports.add(dep.slice(3));
+            return;
+        }
         if (dep.startsWith('@/') || dep.startsWith('./') || dep.startsWith('../') || dep.startsWith('/')) {
             localImports.add(dep);
             return;
@@ -71,7 +76,6 @@ export async function analyseCodeOnServer(sourceCode: string) {
     // convert the Set to Array
     const remoteImportsArray = Array.from(remoteImports);
     const localImportsArray = Array.from(localImports);
-
-
-    return { remoteImports: remoteImportsArray, localImports: localImportsArray, exports };
+    
+    return { remoteImports: remoteImportsArray, localImports: localImportsArray, exports, relativeImports: Array.from(relativeImports) };
 }
