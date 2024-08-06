@@ -184,7 +184,7 @@ const stylesText = `@tailwind base;
 @layer base {
   :root {
     --background: 45 100% 100%;
-    --foreground: 0 0% 100%;
+    --foreground: 0 0% 0%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
