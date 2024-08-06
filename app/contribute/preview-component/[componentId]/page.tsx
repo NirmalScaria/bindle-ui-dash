@@ -79,7 +79,7 @@ export default async function PreviewComponentPage({ params }: { params: { compo
         if (relativeImports.includes(relativeImport)) return;
         const ref = db.collection('Components').doc(relativeImport);
         const nextComponent: Component = (await ref.get()).data() as Component;
-        parseTree({ currentComponent: nextComponent });
+        await parseTree({ currentComponent: nextComponent });
       }
     }
     if (currentComponent.remoteDependancies.length > 0) {
