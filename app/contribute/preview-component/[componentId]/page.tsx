@@ -31,8 +31,9 @@ export default async function PreviewComponentPage({ params }: { params: { compo
     importDeclarations += `import { ${exportItem} } from "./${component.location}"\n`
   }
   filesToAdd["/App.tsx"] = importDeclarations + appCode;
+  filesToAdd["/tailwind.config.ts"] = `tailwind.config = ` + JSON.stringify(twconig, null, 2);
 
-  var dependencies:any = {
+  var dependencies: any = {
     "tailwindcss": "latest",
     "tailwindcss-animate": "latest"
   }
@@ -107,7 +108,7 @@ export default function App() {
   )
 }`
 
-const twconig = `tailwind.config = {
+const twconig = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -181,7 +182,7 @@ const twconig = `tailwind.config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}`
+}
 
 const stylesText = `@tailwind base;
 @tailwind components;
@@ -232,7 +233,6 @@ body {
 }`
 
 const defaultFiles: any = {
-  "/tailwind.config.ts": twconig,
   "/styles.css": stylesText,
   "/public/index.html": `<!DOCTYPE html>
 <html lang="en">
