@@ -93,7 +93,7 @@ export default async function PreviewComponentPage({ params }: { params: { compo
 
 var appCode = `export default function App() {
   return (
-    <div className="flex flex-col items-center justify-center h-screen text-center">
+    <div className="flex flex-col items-center justify-center p-4 h-screen text-center">
       Your components have been imported. <br/>
       Edit the code to try them out.
     </div>
