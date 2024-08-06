@@ -32,6 +32,15 @@ export default async function PreviewComponentPage({ params }: { params: { compo
   }
   filesToAdd["/App.tsx"] = importDeclarations + appCode;
 
+  var dependencies:any = {
+    "tailwindcss": "latest",
+    "tailwindcss-animate": "latest"
+  }
+
+  for (const remoteDependancy of remoteDependencies) {
+    dependencies[remoteDependancy.name] = remoteDependancy.version;
+  }
+
   filesToAdd = { ...defaultFiles, ...filesToAdd };
 
   return <div className="flex flex-col h-full w-full items-start pt-4">
@@ -55,13 +64,7 @@ export default async function PreviewComponentPage({ params }: { params: { compo
           externalResources: ["https://cdn.tailwindcss.com"],
         }}
         customSetup={{
-          dependencies: {
-            "@radix-ui/react-slot": "latest",
-            "tailwind-merge": "latest",
-            "class-variance-authority": "latest",
-            "tailwindcss": "latest",
-            "tailwindcss-animate": "latest"
-          }
+          dependencies: dependencies
         }}
       />
     </div>
@@ -94,7 +97,8 @@ export default async function PreviewComponentPage({ params }: { params: { compo
 
 }
 
-var appCode = `export default function App() {
+var appCode = `import "./tailwind.config.ts";
+export default function App() {
   return (
     <div className="flex flex-col items-center justify-center p-4 h-screen text-center">
       Your components have been imported. <br/>
