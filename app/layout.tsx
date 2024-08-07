@@ -33,7 +33,7 @@ export default function RootLayout({
           {children}
           <Toaster />
         </body>
-        <GoogleAnalytics gaId="G-7DVTHM9915" />
+        <GoogleAnalytics gaId="G-CZ25ND9KVQ" />
       </FirebaseNextJSProvider>
     </html>
   );
