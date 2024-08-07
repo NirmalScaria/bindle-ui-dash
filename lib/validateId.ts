@@ -1,5 +1,5 @@
 'use server';
-import {getAppSS} from "firebase-nextjs/server/auth";
+import { getAppSS } from "firebase-nextjs/server/auth";
 
 export default async function validateId({ id }: { id: string }) {
     // id can contain alphanumeric characters, hyphens, and underscores
@@ -17,7 +17,7 @@ export default async function validateId({ id }: { id: string }) {
     }
     // check if document with id already exists
     const doc = await db.collection("Components").doc(id).get();
-    if(doc.exists) {
+    if (doc.exists) {
         errors.push("A component with same id already exists.");
     }
     return errors;

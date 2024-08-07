@@ -1,9 +1,9 @@
 "use server";
 
-import type { NextApiResponse } from 'next'
-import { NextRequest, NextResponse } from 'next/server'
-import { getAppSS } from 'firebase-nextjs/server/auth';
 import { Component } from '@/models/component';
+import { getAppSS } from 'firebase-nextjs/server/auth';
+import type { NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
 type ResponseData = {
     message: string
@@ -32,7 +32,7 @@ export function Button({ children }: { children: string }) {
 
 export async function GET(req: NextRequest, res: NextApiResponse<ResponseData>) {
     const params = req.nextUrl.searchParams
-    if(!params.has('componentId')) {
+    if (!params.has('componentId')) {
         return NextResponse.json({ message: "Component name is required", success: false })
     }
     const componentId: string = params.get('componentId')!

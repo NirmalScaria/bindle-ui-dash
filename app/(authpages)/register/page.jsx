@@ -1,6 +1,6 @@
 "use client";
-import { getUserCS } from "firebase-nextjs/client/auth"
-import { GoogleSignInButton, EmailSignUpButton } from "firebase-nextjs/client/components";
+import { getUserCS } from "firebase-nextjs/client/auth";
+import { EmailSignUpButton, GoogleSignInButton } from "firebase-nextjs/client/components";
 import Link from "next/link";
 import { useState } from "react";
 

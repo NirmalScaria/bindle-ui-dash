@@ -1,7 +1,7 @@
 "use server";
 
 import { Component } from "@/models/component";
-import { getUserSS, getAppSS } from "firebase-nextjs/server/auth";
+import { getAppSS, getUserSS } from "firebase-nextjs/server/auth";
 
 export default async function publishComponentAction({ componentId }: { componentId: string }) {
     const user = await getUserSS();

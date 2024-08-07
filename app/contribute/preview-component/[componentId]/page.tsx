@@ -1,12 +1,11 @@
 import { Description, Heading } from "@/components/design/Texts";
+import PublishButton from "@/components/preview-components/publishButton";
+import { decodeImports } from "@/lib/decodeImports";
 import { cn } from "@/lib/utils";
 import { Component, DependancyItem } from "@/models/component";
+import { Sandpack } from "@codesandbox/sandpack-react";
 import { getAppSS } from "firebase-nextjs/server/auth";
 import { Roboto_Mono } from "next/font/google";
-import { Sandpack } from "@codesandbox/sandpack-react";
-import { decodeImports } from "@/lib/decodeImports";
-import { Button } from "@/components/ui/button";
-import PublishButton from "@/components/preview-components/publishButton";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -32,7 +31,7 @@ export default async function PreviewComponentPage({ params }: { params: { compo
     importDeclarations += `import { ${exportItem} } from "./${component.location}"\n`
   }
   filesToAdd["/App.tsx"] = importDeclarations + appCode;
-  filesToAdd["/tailwind.config.ts"] = `tailwind.config = ` + JSON.stringify({...twconig, ...tailwindAdditionalConfig}, null, 2);
+  filesToAdd["/tailwind.config.ts"] = `tailwind.config = ` + JSON.stringify({ ...twconig, ...tailwindAdditionalConfig }, null, 2);
 
   var dependencies: any = {
     "tailwindcss": "latest",

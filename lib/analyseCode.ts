@@ -76,6 +76,6 @@ export async function analyseCodeOnServer(sourceCode: string) {
     // convert the Set to Array
     const remoteImportsArray = Array.from(remoteImports);
     const localImportsArray = Array.from(localImports);
-    
+
     return { remoteImports: remoteImportsArray, localImports: localImportsArray, exports, relativeImports: Array.from(relativeImports) };
 }

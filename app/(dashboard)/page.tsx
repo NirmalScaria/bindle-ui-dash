@@ -39,7 +39,7 @@ export default async function Home() {
       <div className="max-w-[60rem] py-2 md:py-6 flex flex-col">
         <div className="h-[80vh] flex flex-col items-center w-full justify-center">
           <h1 className={cn("text-sm font-medium bg-gradient-to-tl from-[#c278ba]  to-[#ae58a4] text-white px-4 py-1 rounded-full border border-white/40 mb-2", poppins.className)}>bindle-ui</h1>
-          <p className={cn("text-white font-bold text-2xl md:text-5xl max-w-[60rem] text-center mb-3", poppins.className)}>A truly collaborative <br/>design mega-library</p>
+          <p className={cn("text-white font-bold text-2xl md:text-5xl max-w-[60rem] text-center mb-3", poppins.className)}>A truly collaborative <br />design mega-library</p>
           <p className={cn("text-white/70 font-thin text-md md:text-xl max-w-[55rem] text-center", poppins.className)}>Bindle is a library of design libraries. Bindle is libraryception.</p>
           <div className="flex flex-row gap-2 mt-4">
             <LinkItem className="flex md:hidden" href='https://github.com/NirmalScaria/bindle-ui' text='GitHub' image={<BsGithub size={16} />} big={true} />

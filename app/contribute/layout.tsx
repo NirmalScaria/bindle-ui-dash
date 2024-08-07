@@ -1,7 +1,6 @@
 import BottomBar from "@/components/bottomBar";
 import ContributeSidebar from "@/components/contributeSidebar";
 import ContributeTopBar from "@/components/contributeTopbar";
-import MySidebar from "@/components/sidebar";
 export default function Layout({ children }: { children: React.ReactNode }) {
     return <div className="flex flex-col">
         <ContributeSidebar />

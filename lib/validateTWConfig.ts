@@ -1,5 +1,4 @@
 "use server";
-import type { Config } from "tailwindcss"
 export default async function validateTWConfig({ config }: { config: string }) {
     const errors: string[] = [];
     var configJSON;

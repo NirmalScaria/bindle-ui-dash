@@ -1,12 +1,11 @@
+import { Toaster } from "@/components/ui/toaster";
+import { cn } from "@/lib/utils";
+import { GoogleAnalytics } from '@next/third-parties/google';
+import { FirebaseNextJSProvider } from "firebase-nextjs/client/auth";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { FirebaseNextJSProvider } from "firebase-nextjs/client/auth";
-import BottomBar from "@/components/bottomBar";
-import { GoogleAnalytics } from '@next/third-parties/google'
-import { cn } from "@/lib/utils";
 import Head from "next/head";
-import { Toaster } from "@/components/ui/toaster"
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

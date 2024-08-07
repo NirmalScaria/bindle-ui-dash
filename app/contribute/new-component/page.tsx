@@ -15,8 +15,8 @@ import { Component } from "@/models/component";
 import { Loader2 } from "lucide-react";
 import { Roboto_Mono } from "next/font/google";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 import React, { useState } from "react";
-import { useRouter } from 'next/navigation'
 
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
