@@ -15,3 +15,18 @@ export interface Component {
     exports: string[];
     status?: string;
 }
+
+export interface PublishedComponent {
+    id: string;
+    uid?: string;
+    location: string;
+    content: string;
+    owner: string | null;
+    remoteDependancies: DependancyItem[];
+    relativeImports: string[];
+    tailwindConfig: string;
+    exports: string[];
+    status?: string;
+    name: string;
+    description: string;
+}
