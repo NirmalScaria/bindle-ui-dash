@@ -1,5 +1,3 @@
-import { Toaster } from "@/components/ui/toaster";
-import { cn } from "@/lib/utils";
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { FirebaseNextJSProvider } from "firebase-nextjs/client/auth";
 import type { Metadata } from "next";
@@ -28,10 +26,7 @@ export default function RootLayout({
         />
       </Head>
       <FirebaseNextJSProvider>
-        <body className={cn(inter.className, "text-white")}>
-          {children}
-          <Toaster />
-        </body>
+        {children}
         <GoogleAnalytics gaId="G-CZ25ND9KVQ" />
       </FirebaseNextJSProvider>
     </html>
