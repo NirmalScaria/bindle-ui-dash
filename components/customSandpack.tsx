@@ -7,6 +7,7 @@ import {
     SandpackCodeEditor
 } from "@codesandbox/sandpack-react";
 import { useState } from "react";
+import { githubLight } from "@codesandbox/sandpack-themes";
 
 
 export default function CustomSandpack() {
@@ -17,7 +18,7 @@ export default function CustomSandpack() {
             <button onClick={() => setShowCode(false)} className={cn("p-2 text-sm", showCode ? "" : "border-b-2 border-b-black")}>Preview</button>
             <button onClick={() => setShowCode(true)} className={cn("p-2 text-sm", !showCode ? "" : "border-b-2 border-b-black")}>Code</button>
         </div>
-        <SandpackProvider template="vanilla" theme="auto">
+        <SandpackProvider template="vanilla" theme={githubLight}>
             <SandpackLayout style={{ visibility: !showCode ? "visible" : "hidden", height: !showCode ? "auto" : "1px" }}>
                 <SandpackPreview />
             </SandpackLayout>
