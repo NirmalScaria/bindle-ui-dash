@@ -11,11 +11,15 @@ export default function InstallComponent({ component }: { component: PublishedCo
 
     const installCommand = component.installCommand == "auto" ? "npx bindle-ui add " + component.id : component.installCommand
     var remoteDependanciesCommand = ""
+    var tailwindContent = ""
     if (component.remoteDependancies && component.remoteDependancies.length > 0) {
         remoteDependanciesCommand = "npm install "
         component.remoteDependancies.forEach(dep => {
             remoteDependanciesCommand += dep.name + "@" + dep.version.replaceAll('^', '').replaceAll('~', '') + " "
         })
+    }
+    if (component.tailwindConfig && component.tailwindConfig != "") {
+        tailwindContent = JSON.stringify(JSON.parse(component.tailwindConfig), null, 2)
     }
     var manualSteps: any = [
         {
@@ -28,6 +32,12 @@ export default function InstallComponent({ component }: { component: PublishedCo
         manualSteps.push({
             "text": "Install the dependancies running the command.",
             "code": remoteDependanciesCommand
+        })
+    }
+    if (tailwindContent != "") {
+        manualSteps.push({
+            "text": "Add the following code to your tailwind.config.js file.",
+            "code": tailwindContent
         })
     }
     manualSteps.push({
@@ -46,7 +56,7 @@ export default function InstallComponent({ component }: { component: PublishedCo
             {manualSteps.map((step: any, i: any) => {
                 return <div key={i} className="flex flex-col gap-4">
                     <div className="flex flex-row items-center gap-3 -left-[3.75rem] relative">
-                        <div className="rounded-full bg-gray-100 border-4 border-white h-10 w-10 flex flex-row items-center justify-center">{i + 1}</div>
+                        <div className="rounded-full bg-gray-100 border-4 border-white h-10 w-10 flex flex-row items-center justify-center font-semibold">{i + 1}</div>
                         <p className="font-semibold">{step.text}</p>
                     </div>
                     {step.code && <div className="flex flex-col max-h-[300px]">
