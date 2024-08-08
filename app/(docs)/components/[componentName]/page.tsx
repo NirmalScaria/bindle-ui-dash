@@ -2,7 +2,6 @@ import CustomSandpack from "@/components/customSandpack";
 import LocationIndicator from "@/components/locationIndicator";
 import { PublishedComponent } from "@/models/component";
 
-
 const testComponent: PublishedComponent = {
     id: "1",
     location: "components/ui/marquee.tsx",

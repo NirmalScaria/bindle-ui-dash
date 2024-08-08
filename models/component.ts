@@ -29,4 +29,10 @@ export interface PublishedComponent {
     status?: string;
     name: string;
     description: string;
+    mainDemo?: ComponentSample;
+}
+
+export interface ComponentSample {
+    dependencies: {[key: string]: string};
+    files: {[key: string]: string};
 }
