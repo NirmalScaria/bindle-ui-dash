@@ -1,6 +1,7 @@
 import InstallComponent from "@/components/component-page/installComponent";
 import CustomSandpack from "@/components/customSandpack";
 import LocationIndicator from "@/components/locationIndicator";
+import MyCode from "@/components/myCode";
 import { PublishedComponent } from "@/models/component";
 import { getAppSS } from "firebase-nextjs/server/auth";
 
@@ -26,6 +27,11 @@ export default async function ComponentHome({ params }: { params: { componentNam
     <h2 className="text-3xl font-bold mt-4">Installation</h2>
     <hr />
     <InstallComponent component={component} />
+    <h2 className="text-3xl font-bold mt-4">Usage</h2>
+    <hr />
+    {component.usageSampleCode && <div className="flex flex-col max-h-[300px]">
+      <MyCode code={component.usageSampleCode} showLineNumbers={false} />
+    </div>}
   </div>
 }
 
@@ -101,5 +107,10 @@ const testComponent: PublishedComponent = {
   name: "Marquee",
   description: "An infinite scrolling component that can be used to display text, images, or videos.",
   installCommand: "auto",
-  manualCode: manualCode
+  manualCode: manualCode,
+  usageSampleCode: `<Marquee pauseOnHover className="[--duration:20s]">
+  {firstRow.map((review) => (
+    <ReviewCard key={review.username} {...review} />
+  ))}
+</Marquee>`,
 }

@@ -32,6 +32,7 @@ export interface PublishedComponent {
     mainDemo?: ComponentSample;
     installCommand: string;
     manualCode: string;
+    usageSampleCode: string;
 }
 
 export interface ComponentSample {
