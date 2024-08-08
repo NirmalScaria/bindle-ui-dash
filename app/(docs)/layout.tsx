@@ -7,9 +7,9 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return <body className={cn(inter.className)}>
-        <div className="flex flex-col">
-            {children}
-        </div >
+
+        {children}
+
         <Toaster />
     </body>
 }
