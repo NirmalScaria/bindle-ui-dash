@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation"
 
 export default function SidebarLink({ name, href }: { name: string, href: string }) {
     const pathname = usePathname()
-    return <Link href={href} className={cn("text-[0.9rem] py-1 hover:text-black hover:underline transition-colors", pathname == href ? "text-black font-medium" : "text-black/50")}>
-        {name}
+    const formattedName = name.replace(/-/g, " ").replace(/\b\w/g, l => l.toUpperCase())
+    return <Link href={href} className={cn("text-[0.9rem] py-1  hover:underline", pathname == href ? "text-black font-medium" : "text-black/50")}>
+        {formattedName}
     </Link>
 }
