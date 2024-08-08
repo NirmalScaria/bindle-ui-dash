@@ -5,11 +5,13 @@ export interface DependancyItem {
 
 export interface Component {
     id: string;
+    uid?: string;
     location: string;
     content: string;
     owner: string | null;
     remoteDependancies: DependancyItem[];
     relativeImports: string[];
     tailwindConfig: string;
-    exports: string[]
+    exports: string[];
+    status?: string;
 }

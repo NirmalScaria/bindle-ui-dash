@@ -8,6 +8,7 @@ export default async function saveComponent({ component }: { component: Componen
     const app = await getAppSS();
     const db = app.firestore();
     component.owner = user?.uid ?? null;
+    component.status = component.status ?? "component";
     const response = await db.collection("Drafts").add(component);
     const docId = response.id;
     return docId;
