@@ -18,15 +18,16 @@ export default async function EditComponentDocumentation({ params }: { params: {
   const db = app.firestore();
   const componentUid = params.componentUid;
   const componentRef = db.collection('Drafts').doc(componentUid);
-  const component: Component = (await componentRef.get()).data() as Component;
+  var component: Component = (await componentRef.get()).data() as Component;
+  component.uid = componentUid;
   var relativeImports: string[] = [];
   var remoteDependencies: DependancyItem[] = [];
   var relativeImportLocations: any = {};
   // var filesToAdd: any = {}
   var tailwindAdditionalConfig: any = {}
-  const {filesToAdd, dependencies} = await parseComponent({component});
+  const { filesToAdd, dependencies } = await parseComponent({ component });
 
-  return <EditDocumentation component={component} filesToAdd={filesToAdd} dependancies={dependencies}/>
+  return <EditDocumentation component={component} filesToAdd={filesToAdd} dependancies={dependencies} />
 
   await parseTree({ currentComponent: component });
   await decodeLocations();

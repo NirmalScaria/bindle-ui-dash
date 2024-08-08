@@ -11,27 +11,66 @@ import { parseComponent } from "@/lib/parseComponent";
 import CustomSandpack from "../customSandpack";
 import CustomSandpackEditor from "../customSandpackEditor";
 import React from "react";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
+import saveDocumentationAction from "@/actions/saveDocumentation";
+import { useToast } from "../ui/use-toast";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function EditDocumentation({ component, filesToAdd, dependancies }: { component: Component, filesToAdd: any, dependancies: any }) {
     const [showPreview, setShowPreview] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const { toast } = useToast();
     const [newComponent, setNewComponent] = useState<PublishedComponent>({
         ...defaultComponent,
         ...component
     });
-    function syncFiles() {
+    function getFiles() {
         const originalFiles = sandpackRef.current!.getClient()!.sandboxSetup.files
         var files: { [key: string]: string } = {}
         Object.keys(originalFiles).forEach((key) => {
             files[key] = originalFiles[key].code
         })
-        setNewComponent({ ...newComponent, mainDemo: { dependencies: dependancies, files: files } })
+        return files
+    }
+    function syncFiles() {
+        setNewComponent({ ...newComponent, mainDemo: { dependencies: dependancies, files: getFiles() } })
         setShowPreview(true);
+    }
+    async function uploadDocumentation() {
+        setLoading(true);
+        const files = getFiles();
+        const componentToUpload = {
+            ...newComponent,
+            mainDemo: {
+                dependencies: dependancies,
+                files: files
+            }
+        }
+        const res = await saveDocumentationAction({ componentId: component.uid ?? component.id, component: componentToUpload, isDraft: true });
+        if (res.success) {
+            toast({
+                title: "Documentation saved successfully",
+                description: "The documentation has been saved successfully",
+            })
+        } else {
+            toast({
+                title: "Error saving documentation",
+                description: "There was an error saving the documentation. Please try again.",
+            })
+        }
+        setLoading(false);
     }
     const sandpackRef = React.useRef<SandpackPreviewRef>();
     return <div className="flex flex-col h-full w-full items-start pt-4 gap-2">
-        <Heading>Edit component documentation</Heading>
+        <div className="flex flex-row justify-between w-full">
+            <Heading>Edit component documentation</Heading>
+            <Button variant="secondary" onClick={uploadDocumentation} disabled={loading}>
+                {loading && <Loader2 className="mr-2 animate-spin" size={16} />}
+                Save Documentation
+            </Button>
+        </div>
         <div className="flex flex-row gap-2 w-full border-b border-white/10">
             <button onClick={() => setShowPreview(false)} className={cn("p-2", !showPreview ? "border-b-2" : "")}>Edit</button>
             <button onClick={syncFiles} className={cn("p-2", showPreview ? "border-b-2" : "")}>Preview</button>
