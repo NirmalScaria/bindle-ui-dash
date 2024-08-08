@@ -2,6 +2,7 @@ import { Description, Heading } from "@/components/design/Texts";
 import EditDocumentation from "@/components/edit-documentation/editDocumentation";
 import PublishButton from "@/components/preview-components/publishButton";
 import { decodeImports } from "@/lib/decodeImports";
+import { parseComponent } from "@/lib/parseComponent";
 import { cn } from "@/lib/utils";
 import { Component, DependancyItem } from "@/models/component";
 import { Sandpack } from "@codesandbox/sandpack-react";
@@ -21,10 +22,11 @@ export default async function EditComponentDocumentation({ params }: { params: {
   var relativeImports: string[] = [];
   var remoteDependencies: DependancyItem[] = [];
   var relativeImportLocations: any = {};
-  var filesToAdd: any = {}
+  // var filesToAdd: any = {}
   var tailwindAdditionalConfig: any = {}
+  const {filesToAdd, dependencies} = await parseComponent({component});
 
-  return <EditDocumentation component={component} />
+  return <EditDocumentation component={component} filesToAdd={filesToAdd} dependancies={dependencies}/>
 
   await parseTree({ currentComponent: component });
   await decodeLocations();
@@ -36,16 +38,16 @@ export default async function EditComponentDocumentation({ params }: { params: {
   filesToAdd["/App.tsx"] = importDeclarations + appCode;
   filesToAdd["/tailwind.config.ts"] = `tailwind.config = ` + JSON.stringify({ ...twconig, ...tailwindAdditionalConfig }, null, 2);
 
-  var dependencies: any = {
-    "tailwindcss": "latest",
-    "tailwindcss-animate": "latest"
-  }
+  // var dependencies: any = {
+  //   "tailwindcss": "latest",
+  //   "tailwindcss-animate": "latest"
+  // }
 
   for (const remoteDependancy of remoteDependencies) {
     dependencies[remoteDependancy.name] = remoteDependancy.version;
   }
 
-  filesToAdd = { ...defaultFiles, ...filesToAdd };
+  // filesToAdd = { ...defaultFiles, ...filesToAdd };
 
   return <div className="flex flex-col h-full w-full items-start pt-4">
     <Heading>Edit component documentation</Heading>

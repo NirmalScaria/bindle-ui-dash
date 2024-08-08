@@ -7,10 +7,13 @@ import { Roboto_Mono } from "next/font/google";
 import { Heading } from "../design/Texts";
 import { useState } from "react";
 import ComponentPagePreview from "../preview-components/previewPage";
+import { parseComponent } from "@/lib/parseComponent";
+import CustomSandpack from "../customSandpack";
+import CustomSandpackEditor from "../customSandpackEditor";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
-export default function EditDocumentation({ component }: { component: Component }) {
+export default function EditDocumentation({ component, filesToAdd, dependancies }: { component: Component, filesToAdd: any, dependancies: any }) {
     const [showPreview, setShowPreview] = useState(false);
     const [newComponent, setNewComponent] = useState<PublishedComponent>({
         ...defaultComponent,
@@ -26,7 +29,7 @@ export default function EditDocumentation({ component }: { component: Component 
             showPreview ? <div className="flex flex-col gap-1 w-full bg-white text-black">
                 <ComponentPagePreview component={newComponent} />
             </div> : <div className="flex flex-col gap-3 p-4 rounded-md w-full bg-white/5 border border-white/20">
-                <span className="text-base mb-2">Component Id: {newComponent.id}</span>
+                <span className="text-base mb-2">Component id: {newComponent.id}</span>
                 <div className="flex flex-col gap-1 w-full">
                     <label className="text-sm">Component Name</label>
                     <input type="text" className="p-2 rounded-md bg-white/10" value={newComponent.name} onChange={(e) => setNewComponent({ ...newComponent, name: e.target.value })} />
@@ -35,20 +38,23 @@ export default function EditDocumentation({ component }: { component: Component 
                     <label className="text-sm">Component Description. (Keep it under 20 words)</label>
                     <textarea className="p-2 rounded-md bg-white/10" value={newComponent.description} onChange={(e) => setNewComponent({ ...newComponent, description: e.target.value })} />
                 </div>
+                <label className="text-sm">Main demo. This will be the first thing the user see. Edit the code here to make the demo appear the way you want.</label>
+                <div className="w-full max-w-[55rem]">
+                    <CustomSandpackEditor
+                        template="react-ts"
+                        files={filesToAdd}
+                        options={{
+                            externalResources: ["https://cdn.tailwindcss.com"],
+                        }}
+                        customSetup={{
+                            dependencies: dependancies
+                        }}
+                    />
+                </div>
             </div>
+
         }
-        <div className="w-full mt-4">
-            {/* <Sandpack
-        template="react-ts"
-        files={filesToAdd}
-        options={{
-          externalResources: ["https://cdn.tailwindcss.com"],
-        }}
-        customSetup={{
-          dependencies: dependencies
-        }}
-      /> */}
-        </div>
+
         {/* <PublishButton componentId={componentUid} /> */}
     </div>
 }
