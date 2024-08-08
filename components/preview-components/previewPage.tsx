@@ -6,12 +6,12 @@ import CustomSandpack from "../customSandpack";
 import InstallComponent from "../component-page/installComponent";
 import MyCode from "../myCode";
 
-export default function ComponentPagePreview({ component }: { component: PublishedComponent }) {
+export default function ComponentPagePreview({ component, sandpackRef }: { component: PublishedComponent, sandpackRef: any }) {
     return <div className="flex flex-col m-5 gap-4 max-w-[50rem]">
         {/* <LocationIndicator /> */}
         <h1 className="text-4xl font-bold">{component.name}</h1>
         <p className="text-lg text-gray-500">{component.description}</p>
-        <CustomSandpack />
+        <CustomSandpack component = {component}/>
         <h2 className="text-3xl font-bold mt-4">Installation</h2>
         <hr />
         <InstallComponent component={component} />
