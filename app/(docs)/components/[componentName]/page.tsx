@@ -2,31 +2,104 @@ import InstallComponent from "@/components/component-page/installComponent";
 import CustomSandpack from "@/components/customSandpack";
 import LocationIndicator from "@/components/locationIndicator";
 import { PublishedComponent } from "@/models/component";
+import { getAppSS } from "firebase-nextjs/server/auth";
 
-const testComponent: PublishedComponent = {
-    id: "marquee",
-    location: "components/ui/marquee.tsx",
-    content: `import { Marquee } from "lucide-react";`,
-    owner: "dfksldkfj",
-    remoteDependancies: [],
-    relativeImports: [],
-    tailwindConfig: "",
-    exports: ["Marquee"],
-    status: "component",
-    name: "Marquee",
-    description: "An infinite scrolling component that can be used to display text, images, or videos.",
-    installCommand: "auto"
-}
+
 
 export default async function ComponentHome({ params }: { params: { componentName: string } }) {
-    const component = testComponent;
-    return <div className="flex flex-col m-5 gap-4 max-w-[50rem]">
-        <LocationIndicator />
-        <h1 className="text-4xl font-bold">{component.name}</h1>
-        <p className="text-lg text-gray-500">{component.description}</p>
-        <CustomSandpack />
-        <h2 className="text-3xl font-bold mt-4">Installation</h2>
-        <hr />
-        <InstallComponent component={component} />
+  const app = await getAppSS();
+  const db = app.firestore();
+  const ref = db.collection("Components").doc(params.componentName);
+  const doc = await ref.get();
+  // merge the testComponent with the data from the database
+  // give the database data priority
+
+  const component = {
+    ...testComponent,
+    ...doc.data()
+  }
+  return <div className="flex flex-col m-5 gap-4 max-w-[50rem]">
+    <LocationIndicator />
+    <h1 className="text-4xl font-bold">{component.name}</h1>
+    <p className="text-lg text-gray-500">{component.description}</p>
+    <CustomSandpack />
+    <h2 className="text-3xl font-bold mt-4">Installation</h2>
+    <hr />
+    <InstallComponent component={component} />
+  </div>
+}
+
+
+const manualCode = `import { cn } from "@/lib/utils";
+
+interface MarqueeProps {
+  className?: string;
+  reverse?: boolean;
+  pauseOnHover?: boolean;
+  children?: React.ReactNode;
+  vertical?: boolean;
+  repeat?: number;
+  [key: string]: any;
+}
+
+export default function Marquee({
+  className,
+  reverse,
+  pauseOnHover = false,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}: MarqueeProps) {
+  return (
+    <div
+      {...props}
+      className={cn(
+        "group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
+        {
+          "flex-row": !vertical,
+          "flex-col": vertical,
+        },
+        className,
+      )}
+    >
+      {Array(repeat)
+        .fill(0)
+        .map((_, i) => (
+          <div
+            key={i}
+            className={cn("flex shrink-0 justify-around [gap:var(--gap)]", {
+              "animate-marquee flex-row": !vertical,
+              "animate-marquee-vertical flex-col": vertical,
+              "group-hover:[animation-play-state:paused]": pauseOnHover,
+              "[animation-direction:reverse]": reverse,
+            })}
+          >
+            {children}
+          </div>
+        ))}
     </div>
+  );
+}
+`
+
+const testComponent: PublishedComponent = {
+  id: "marquee",
+  location: "components/ui/marquee.tsx",
+  content: `import { Marquee } from "lucide-react";`,
+  owner: "dfksldkfj",
+  remoteDependancies: [
+    {
+      name: "react",
+      version: "^17.0.2",
+    }
+  ],
+  relativeImports: [],
+  tailwindConfig: "",
+  exports: ["Marquee"],
+  status: "component",
+  name: "Marquee",
+  description: "An infinite scrolling component that can be used to display text, images, or videos.",
+  installCommand: "auto",
+  manualCode: manualCode
 }
