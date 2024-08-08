@@ -1,4 +1,5 @@
 import { Description, Heading } from "@/components/design/Texts";
+import EditDocumentation from "@/components/edit-documentation/editDocumentation";
 import PublishButton from "@/components/preview-components/publishButton";
 import { decodeImports } from "@/lib/decodeImports";
 import { cn } from "@/lib/utils";
@@ -22,6 +23,8 @@ export default async function EditComponentDocumentation({ params }: { params: {
   var relativeImportLocations: any = {};
   var filesToAdd: any = {}
   var tailwindAdditionalConfig: any = {}
+
+  return <EditDocumentation component={component} />
 
   await parseTree({ currentComponent: component });
   await decodeLocations();
