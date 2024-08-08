@@ -18,10 +18,10 @@ export default function CustomSandpack() {
             <button onClick={() => setShowCode(true)} className={cn("p-2 text-sm", !showCode ? "" : "border-b-2 border-b-black")}>Code</button>
         </div>
         <SandpackProvider template="vanilla" theme="auto">
-            <SandpackLayout style={{ display: showCode ? "none" : "block" }}>
+            <SandpackLayout style={{ visibility: !showCode ? "visible" : "hidden", height: !showCode ? "auto" : "1px" }}>
                 <SandpackPreview />
             </SandpackLayout>
-            <SandpackLayout style={{ display: showCode ? "block" : "none" }}>
+            <SandpackLayout style={{ visibility: showCode ? "visible" : "hidden", height: showCode ? "auto" : "1px" }}>
                 <SandpackCodeEditor />
             </SandpackLayout>
         </SandpackProvider>
