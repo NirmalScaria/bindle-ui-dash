@@ -22,7 +22,6 @@ export async function ComponentSidebarContent() {
     const ref = db.collection("Components").limit(20).select('id', 'name');
     const snapshot = await ref.get();
     const components = snapshot.docs.map(doc => doc.data());
-    console.log(components)
     return <ScrollArea className="h-screen">
         <div className="flex flex-col gap-3">
             <div className="flex flex-col">
