@@ -25,11 +25,16 @@ export default function EditDocumentation({ component }: { component: Component 
         {
             showPreview ? <div className="flex flex-col gap-1 w-full bg-white text-black">
                 <ComponentPagePreview component={newComponent} />
-            </div> : <div className="flex flex-col gap-1 p-4 rounded-md w-full bg-white/5 border border-white/20">
-                <label className="text-sm">Component Name</label>
-                <input type="text" className="p-2 rounded-md bg-white/10" value={newComponent.name} onChange={(e) => setNewComponent({ ...newComponent, name: e.target.value })} />
-                <label className="text-sm">Component Description. (Keep it under 20 words)</label>
-                <textarea className="p-2 rounded-md bg-white/10" value={newComponent.description} onChange={(e) => setNewComponent({ ...newComponent, description: e.target.value })} />
+            </div> : <div className="flex flex-col gap-3 p-4 rounded-md w-full bg-white/5 border border-white/20">
+                <span className="text-base mb-2">Component Id: {newComponent.id}</span>
+                <div className="flex flex-col gap-1 w-full">
+                    <label className="text-sm">Component Name</label>
+                    <input type="text" className="p-2 rounded-md bg-white/10" value={newComponent.name} onChange={(e) => setNewComponent({ ...newComponent, name: e.target.value })} />
+                </div>
+                <div className="flex flex-col gap-1 w-full">
+                    <label className="text-sm">Component Description. (Keep it under 20 words)</label>
+                    <textarea className="p-2 rounded-md bg-white/10" value={newComponent.description} onChange={(e) => setNewComponent({ ...newComponent, description: e.target.value })} />
+                </div>
             </div>
         }
         <div className="w-full mt-4">
