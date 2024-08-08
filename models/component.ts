@@ -33,9 +33,10 @@ export interface PublishedComponent {
     installCommand: string;
     manualCode: string;
     usageSampleCode: string;
+    examples: { [key: string]: ComponentSample };
 }
 
 export interface ComponentSample {
-    dependencies: {[key: string]: string};
-    files: {[key: string]: string};
+    dependencies: { [key: string]: string };
+    files: { [key: string]: string };
 }

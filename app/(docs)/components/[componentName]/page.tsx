@@ -32,6 +32,8 @@ export default async function ComponentHome({ params }: { params: { componentNam
     {component.usageSampleCode && <div className="flex flex-col max-h-[300px]">
       <MyCode code={component.usageSampleCode} showLineNumbers={false} />
     </div>}
+    <h2 className="text-3xl font-bold mt-4">Examples</h2>
+    <hr />
   </div>
 }
 
@@ -113,4 +115,7 @@ const testComponent: PublishedComponent = {
     <ReviewCard key={review.username} {...review} />
   ))}
 </Marquee>`,
+  examples: {
+
+  }
 }
