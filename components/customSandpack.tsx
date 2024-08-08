@@ -22,7 +22,7 @@ export default function CustomSandpack({ ...props }) {
             externalResources: ["https://cdn.tailwindcss.com"],
         }}>
             <SandpackLayout style={{ visibility: !showCode ? "visible" : "hidden", height: !showCode ? "auto" : "1px" }}>
-                <SandpackPreview />
+                <SandpackPreview style={{height: "500px"}}/>
             </SandpackLayout>
             <SandpackLayout style={{ visibility: showCode ? "visible" : "hidden", height: showCode ? "auto" : "1px" }}>
                 <SandpackCodeViewer />

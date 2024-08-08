@@ -15,20 +15,20 @@ import React from "react";
 import { EditorSelection } from "@codemirror/state";
 
 
-export default function CustomSandpackEditor({ ...props }: { [key: string]: any }) {
+export default function CustomSandpackEditor({height, ...props }: {height: string, [key: string]: any }) {
     const [showCode, setShowCode] = useState(false);
     return <div className="flex flex-col w-full">
         <div className="flex flex-row mb-5 border-b">
             <button onClick={() => setShowCode(false)} className={cn("p-2 text-sm", showCode ? "" : "border-b-2 border-b-white")}>Preview</button>
             <button onClick={() => setShowCode(true)} className={cn("p-2 text-sm", !showCode ? "" : "border-b-2 border-b-white")}>Code</button>
         </div>
-        <SandpackProvider template="react-ts" theme={githubLight} {...props} >
+        <SandpackProvider template="react-ts" theme={githubLight} {...props}>
             <SandpackLayout style={{ visibility: !showCode ? "visible" : "hidden", height: !showCode ? "auto" : "1px" }} >
-                <SandpackPreview ref={props.sandpackRef}/>
+                <SandpackPreview ref={props.sandpackRef} style={{ height: height }} />
             </SandpackLayout>
             <SandpackLayout style={{ visibility: showCode ? "visible" : "hidden", height: showCode ? "auto" : "1px" }}>
                 <SandpackFileExplorer />
-                <SandpackCodeEditor  />
+                <SandpackCodeEditor />
             </SandpackLayout>
         </SandpackProvider>
     </div>

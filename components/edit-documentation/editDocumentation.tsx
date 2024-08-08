@@ -91,6 +91,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                 <label className="text-sm">Main demo. This will be the first thing the user see. Edit the code here to make the demo appear the way you want.</label>
                 <div className="w-full max-w-[55rem]">
                     <CustomSandpackEditor
+                        height="500px"
                         template="react-ts"
                         files={newComponent.mainDemo?.files ?? filesToAdd}
                         options={{
