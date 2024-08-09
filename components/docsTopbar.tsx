@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BsGithub, BsTwitterX, BsX } from "react-icons/bs";
 export default function DocsTopbar({ sidebarContent }: { sidebarContent: JSX.Element }) {
-    return <div className="flex flex-row items-center h-[4rem] w-full fixed px-2 md:px-4 justify-between">
+    return <div className="flex flex-row items-center h-[4rem] w-full fixed px-2 md:px-4 justify-between backdrop-blur bg-white/20 z-20">
         <Sheet>
             <SheetTrigger className="block md:hidden">
                 <div className="p-2 cursor-pointer">

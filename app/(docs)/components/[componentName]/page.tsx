@@ -35,7 +35,7 @@ export default async function ComponentHome({ params }: { params: { componentNam
   }
   metadata.title = `${component.name} | Bindle-UI`
   metadata.description = component.description
-  return <div className="flex flex-col m-5 gap-4 max-w-[50rem]">
+  return <div className="flex flex-col m-5 gap-4 max-w-[50rem] z-10">
     <LocationIndicator />
     <h1 className="text-4xl font-bold">{component.name}</h1>
     <p className="text-lg text-gray-500">{component.description}</p>
