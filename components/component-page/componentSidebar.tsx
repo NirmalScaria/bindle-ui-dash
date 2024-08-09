@@ -8,7 +8,7 @@ import { getAppSS } from "firebase-nextjs/server/auth";
 
 export default async function ComponentSidebar({ className }: { className?: string }) {
     return <div className={cn("flex flex-col z-10", className)}>
-        <div className={"h-screen w-[320px] fixed flex-col gap-2 pt-2 px-4 hidden md:flex justify-between"}>
+        <div className={"h-screen w-[250px] lg:w-[min(280px,15vw)] flex-col gap-2 pt-2 px-4 hidden lg:flex justify-between"}>
             <div className="flex flex-col gap-2 my-4 mx-6">
                 <ComponentSidebarContent />
             </div>
