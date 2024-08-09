@@ -100,7 +100,17 @@ function DraftItem({ draft }: { draft: Component }) {
 }
 
 function ComponentItem({ component }: { component: Component }) {
-    return <div className="flex flex-col p-3 border rounded-md my-2 w-full">
-        <div className="font-bold">{component.id}</div>
+    return <div className="flex flex-col p-3 border rounded-md my-2 w-full gap-2">
+        <div className="font-bold flex flex-row">
+            {component.id}
+        </div>
+        <div className="flex flex-row justify-between">
+
+            <div className="flex flex-row gap-2">
+                {/* <Link href={`/contribute/edit-component/${component.uid}?published=true`}><Button variant="secondary" size="sm">Edit Component</Button></Link> */}
+                <Link href={`/contribute/edit-component-documentation/${component.uid}?published=true`}><Button variant="secondary" size="sm">Edit Documentation</Button></Link>
+                {/* <Link href={`/contribute/edit-component-documentation/${component.uid}?published=true`}><Button variant="secondary" size="sm">Publish</Button></Link> */}
+            </div>
+        </div>
     </div>
 }
