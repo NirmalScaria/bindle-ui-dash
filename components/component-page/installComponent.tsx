@@ -34,7 +34,7 @@ export default function InstallComponent({ component }: { component: PublishedCo
             "code": remoteDependanciesCommand
         })
     }
-    if (tailwindContent != "") {
+    if (tailwindContent != "" && tailwindContent != "{}") {
         manualSteps.push({
             "text": "Add the following code to your tailwind.config.js file.",
             "code": tailwindContent
