@@ -88,8 +88,22 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         })
         return files
     }
+    function getExamples() {
+        var res: { name: string, code: ComponentSample }[] = []
+        exampleRefs.forEach((example) => {
+            res.push({
+                name: example.content.name,
+                code: {
+                    dependencies: example.content.code.dependencies,
+                    files: example.content.code.files
+                }
+            })
+        })
+        return res;
+    }
+
     function syncFiles() {
-        setNewComponent({ ...newComponent, mainDemo: { dependencies: dependancies, files: getFiles() } })
+        setNewComponent({ ...newComponent, mainDemo: { dependencies: dependancies, files: getFiles() }, examples: getExamples() })
         setShowPreview(true);
     }
     async function uploadDocumentation() {
@@ -100,7 +114,8 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
             mainDemo: {
                 dependencies: dependancies,
                 files: files
-            }
+            },
+            examples: getExamples()
         }
         const res = await saveDocumentationAction({ componentId: component.uid ?? component.id, component: componentToUpload, isDraft: true });
         if (res.success) {
@@ -146,7 +161,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         {
             showPreview ? <div className="flex flex-col gap-1 w-full bg-white text-black">
                 <ComponentPagePreview component={newComponent} sandpackRef={sandpackRef} />
-            </div> : <div className="flex flex-col gap-3 p-4 rounded-md w-full bg-white/5 border border-white/20">
+            </div> : <div className="flex flex-col gap-3 p-4 rounded-md w-full bg-white/5 border border-white/20  max-w-[55rem]">
                 <span className="text-base mb-2">Component id: {newComponent.id}</span>
                 <div className="flex flex-col gap-1 w-full">
                     <label className="text-sm">Component Name</label>
@@ -191,7 +206,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                         })
                     }
                     {
-                        edittingIndex != null && <div className="flex flex-col gap-3">
+                        edittingIndex != null && <div className="flex flex-col gap-3 max-w-[55rem]">
                             <div className="flex flex-row gap-2">
                                 Example title:
                                 <Input defaultValue={edittingExampleName} placeholder="Default" className="text-black" onChange={(e) => {

@@ -11,7 +11,7 @@ export default function ComponentPagePreview({ component, sandpackRef }: { compo
         {/* <LocationIndicator /> */}
         <h1 className="text-4xl font-bold">{component.name}</h1>
         <p className="text-lg text-gray-500">{component.description}</p>
-        <CustomSandpack component = {component}/>
+        <CustomSandpack component={component} />
         <h2 className="text-3xl font-bold mt-4">Installation</h2>
         <hr />
         <InstallComponent component={component} />
@@ -22,5 +22,13 @@ export default function ComponentPagePreview({ component, sandpackRef }: { compo
         </div>}
         <h2 className="text-3xl font-bold mt-4">Examples</h2>
         <hr />
+        {
+            component.examples.map((example, index) => {
+                return <div key={index} className="flex flex-col gap-4">
+                    <h3 className="text-2xl font-bold">{example.name}</h3>
+                    <CustomSandpack files={example.code.files} />
+                </div>
+            })
+        }
     </div>
 }
