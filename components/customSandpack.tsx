@@ -5,7 +5,7 @@ import {
     SandpackLayout,
     SandpackPreview,
     SandpackCodeEditor,
-    SandpackCodeViewer
+    SandpackFileExplorer
 } from "@codesandbox/sandpack-react";
 import { useState } from "react";
 import { githubLight } from "@codesandbox/sandpack-themes";
@@ -29,6 +29,7 @@ export default function CustomSandpack({ ...props }) {
                 <SandpackPreview style={{ height: "450px" }} />
             </SandpackLayout>
             <SandpackLayout style={{ visibility: showCode ? "visible" : "hidden", height: showCode ? "auto" : "1px" }}>
+                <SandpackFileExplorer style={{ height: "450px" }} />
                 <SandpackCodeEditor style={{ height: "450px" }} readOnly={true} />
             </SandpackLayout>
         </SandpackProvider>
