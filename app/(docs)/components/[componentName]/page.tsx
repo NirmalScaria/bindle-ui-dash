@@ -1,5 +1,8 @@
+import ComponentSidebar, { ComponentSidebarContent } from "@/components/component-page/componentSidebar";
 import InstallComponent from "@/components/component-page/installComponent";
 import CustomSandpack from "@/components/customSandpack";
+import DocsFooter from "@/components/docsFooter";
+import DocsTopbar from "@/components/docsTopbar";
 import LocationIndicator from "@/components/locationIndicator";
 import MyCode from "@/components/myCode";
 import { PublishedComponent } from "@/models/component";
@@ -35,32 +38,46 @@ export default async function ComponentHome({ params }: { params: { componentNam
   }
   metadata.title = `${component.name} | Bindle-UI`
   metadata.description = component.description
-  return <div className="flex flex-col m-5 gap-4 z-10">
-    <LocationIndicator />
-    <h1 className="text-4xl font-bold">{component.name}</h1>
-    <p className="text-lg text-gray-500">{component.description}</p>
-    <CustomSandpack component={component} />
-    <h2 className="text-3xl font-bold mt-4">Installation</h2>
-    <hr />
-    <InstallComponent component={component} />
-    <h2 className="text-3xl font-bold mt-4">Usage</h2>
-    <hr />
-    {component.usageSampleCode && <div className="flex flex-col max-h-[300px]">
-      <MyCode code={component.usageSampleCode} showLineNumbers={false} />
-    </div>}
-    {component.examples != undefined && component.examples.length != 0 && <> <h2 className="text-3xl font-bold mt-4">Examples</h2>
-      <hr />
-      {
-        component.examples.map((example, index) => {
-          return <div key={index} className="flex flex-col gap-4">
-            <h3 className="text-2xl font-bold">{example.name}</h3>
-            <CustomSandpack files={example.code.files} />
-          </div>
-        })
-      }
-    </>
-    }
-  </div>
+  return <>
+    <DocsTopbar sidebarContent={<ComponentSidebarContent />} />
+    <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
+      <ComponentSidebar />
+    </div>
+    <div className="flex mt-[4rem] flex-col justify-between w-full flex-grow max-w-[60rem] lg:max-w-[min(55vw,60rem)] overflow-y-visible">
+      <div className="flex flex-col w-full min-h-screen">
+        <div className="flex flex-col m-5 gap-4 z-10">
+          <LocationIndicator />
+          <h1 className="text-4xl font-bold">{component.name}</h1>
+          <p className="text-lg text-gray-500">{component.description}</p>
+          <CustomSandpack component={component} />
+          <h2 className="text-3xl font-bold mt-4">Installation</h2>
+          <hr />
+          <InstallComponent component={component} />
+          <h2 className="text-3xl font-bold mt-4">Usage</h2>
+          <hr />
+          {component.usageSampleCode && <div className="flex flex-col max-h-[300px]">
+            <MyCode code={component.usageSampleCode} showLineNumbers={false} />
+          </div>}
+          {component.examples != undefined && component.examples.length != 0 && <> <h2 className="text-3xl font-bold mt-4">Examples</h2>
+            <hr />
+            {
+              component.examples.map((example, index) => {
+                return <div key={index} className="flex flex-col gap-4">
+                  <h3 className="text-2xl font-bold">{example.name}</h3>
+                  <CustomSandpack files={example.code.files} />
+                </div>
+              })
+            }
+          </>
+          }
+        </div>
+        <DocsFooter />
+      </div>
+    </div>
+    <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
+      <div className="hidden lg:flex w-[min(280px,15vw)]" />
+      {/* <ComponentSidebar /> */}
+    </div></>
 }
 
 
