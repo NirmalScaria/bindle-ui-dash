@@ -93,6 +93,7 @@ export default function Marquee({
 
 const testComponent: PublishedComponent = {
   id: "marquee",
+  uid: "df",
   location: "components/ui/marquee.tsx",
   content: `import { Marquee } from "lucide-react";`,
   owner: "dfksldkfj",
