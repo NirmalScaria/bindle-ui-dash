@@ -39,5 +39,8 @@
 
 }
 
-body {
+html {
+  overflow-y: scroll;
+  overflow-x: clip;
+  color-scheme: light;
 }

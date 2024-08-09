@@ -4,9 +4,9 @@ import DocsTopbar from "@/components/docsTopbar";
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return <div className="h-screen w-screen">
+    return <div className="h-screen">
         <DocsTopbar sidebarContent={<ComponentSidebarContent />} />
-        <div className="h-full w-full flex flex-col overflow-y-scroll overflow-x-auto">
+        <div className="h-full w-full flex flex-col overflow-y-visible ">
             <ComponentSidebar className="mt-[4rem]" />
             <div className="flex flex-col justify-between">
                 <div className="flex flex-row">
