@@ -27,11 +27,22 @@ export default async function MyComponentsPage() {
         <Description>This page lists the components you have published, and components that are in your drafts.</Description>
         <Heading2>Drafts</Heading2>
         {
+            drafts.length == 0 && <Description><div className="flex flex-col gap-2">
+                You have no drafts.
+                Start by creating a component
+                <Link href="/contribute/new-component"><Button variant="secondary" size="sm">Create Component</Button></Link>
+            </div>
+            </Description>
+        }
+        {
             drafts.map(draft => <DraftItem draft={draft as Component} />)
         }
         <div className="mt-4">
             <Heading2>Published Components</Heading2>
         </div>
+        {
+            components.length == 0 && <Description>You have no published components.</Description>
+        }
         {
             components.map(component => <ComponentItem component={component as Component} />)
         }

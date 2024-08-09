@@ -19,6 +19,16 @@ export default async function ComponentHome({ params }: { params: { componentNam
     ...testComponent,
     ...doc.data()
   }
+  if (doc.data() == undefined) {
+    return <div className="flex flex-col m-5 gap-4 h-full justify-between max-w-[50rem]">
+      <LocationIndicator />
+      <div className="flex flex-col justify-center items-center text-center w-full">
+        <h1 className="text-4xl font-bold">Component Not Found</h1>
+        <p className="text-lg text-gray-500">The component you are looking for does not exist.</p>
+      </div>
+      <div></div>
+    </div>
+  }
   return <div className="flex flex-col m-5 gap-4 max-w-[50rem]">
     <LocationIndicator />
     <h1 className="text-4xl font-bold">{component.name}</h1>
