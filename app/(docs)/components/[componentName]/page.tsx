@@ -4,8 +4,12 @@ import LocationIndicator from "@/components/locationIndicator";
 import MyCode from "@/components/myCode";
 import { PublishedComponent } from "@/models/component";
 import { getAppSS } from "firebase-nextjs/server/auth";
+import type { Metadata } from 'next';
 
-
+export const metadata: Metadata = {
+  title: "Bindle-UI : A mega library of UI components for Javascript and React",
+  description: "Bindle UI provides an ever growing set of UI components for Javascript and React",
+};
 
 export default async function ComponentHome({ params }: { params: { componentName: string } }) {
   const app = await getAppSS();
@@ -29,6 +33,8 @@ export default async function ComponentHome({ params }: { params: { componentNam
       <div></div>
     </div>
   }
+  metadata.title = `${component.name} | Bindle-UI`
+  metadata.description = component.description
   return <div className="flex flex-col m-5 gap-4 max-w-[50rem]">
     <LocationIndicator />
     <h1 className="text-4xl font-bold">{component.name}</h1>
