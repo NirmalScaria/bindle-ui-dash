@@ -13,7 +13,7 @@ export interface Component {
     relativeImports: string[];
     tailwindConfig: string;
     exports: string[];
-    status?: string;
+    status?: "component" | "documentation" | "published";
 }
 
 export interface PublishedComponent {
@@ -26,7 +26,7 @@ export interface PublishedComponent {
     relativeImports: string[];
     tailwindConfig: string;
     exports: string[];
-    status?: string;
+    status?: "component" | "documentation" | "published";
     name: string;
     description: string;
     mainDemo?: ComponentSample;

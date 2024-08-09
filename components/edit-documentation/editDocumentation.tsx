@@ -131,7 +131,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
             },
             examples: getExamples()
         }
-        const res = await saveDocumentationAction({ componentId: component.uid ?? component.id, component: componentToUpload, isDraft: true });
+        const res = await saveDocumentationAction({ componentId: component.uid ?? component.id, component: componentToUpload, isDraft: component.status != "published" });
         if (res.success) {
             toast({
                 title: "Documentation saved successfully",
@@ -202,10 +202,10 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                     {saving && <Loader2 className="mr-2 animate-spin" size={16} />}
                     Save Documentation
                 </Button>
-                <Button variant="secondary" onClick={publishComponent} disabled={saving || publishing || showPreview}>
+                {newComponent.status != "published" && <Button variant="secondary" onClick={publishComponent} disabled={saving || publishing || showPreview}>
                     {publishing && <Loader2 className="mr-2 animate-spin" size={16} />}
                     Publish
-                </Button>
+                </Button>}
             </div>
         </div>
         <div className="flex flex-row gap-2 w-full border-b border-white/10">

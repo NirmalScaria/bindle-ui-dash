@@ -12,7 +12,6 @@ export default async function EditComponentDocumentation({ params, searchParams 
   const app = await getAppSS();
   const db = app.firestore();
   const componentUid = params.componentUid;
-  console.log(searchParams)
   // @ts-ignore
   const isPublished: string = searchParams["published"];
   var componentRef = db.collection('Drafts').doc(componentUid);
