@@ -20,12 +20,16 @@ export default function CustomSandpack({ ...props }) {
         </div>
         <SandpackProvider template="react-ts" theme={githubLight} {...props} files={props.files ?? props.component.mainDemo?.files ?? {}} options={{
             externalResources: ["https://cdn.tailwindcss.com"],
+            initMode: "user-visible",
+            initModeObserverOptions: {
+                rootMargin: "1000px 0px"
+            }
         }}>
             <SandpackLayout style={{ visibility: !showCode ? "visible" : "hidden", height: !showCode ? "auto" : "1px" }}>
-                <SandpackPreview style={{height: "500px"}}/>
+                <SandpackPreview style={{ height: "450px" }} />
             </SandpackLayout>
             <SandpackLayout style={{ visibility: showCode ? "visible" : "hidden", height: showCode ? "auto" : "1px" }}>
-                <SandpackCodeViewer />
+                <SandpackCodeEditor style={{ height: "450px" }} readOnly={true} />
             </SandpackLayout>
         </SandpackProvider>
     </div>
