@@ -40,11 +40,19 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
     function saveExample() {
         // This saves the actively editting example to the exampleRefs
         // Does not save to the newComponent or database.
+        const originalFiles = edittingExample!.ref.current!.getClient()!.sandboxSetup.files
+        var files: { [key: string]: string } = {}
+        Object.keys(originalFiles).forEach((key) => {
+            files[key] = originalFiles[key].code
+        })
         if (edittingIndex === -1) {
             setExampleRefs([...exampleRefs, {
                 content: {
                     name: edittingExampleName,
-                    code: edittingExample!.code
+                    code: {
+                        dependencies: dependancies,
+                        files: files
+                    }
                 },
                 ref: edittingExample!.ref
             }])
@@ -53,7 +61,10 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
             updatedExampleRefs[edittingIndex!] = {
                 content: {
                     name: edittingExampleName,
-                    code: edittingExample!.code
+                    code: {
+                        dependencies: dependancies,
+                        files: files
+                    }
                 },
                 ref: edittingExample!.ref
             }
@@ -166,21 +177,21 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                 <div className="flex flex-col gap-3">
                     {
                         exampleRefs.map((example, index) => {
-                            return <div className="flex flex-col rounded-md p-3 border">
-                                <div className="flex flex-row gap-2">
-                                    Title of the example:
-                                    <Input defaultValue={example.content.name} placeholder="Default" className="text-black" onChange={(e) => {
-                                        const thisExample = { ...example, content: { ...example.content, name: e.target.value } }
-                                        var updatedExampleRefs = [...exampleRefs];
-                                        updatedExampleRefs[index] = thisExample;
-                                        setExampleRefs(updatedExampleRefs)
-                                    }} />
-                                </div>
+                            return <div className="flex flex-row w-full justify-between rounded-md p-3 border">
+                                {example.content.name}
+                                <Button variant="secondary" onClick={() => {
+                                    setEdittingExample({
+                                        code: example.content.code,
+                                        ref: example.ref
+                                    })
+                                    setEdittingExampleName(example.content.name)
+                                    setEdittingIndex(index)
+                                }}>Edit</Button>
                             </div>
                         })
                     }
                     {
-                        edittingIndex && <div className="flex flex-col gap-3">
+                        edittingIndex != null && <div className="flex flex-col gap-3">
                             <div className="flex flex-row gap-2">
                                 Example title:
                                 <Input defaultValue={edittingExampleName} placeholder="Default" className="text-black" onChange={(e) => {
