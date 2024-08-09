@@ -122,7 +122,7 @@ export default function NewComponentPage() {
       title: "Component saved",
       description: `Component saved successfully to drafts.`,
     })
-    router.push(`/contribute/preview-component/${docId}`);
+    router.push(`/contribute/edit-component-documentation/${docId}`);
   }
 
   async function setDependancyVersions() {

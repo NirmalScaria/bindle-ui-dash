@@ -20,15 +20,17 @@ export default function ComponentPagePreview({ component, sandpackRef }: { compo
         {component.usageSampleCode && <div className="flex flex-col max-h-[300px]">
             <MyCode code={component.usageSampleCode} showLineNumbers={false} />
         </div>}
-        <h2 className="text-3xl font-bold mt-4">Examples</h2>
-        <hr />
-        {
-            component.examples.map((example, index) => {
-                return <div key={index} className="flex flex-col gap-4">
-                    <h3 className="text-2xl font-bold">{example.name}</h3>
-                    <CustomSandpack files={example.code.files} />
-                </div>
-            })
+        {component.examples != undefined && component.examples.length != 0 && <> <h2 className="text-3xl font-bold mt-4">Examples</h2>
+            <hr />
+            {
+                component.examples.map((example, index) => {
+                    return <div key={index} className="flex flex-col gap-4">
+                        <h3 className="text-2xl font-bold">{example.name}</h3>
+                        <CustomSandpack files={example.code.files} />
+                    </div>
+                })
+            }
+        </>
         }
     </div>
 }

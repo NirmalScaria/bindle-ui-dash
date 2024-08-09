@@ -34,7 +34,9 @@ const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
 export default function EditDocumentation({ component, filesToAdd, dependancies }: { component: Component, filesToAdd: any, dependancies: any }) {
     const [showPreview, setShowPreview] = useState(false);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+    const [publishing, setPublishing] = useState(false);
     const { toast } = useToast();
     const [newComponent, setNewComponent] = useState<PublishedComponent>({
         ...defaultComponent,
@@ -119,7 +121,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         setShowPreview(true);
     }
     async function uploadDocumentation() {
-        setLoading(true);
+        setSaving(true);
         const files = getFiles();
         const componentToUpload = {
             ...newComponent,
@@ -140,12 +142,13 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                 title: "Error saving documentation",
                 description: "There was an error saving the documentation. Please try again.",
             })
+            setSaving(false);
             return false;
         }
-        setLoading(false);
+        setSaving(false);
     }
     async function publishComponent() {
-        setLoading(true);
+        setPublishing(true);
         const res = await publishComponentAction({ componentId: component.uid ?? component.id });
         if (res.success) {
             toast({
@@ -157,9 +160,9 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                 title: "Error publishing component",
                 description: res.error,
             })
-            setLoading(false);
+            setPublishing(false);
         }
-        setLoading(false);
+        setPublishing(false);
     }
     const sandpackRef = React.useRef<SandpackPreviewRef>();
     const MemoizedSandpackEditor = useMemo(() => (
@@ -180,12 +183,12 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         <div className="flex flex-row justify-between w-full">
             <Heading>Edit component documentation</Heading>
             <div className="flex flex-row gap-2">
-                <Button variant="secondary" onClick={uploadDocumentation} disabled={loading || showPreview}>
-                    {loading && <Loader2 className="mr-2 animate-spin" size={16} />}
+                <Button variant="secondary" onClick={uploadDocumentation} disabled={saving || publishing || showPreview}>
+                    {saving && <Loader2 className="mr-2 animate-spin" size={16} />}
                     Save Documentation
                 </Button>
-                <Button variant="secondary" onClick={publishComponent} disabled={loading || showPreview}>
-                    {loading && <Loader2 className="mr-2 animate-spin" size={16} />}
+                <Button variant="secondary" onClick={publishComponent} disabled={saving || publishing || showPreview}>
+                    {publishing && <Loader2 className="mr-2 animate-spin" size={16} />}
                     Publish
                 </Button>
             </div>

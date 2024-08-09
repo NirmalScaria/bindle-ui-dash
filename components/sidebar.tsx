@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CloudUpload, Database, Filter, Fingerprint, House, LayoutPanelLeft, Menu, Paintbrush, Settings, X } from "lucide-react";
+import { CloudUpload, Component, Database, Filter, Fingerprint, House, LayoutPanelLeft, Menu, Paintbrush, Plus, Settings, X } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,10 +13,20 @@ const poppins = Poppins({ weight: ["300", "400", "500", "600"], subsets: ['latin
 
 const pages = [
     {
-        name: "Introduction",
+        name: "Home",
         icon: <House size={20} />,
-        href: "/",
+        href: "/contribute",
     },
+    {
+        name: "New Component",
+        icon: <Plus size={20} />,
+        href: "/contribute/new-component",
+    },
+    {
+        name: "My Components",
+        icon: <Component size={20} />,
+        href: "/contribute/my-components",
+    }
 ]
 
 export default function MySidebar() {

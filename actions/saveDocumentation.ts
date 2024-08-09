@@ -15,19 +15,9 @@ export default async function saveDocumentationAction({ componentId, component, 
     if (currentComponent.owner !== user?.uid) {
         return { error: "You are not the owner of this component" };
     }
-    if (component.name.length < 2) {
-        return { error: "Name is too short" };
+    if (!(component.name.length < 2 || component.name.length > 30 || component.description.length < 4 || component.description.length > 120)) {
+        component.status = "documentation";
     }
-    if (component.name.length > 30) {
-        return { error: "Name is too long" };
-    }
-    if (component.description.length < 4) {
-        return { error: "Description is too short" };
-    }
-    if (component.description.length > 120) {
-        return { error: "Description is too long" };
-    }
-    component.status = "documentation";
     const response = await componentRef.set(component);
     return { success: true };
 }
