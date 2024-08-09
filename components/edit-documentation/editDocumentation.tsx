@@ -17,6 +17,17 @@ import saveDocumentationAction from "@/actions/saveDocumentation";
 import { useToast } from "../ui/use-toast";
 import { defaultFiles } from "@/lib/defaultExample";
 import { Input } from "../ui/input";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { DialogClose } from "@radix-ui/react-dialog";
+
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -149,7 +160,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
     return <div className="flex flex-col h-full w-full items-start pt-4 gap-2">
         <div className="flex flex-row justify-between w-full">
             <Heading>Edit component documentation</Heading>
-            <Button variant="secondary" onClick={uploadDocumentation} disabled={loading}>
+            <Button variant="secondary" onClick={uploadDocumentation} disabled={loading || showPreview}>
                 {loading && <Loader2 className="mr-2 animate-spin" size={16} />}
                 Save Documentation
             </Button>
@@ -194,14 +205,37 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                         exampleRefs.map((example, index) => {
                             return <div className="flex flex-row w-full justify-between rounded-md p-3 border">
                                 {example.content.name}
-                                <Button variant="secondary" onClick={() => {
-                                    setEdittingExample({
-                                        code: example.content.code,
-                                        ref: example.ref
-                                    })
-                                    setEdittingExampleName(example.content.name)
-                                    setEdittingIndex(index)
-                                }}>Edit</Button>
+                                <div className="flex flex-row gap-2">
+
+                                    <Dialog>
+                                        <DialogTrigger><Button variant="destructive">Delete</Button></DialogTrigger>
+                                        <DialogContent>
+                                            <DialogHeader>
+                                                <DialogTitle className="text-black">Are you sure?</DialogTitle>
+                                                <DialogDescription>
+                                                    This will delete the example permanently. The component code is unaffected.
+                                                </DialogDescription>
+                                            </DialogHeader>
+                                            <DialogFooter>
+                                                <DialogClose>
+                                                    <Button variant="outline" className="text-black">Cancel</Button>
+                                                </DialogClose>
+                                                <Button variant="destructive" onClick={() => {
+                                                    setExampleRefs(exampleRefs.filter((_, i) => i != index))
+                                                }}>Delete</Button>
+                                            </DialogFooter>
+                                        </DialogContent>
+                                    </Dialog>
+
+                                    <Button variant="secondary" onClick={() => {
+                                        setEdittingExample({
+                                            code: example.content.code,
+                                            ref: example.ref
+                                        })
+                                        setEdittingExampleName(example.content.name)
+                                        setEdittingIndex(index)
+                                    }}>Edit</Button>
+                                </div>
                             </div>
                         })
                     }
