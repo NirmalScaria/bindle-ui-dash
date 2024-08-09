@@ -179,6 +179,21 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
             sandpackRef={edittingExample?.ref}
         />
     ), [edittingExample]);
+
+    const MemoizedMainEditor = useMemo(() => (
+        <CustomSandpackEditor
+            height="500px"
+            template="react-ts"
+            files={newComponent.mainDemo?.files ?? filesToAdd}
+            options={{
+                externalResources: ["https://cdn.tailwindcss.com"],
+            }}
+            customSetup={{
+                dependencies: dependancies
+            }}
+            sandpackRef={sandpackRef}
+        />
+    ), [newComponent.mainDemo]);
     return <div className="flex flex-col h-full w-full items-start pt-4 gap-2">
         <div className="flex flex-row justify-between w-full">
             <Heading>Edit component documentation</Heading>
@@ -212,18 +227,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                 </div>
                 <label className="text-sm">Main demo. This will be the first thing the user see. Edit the code here to make the demo appear the way you want.</label>
                 <div className="w-full max-w-[55rem]">
-                    <CustomSandpackEditor
-                        height="500px"
-                        template="react-ts"
-                        files={newComponent.mainDemo?.files ?? filesToAdd}
-                        options={{
-                            externalResources: ["https://cdn.tailwindcss.com"],
-                        }}
-                        customSetup={{
-                            dependencies: dependancies
-                        }}
-                        sandpackRef={sandpackRef}
-                    />
+                    {MemoizedMainEditor}
                 </div>
                 <label className="text-sm">Usage Sample Code. Give a brief idea about how to use the component after import. Do not include the whole render code. Just the component.</label>
                 <textarea className="h-[150px] p-2 rounded-md bg-white/10" value={newComponent.usageSampleCode} placeholder={usageSampleCodePlaceholder} onChange={(e) => setNewComponent({ ...newComponent, usageSampleCode: e.target.value })} />
