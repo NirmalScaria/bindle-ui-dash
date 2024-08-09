@@ -23,7 +23,7 @@ export default async function ComponentHome({ params }: { params: { componentNam
     <LocationIndicator />
     <h1 className="text-4xl font-bold">{component.name}</h1>
     <p className="text-lg text-gray-500">{component.description}</p>
-    <CustomSandpack />
+    <CustomSandpack component={component}/>
     <h2 className="text-3xl font-bold mt-4">Installation</h2>
     <hr />
     <InstallComponent component={component} />
