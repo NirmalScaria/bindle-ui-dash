@@ -224,7 +224,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                             setEdittingExample({
                                 code: {
                                     dependencies: dependancies,
-                                    files: defaultFiles
+                                    files: filesToAdd
                                 },
                                 ref: createRef<SandpackPreviewRef | undefined>()
                             })
