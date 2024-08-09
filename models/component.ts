@@ -33,7 +33,7 @@ export interface PublishedComponent {
     installCommand: string;
     manualCode: string;
     usageSampleCode: string;
-    examples: { [key: string]: ComponentSample };
+    examples: {name: string, code: ComponentSample}[];
 }
 
 export interface ComponentSample {

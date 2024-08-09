@@ -1,11 +1,11 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Component, PublishedComponent } from "@/models/component";
+import { Component, ComponentSample, PublishedComponent } from "@/models/component";
 import { Sandpack, SandpackPreviewRef } from "@codesandbox/sandpack-react";
 import { Description } from "@radix-ui/react-toast";
 import { Roboto_Mono } from "next/font/google";
 import { Heading } from "../design/Texts";
-import { useState } from "react";
+import { createRef, useRef, useState } from "react";
 import ComponentPagePreview from "../preview-components/previewPage";
 import { parseComponent } from "@/lib/parseComponent";
 import CustomSandpack from "../customSandpack";
@@ -15,6 +15,8 @@ import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import saveDocumentationAction from "@/actions/saveDocumentation";
 import { useToast } from "../ui/use-toast";
+import { defaultFiles } from "@/lib/defaultExample";
+import { Input } from "../ui/input";
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -26,6 +28,16 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         ...defaultComponent,
         ...component
     });
+    // ExampleRefs should be used throughout the page.
+    // Only when it is to be saved, set it to the actual component and then save.
+    const [exampleRefs, setExampleRefs] = useState<{ content: { name: string, code: ComponentSample }, ref: React.RefObject<SandpackPreviewRef | undefined> }[]>(
+        newComponent.examples.map((example) => {
+            return {
+                content: example,
+                ref: createRef<SandpackPreviewRef | undefined>()
+            }
+        })
+    )
     function getFiles() {
         const originalFiles = sandpackRef.current!.getClient()!.sandboxSetup.files
         var files: { [key: string]: string } = {}
@@ -105,6 +117,38 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                 </div>
                 <label className="text-sm">Usage Sample Code. Give a brief idea about how to use the component after import. Do not include the whole render code. Just the component.</label>
                 <textarea className="h-[150px] p-2 rounded-md bg-white/10" value={newComponent.usageSampleCode} placeholder={usageSampleCodePlaceholder} onChange={(e) => setNewComponent({ ...newComponent, usageSampleCode: e.target.value })} />
+                <label className="text-sm">Example codes. Add examples that show different ways the component could be used.</label>
+                <div className="flex flex-col gap-3">
+                    {
+                        exampleRefs.map((example, index) => {
+                            return <div className="flex flex-col rounded-md p-3 border">
+                                <div className="flex flex-row gap-2">
+                                    Title of the example:
+                                    <Input defaultValue={example.content.name} placeholder="Default" className="text-black" onChange={(e) => {
+                                        const thisExample = { ...example, content: { ...example.content, name: e.target.value } }
+                                        var updatedExampleRefs = [...exampleRefs];
+                                        updatedExampleRefs[index] = thisExample;
+                                        setExampleRefs(updatedExampleRefs)
+                                    }} />
+                                </div>
+                            </div>
+                        })
+                    }
+                    <Button variant="secondary" className="w-full" onClick={() => {
+                        setExampleRefs([...exampleRefs, {
+                            content: {
+                                name: "Example Name",
+                                code: {
+                                    dependencies: {},
+                                    files: defaultFiles
+                                }
+                            },
+                            ref: createRef()
+                        }])
+                    }}>
+                        Add New Example
+                    </Button>
+                </div>
             </div>
         }
 
@@ -115,7 +159,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
 const defaultComponent: PublishedComponent = {
     id: "",
     location: "",
-    content: `import { Marquee } from "lucide-react";`,
+    content: `import {Marquee} from "lucide-react";`,
     owner: "dfksldkfj",
     remoteDependancies: [
     ],
@@ -128,9 +172,8 @@ const defaultComponent: PublishedComponent = {
     installCommand: "auto",
     manualCode: "",
     usageSampleCode: ``,
-    examples: {
-    }
+    examples: []
 }
-const usageSampleCodePlaceholder = `import { Button } from "@/components/ui/button"
-<Button variant="outline">Button</Button>
-`
+const usageSampleCodePlaceholder = `import {Button} from "@/components/ui/button"
+        <Button variant="outline">Button</Button>
+        `
