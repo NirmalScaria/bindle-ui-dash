@@ -1,7 +1,5 @@
 import LocationIndicator from "@/components/locationIndicator"
 import { Button } from "@/components/ui/button"
-import { Quote } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
 export default async function ComponentHome() {
     return <div className="flex flex-col m-5 gap-3 max-w-[50rem]">
