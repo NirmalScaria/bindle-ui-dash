@@ -27,6 +27,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { DialogClose } from "@radix-ui/react-dialog";
+import publishComponentAction from "@/actions/publishComponent";
 
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
@@ -139,6 +140,24 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                 title: "Error saving documentation",
                 description: "There was an error saving the documentation. Please try again.",
             })
+            return false;
+        }
+        setLoading(false);
+    }
+    async function publishComponent() {
+        setLoading(true);
+        const res = await publishComponentAction({ componentId: component.uid ?? component.id });
+        if (res.success) {
+            toast({
+                title: "Component published successfully",
+                description: "The component has been published successfully",
+            })
+        } else {
+            toast({
+                title: "Error publishing component",
+                description: res.error,
+            })
+            setLoading(false);
         }
         setLoading(false);
     }
@@ -160,10 +179,16 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
     return <div className="flex flex-col h-full w-full items-start pt-4 gap-2">
         <div className="flex flex-row justify-between w-full">
             <Heading>Edit component documentation</Heading>
-            <Button variant="secondary" onClick={uploadDocumentation} disabled={loading || showPreview}>
-                {loading && <Loader2 className="mr-2 animate-spin" size={16} />}
-                Save Documentation
-            </Button>
+            <div className="flex flex-row gap-2">
+                <Button variant="secondary" onClick={uploadDocumentation} disabled={loading || showPreview}>
+                    {loading && <Loader2 className="mr-2 animate-spin" size={16} />}
+                    Save Documentation
+                </Button>
+                <Button variant="secondary" onClick={publishComponent} disabled={loading || showPreview}>
+                    {loading && <Loader2 className="mr-2 animate-spin" size={16} />}
+                    Publish
+                </Button>
+            </div>
         </div>
         <div className="flex flex-row gap-2 w-full border-b border-white/10">
             <button onClick={() => setShowPreview(false)} className={cn("p-2", !showPreview ? "border-b-2" : "")}>Edit</button>
