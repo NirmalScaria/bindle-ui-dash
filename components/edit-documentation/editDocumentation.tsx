@@ -5,7 +5,7 @@ import { Sandpack, SandpackPreviewRef } from "@codesandbox/sandpack-react";
 import { Description } from "@radix-ui/react-toast";
 import { Roboto_Mono } from "next/font/google";
 import { Heading } from "../design/Texts";
-import { createRef, useRef, useState } from "react";
+import { createRef, useMemo, useRef, useState } from "react";
 import ComponentPagePreview from "../preview-components/previewPage";
 import { parseComponent } from "@/lib/parseComponent";
 import CustomSandpack from "../customSandpack";
@@ -28,8 +28,39 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         ...defaultComponent,
         ...component
     });
-    // ExampleRefs should be used throughout the page.
-    // Only when it is to be saved, set it to the actual component and then save.
+    // -1 means creating new. Any other number means editting that index.
+    const [edittingIndex, setEdittingIndex] = useState<number | null>(null);
+    const [edittingExample, setEdittingExample] = useState<{ code: ComponentSample, ref: React.RefObject<SandpackPreviewRef | undefined> } | null>(null);
+    const [edittingExampleName, setEdittingExampleName] = useState("");
+    // Add new example button stays visible if not already editting or creating an example.
+    // When creating an example, the editor opens up, and a save button appears.
+    // When saving, it saves to exampleRefs and closes the editor.
+    // When editing, the editor opens up with the content of the example, and a save button appears.
+    // When saving, it saves to exampleRefs and closes the editor.
+    function saveExample() {
+        // This saves the actively editting example to the exampleRefs
+        // Does not save to the newComponent or database.
+        if (edittingIndex === -1) {
+            setExampleRefs([...exampleRefs, {
+                content: {
+                    name: edittingExampleName,
+                    code: edittingExample!.code
+                },
+                ref: edittingExample!.ref
+            }])
+        } else {
+            var updatedExampleRefs = [...exampleRefs];
+            updatedExampleRefs[edittingIndex!] = {
+                content: {
+                    name: edittingExampleName,
+                    code: edittingExample!.code
+                },
+                ref: edittingExample!.ref
+            }
+            setExampleRefs(updatedExampleRefs)
+        }
+        setEdittingIndex(null)
+    }
     const [exampleRefs, setExampleRefs] = useState<{ content: { name: string, code: ComponentSample }, ref: React.RefObject<SandpackPreviewRef | undefined> }[]>(
         newComponent.examples.map((example) => {
             return {
@@ -75,6 +106,20 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         setLoading(false);
     }
     const sandpackRef = React.useRef<SandpackPreviewRef>();
+    const MemoizedSandpackEditor = useMemo(() => (
+        <CustomSandpackEditor
+            height="500px"
+            template="react-ts"
+            files={edittingExample?.code.files}
+            options={{
+                externalResources: ["https://cdn.tailwindcss.com"],
+            }}
+            customSetup={{
+                dependencies: dependancies
+            }}
+            sandpackRef={edittingExample?.ref}
+        />
+    ), [edittingExample]);
     return <div className="flex flex-col h-full w-full items-start pt-4 gap-2">
         <div className="flex flex-row justify-between w-full">
             <Heading>Edit component documentation</Heading>
@@ -134,20 +179,32 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                             </div>
                         })
                     }
-                    <Button variant="secondary" className="w-full" onClick={() => {
-                        setExampleRefs([...exampleRefs, {
-                            content: {
-                                name: "Example Name",
+                    {
+                        edittingIndex && <div className="flex flex-col gap-3">
+                            <div className="flex flex-row gap-2">
+                                Example title:
+                                <Input defaultValue={edittingExampleName} placeholder="Default" className="text-black" onChange={(e) => {
+                                    setEdittingExampleName(e.target.value)
+                                }} />
+                            </div>
+                            {MemoizedSandpackEditor}
+                            <Button variant="secondary" onClick={() => {
+                                saveExample()
+                            }}>Save Example</Button>
+                        </div>
+                    }
+                    {
+                        edittingIndex === null && <Button variant="secondary" onClick={() => {
+                            setEdittingExample({
                                 code: {
-                                    dependencies: {},
+                                    dependencies: dependancies,
                                     files: defaultFiles
-                                }
-                            },
-                            ref: createRef()
-                        }])
-                    }}>
-                        Add New Example
-                    </Button>
+                                },
+                                ref: createRef<SandpackPreviewRef | undefined>()
+                            })
+                            setEdittingIndex(-1)
+                        }}>Add new example</Button>
+                    }
                 </div>
             </div>
         }

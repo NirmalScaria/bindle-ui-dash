@@ -130,7 +130,7 @@ export default function App() {
 
 export const defaultFiles: any = {
     "/styles.css": stylesText,
-    "/tailwind.config.js": `tailwind.config = ` + JSON.stringify({ ...twconig }, null, 2),
+    "/tailwind.config.ts": `tailwind.config = ` + JSON.stringify({ ...twconig }, null, 2),
     "/App.tsx": appCode,
     "/public/index.html": `<!DOCTYPE html>
 <html lang="en">
