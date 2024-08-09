@@ -107,7 +107,7 @@ function ComponentItem({ component }: { component: Component }) {
         <div className="flex flex-row justify-between">
 
             <div className="flex flex-row gap-2">
-                {/* <Link href={`/contribute/edit-component/${component.uid}?published=true`}><Button variant="secondary" size="sm">Edit Component</Button></Link> */}
+                <Link href={`/contribute/edit-component/${component.uid}?published=true`}><Button variant="secondary" size="sm">Edit Component</Button></Link>
                 <Link href={`/contribute/edit-component-documentation/${component.uid}?published=true`}><Button variant="secondary" size="sm">Edit Documentation</Button></Link>
                 {/* <Link href={`/contribute/edit-component-documentation/${component.uid}?published=true`}><Button variant="secondary" size="sm">Publish</Button></Link> */}
             </div>
