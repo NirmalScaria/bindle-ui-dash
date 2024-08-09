@@ -103,8 +103,9 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                         sandpackRef={sandpackRef}
                     />
                 </div>
+                <label className="text-sm">Usage Sample Code. Give a brief idea about how to use the component after import. Do not include the whole render code. Just the component.</label>
+                <textarea className="h-[150px] p-2 rounded-md bg-white/10" value={newComponent.usageSampleCode} placeholder={usageSampleCodePlaceholder} onChange={(e) => setNewComponent({ ...newComponent, usageSampleCode: e.target.value })} />
             </div>
-
         }
 
         {/* <PublishButton componentId={componentUid} /> */}
@@ -130,3 +131,6 @@ const defaultComponent: PublishedComponent = {
     examples: {
     }
 }
+const usageSampleCodePlaceholder = `import { Button } from "@/components/ui/button"
+<Button variant="outline">Button</Button>
+`
