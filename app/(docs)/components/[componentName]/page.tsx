@@ -23,7 +23,7 @@ export default async function ComponentHome({ params }: { params: { componentNam
     <LocationIndicator />
     <h1 className="text-4xl font-bold">{component.name}</h1>
     <p className="text-lg text-gray-500">{component.description}</p>
-    <CustomSandpack component={component}/>
+    <CustomSandpack component={component} />
     <h2 className="text-3xl font-bold mt-4">Installation</h2>
     <hr />
     <InstallComponent component={component} />
@@ -34,6 +34,14 @@ export default async function ComponentHome({ params }: { params: { componentNam
     </div>}
     <h2 className="text-3xl font-bold mt-4">Examples</h2>
     <hr />
+    {
+      component.examples.map((example, index) => {
+        return <div key={index} className="flex flex-col gap-4">
+          <h3 className="text-2xl font-bold">{example.name}</h3>
+          <CustomSandpack files={example.code.files} />
+        </div>
+      })
+    }
   </div>
 }
 
@@ -60,33 +68,7 @@ export default function Marquee({
   ...props
 }: MarqueeProps) {
   return (
-    <div
-      {...props}
-      className={cn(
-        "group flex overflow-hidden p-2 [--duration:40s] [--gap:1rem] [gap:var(--gap)]",
-        {
-          "flex-row": !vertical,
-          "flex-col": vertical,
-        },
-        className,
-      )}
-    >
-      {Array(repeat)
-        .fill(0)
-        .map((_, i) => (
-          <div
-            key={i}
-            className={cn("flex shrink-0 justify-around [gap:var(--gap)]", {
-              "animate-marquee flex-row": !vertical,
-              "animate-marquee-vertical flex-col": vertical,
-              "group-hover:[animation-play-state:paused]": pauseOnHover,
-              "[animation-direction:reverse]": reverse,
-            })}
-          >
-            {children}
-          </div>
-        ))}
-    </div>
+    <div>Placeholder </div>
   );
 }
 `
