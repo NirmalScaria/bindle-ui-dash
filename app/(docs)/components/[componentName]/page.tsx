@@ -48,13 +48,13 @@ export default async function ComponentHome({ params }: { params: { componentNam
       <div className="flex flex-col w-full min-h-screen">
         <div className="flex flex-col m-5 gap-4 z-10">
           <LocationIndicator />
-          <h1 className="text-4xl font-bold">{component.name}</h1>
+          <h1 className="text-4xl font-bold" id="introduction">{component.name}</h1>
           <p className="text-lg text-gray-500">{component.description}</p>
           <CustomSandpack component={component} />
-          <h2 className="text-3xl font-bold mt-4">Installation</h2>
+          <h2 className="text-3xl font-bold mt-4" id="installation">Installation</h2>
           <hr />
           <InstallComponent component={component} />
-          <h2 className="text-3xl font-bold mt-4">Usage</h2>
+          <h2 className="text-3xl font-bold mt-4" id="usage">Usage</h2>
           <hr />
           {component.usageSampleCode && <div className="flex flex-col max-h-[300px]">
             <MyCode code={component.usageSampleCode} showLineNumbers={false} />
@@ -63,7 +63,7 @@ export default async function ComponentHome({ params }: { params: { componentNam
             <hr />
             {
               component.examples.map((example, index) => {
-                return <div key={index} className="flex flex-col gap-4">
+                return <div key={index} className="flex flex-col gap-4" id={example.name}>
                   <h3 className="text-2xl font-bold">{example.name}</h3>
                   <CustomSandpack files={example.code.files} />
                 </div>
