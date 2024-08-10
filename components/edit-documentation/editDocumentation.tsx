@@ -140,7 +140,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         } else {
             toast({
                 title: "Error saving documentation",
-                description: "There was an error saving the documentation. Please try again.",
+                description: res.error,
             })
             setSaving(false);
             return false;
