@@ -23,16 +23,13 @@ export default function ComponentRightBar({ ownerId, examples }: { ownerId: stri
 
         }
     }, [ownerId])
-    return <ScrollArea className="h-screen mt-7 hidden lg:flex w-[min(280px,15vw)] ">
-        <div className="flex flex-col gap-3">
+    return <ScrollArea className="h-screen mt-7 hidden lg:flex w-[min(280px,15vw)] pr-5">
+        <div className="flex flex-col gap-3 pb-[200px]">
             {owner != null && <div className="flex flex-col">
                 <span className="font-bold text-sm mb-2">
-                    Credits
+                    Created by
                 </span>
-                <span className="text-sm mb-0 text-gray-500">
-                    This component is created and maintained by
-                </span>
-                <div className="flex flex-col  w-full my-4 rounded-md pr-4">
+                <div className="flex flex-col  w-full my-2 rounded-md pr-4">
                     <div className="flex flex-row items-center justify-between">
                         <div className="flex flex-col gap-0">
                             <span className="text-sm font-semibold leading-none">
@@ -59,7 +56,7 @@ export default function ComponentRightBar({ ownerId, examples }: { ownerId: stri
                             }
                         </div>
                     </div>
-                    {owner.sponsorLink && owner.sponsorLink != "" && <Link href={owner.sponsorLink} className="w-full mt-4 font-semibold text-black text-sm">
+                    {owner.sponsorLink && owner.sponsorLink != "" && <Link href={owner.sponsorLink} className="w-full mt-2 underline text-gray-500 hover:text-black transition-colors text-sm">
                         Sponsor the creator
                     </Link>
                     }
