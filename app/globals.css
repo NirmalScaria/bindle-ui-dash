@@ -40,7 +40,6 @@
 }
 
 html {
-  overflow-y: clip;
   overflow-x: clip;
   color-scheme: light;
 }
