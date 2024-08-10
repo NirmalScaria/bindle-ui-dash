@@ -1,3 +1,4 @@
+import ComponentRightBar from "@/components/component-page/componentRightbar";
 import ComponentSidebar, { ComponentSidebarContent } from "@/components/component-page/componentSidebar";
 import InstallComponent from "@/components/component-page/installComponent";
 import CustomSandpack from "@/components/customSandpack";
@@ -75,8 +76,7 @@ export default async function ComponentHome({ params }: { params: { componentNam
       </div>
     </div>
     <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-      <div className="hidden lg:flex w-[min(280px,15vw)]" />
-      {/* <ComponentSidebar /> */}
+      <ComponentRightBar />
     </div></>
 }
 
