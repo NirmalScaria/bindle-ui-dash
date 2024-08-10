@@ -76,7 +76,7 @@ export default async function ComponentHome({ params }: { params: { componentNam
       </div>
     </div>
     <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-      <ComponentRightBar />
+      <ComponentRightBar ownerId={component.owner} examples={component.examples.map((example) => { return example.name })} />
     </div></>
 }
 

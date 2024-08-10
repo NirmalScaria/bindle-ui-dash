@@ -1,43 +1,70 @@
+"use client";
 import Link from "next/link";
 import { ScrollArea } from "../ui/scroll-area";
 import SidebarLink from "./sidebarLink";
-import { Bug, User2 } from "lucide-react";
-import { BsGithub, BsTwitterX } from "react-icons/bs";
+import { AppWindow, Bug, User2 } from "lucide-react";
+import { BsGithub, BsLinkedin, BsTwitterX } from "react-icons/bs";
 import { cn } from "@/lib/utils";
 import { CgBulb } from "react-icons/cg";
+import { Contributor } from "@/models/contributor";
+import { useEffect, useState } from "react";
+import getContributor from "@/actions/getContributor";
 
-export default function ComponentRightBar() {
+export default function ComponentRightBar({ ownerId, examples }: { ownerId: string | null, examples: string[] }) {
+    const [owner, setOwner] = useState<Contributor | null>(null);
+    useEffect(() => {
+        if (ownerId != null) {
+            getContributor({ id: ownerId }).then((data) => {
+                if ("error" in data) {
+                    return;
+                }
+                setOwner(data)
+            })
+
+        }
+    }, [ownerId])
     return <ScrollArea className="h-screen mt-7 hidden lg:flex w-[min(280px,15vw)] ">
         <div className="flex flex-col gap-3">
-            <div className="flex flex-col">
+            {owner != null && <div className="flex flex-col">
                 <span className="font-bold text-sm mb-2">
                     Credits
                 </span>
                 <span className="text-sm mb-0 text-gray-500">
                     This component is created and maintained by
                 </span>
-                <div className="flex flex-col px-1.5 py-1 w-full my-2 border rounded-md pr-4">
+                <div className="flex flex-col  w-full my-4 rounded-md pr-4">
                     <div className="flex flex-row items-center justify-between">
-                        <div className="flex flex-col gap-0 m-2">
+                        <div className="flex flex-col gap-0">
                             <span className="text-sm font-semibold leading-none">
-                                Nirmal Scaria
+                                {owner.displayName}
                             </span>
-                            <Link href="/contributors/@scaria" className="w-full text-gray-500 underline text-sm">
-                                @scaria
+                            <Link href={`/contributors/${owner.id}`} className="w-full text-gray-500 underline text-sm">
+                                {owner.id}
                             </Link>
                         </div>
                         <div className="flex flex-row gap-1">
-                            <Link href="https://github.com/NirmalScaria" target="_blank" className="border w-full hover:bg-gray-200 rounded-md transition-colors text-gray-500">
+                            {owner.github && owner.github != "" && <Link href={owner.github} target="_blank" className="border w-full hover:bg-gray-200 rounded-md transition-colors text-gray-500">
                                 <BsGithub size={15} className="m-1.5 text-gray-700" />
-                            </Link>
-                            <Link href="https://x.com/scaria0dev" target="_blank" className="border w-full hover:bg-gray-200 rounded-md transition-colors text-gray-500">
+                            </Link>}
+                            {owner.twitter && owner.twitter != "" && <Link href={owner.twitter} target="_blank" className="border w-full hover:bg-gray-200 rounded-md transition-colors text-gray-500">
                                 <BsTwitterX size={15} className="m-1.5 text-gray-700" />
+                            </Link>}
+                            {owner.linkedin && owner.linkedin != "" && <Link href={owner.linkedin} target="_blank" className="border w-full hover:bg-gray-200 rounded-md transition-colors text-gray-500">
+                                <BsLinkedin size={15} className="m-1.5 text-gray-700" />
                             </Link>
+                            }
+                            {owner.website && owner.website != "" && <Link href={owner.website} target="_blank" className="border w-full hover:bg-gray-200 rounded-md transition-colors text-gray-500">
+                                <AppWindow size={15} className="m-1.5 text-gray-700" />
+                            </Link>
+                            }
                         </div>
                     </div>
-
+                    {owner.sponsorLink && owner.sponsorLink != "" && <Link href={owner.sponsorLink} className="w-full mt-4 font-semibold text-black text-sm">
+                        Sponsor the creator
+                    </Link>
+                    }
                 </div>
-            </div>
+            </div>}
             <span className="font-bold text-sm">
                 On this page
             </span>
@@ -47,9 +74,11 @@ export default function ComponentRightBar() {
                 <SidebarLink name="Usage" href="#usage" />
                 <SidebarLink name="Examples" href="#examples" />
                 <div className="flex flex-col pl-4">
-                    <SidebarLink name="Secondary" href="#examples" />
-                    <SidebarLink name="Primary" href="#examples" />
-                    <SidebarLink name="Secondary" href="#examples" />
+                    {
+                        examples.map((example, index) => {
+                            return <SidebarLink key={index} name={example} href={`#${example}`} />
+                        })
+                    }
                 </div>
             </div>
             <span className="font-bold text-sm">
