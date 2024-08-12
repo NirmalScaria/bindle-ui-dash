@@ -119,7 +119,7 @@ export default function EditComponent({ component }: { component: Component }) {
             title: "Component saved",
             description: `Component saved successfully to drafts.`,
         })
-        router.push(`/contribute/edit-component-documentation/${componentToUpload.uid ?? componentToUpload.id}?published=${componentToUpload.status == "published" ? "true" : "false"}`);
+        router.push(`/contribute/edit-component-documentation/${componentToUpload.uid ?? componentToUpload.id}`);
     }
 
     async function setDependancyVersions() {
