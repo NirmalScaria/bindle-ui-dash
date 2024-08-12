@@ -1,8 +1,8 @@
 // Takes a component and returns the necessary parameters to create a sandpack.
 
+import { decodeImports } from "@/lib/decodeImports";
 import { Component, DependancyItem } from "@/models/component";
 import { getAppSS } from "firebase-nextjs/server/auth";
-import { decodeImports } from "@/lib/decodeImports";
 
 export async function parseComponent({ component }: { component: Component }) {
     const app = await getAppSS();

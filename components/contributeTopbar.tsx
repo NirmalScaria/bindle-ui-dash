@@ -1,9 +1,9 @@
+import { ProfileButton } from "firebase-nextjs/client/components";
 import { Command, PanelRightCloseIcon } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
-import { BsGithub, BsTwitterX, BsX } from "react-icons/bs";
-import { ProfileButton } from "firebase-nextjs/client/components";
+import { BsGithub, BsTwitterX } from "react-icons/bs";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 export default function ContributeTopBar({ sidebarContent }: { sidebarContent: JSX.Element }) {
     return <div className="flex mr-4 border-b border-white/40 -pr-2 flex-row items-center h-[4rem] w-full fixed px-2 lg:px-4 justify-between backdrop-blur bg-white/20 z-20">
         <Sheet>

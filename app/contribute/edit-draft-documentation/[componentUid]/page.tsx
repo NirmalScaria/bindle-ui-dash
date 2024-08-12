@@ -2,11 +2,6 @@ import EditDocumentation from "@/components/edit-documentation/editDocumentation
 import { parseComponent } from "@/lib/parseComponent";
 import { Component } from "@/models/component";
 import { getAppSS } from "firebase-nextjs/server/auth";
-import { Roboto_Mono } from "next/font/google";
-
-const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
-
-
 
 export default async function EditComponentDocumentation({ params, searchParams }: { params: { componentUid: string }, searchParams: URLSearchParams }) {
   const app = await getAppSS();

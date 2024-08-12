@@ -18,7 +18,6 @@ const pages = [
 ]
 
 export default function LibrarySidebar() {
-    const pathname = usePathname()
     const [open, setOpen] = useState(false);
 
     var openClass = "hidden"

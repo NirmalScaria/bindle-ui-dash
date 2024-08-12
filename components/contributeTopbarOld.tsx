@@ -1,12 +1,11 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { getUserCS } from "firebase-nextjs/client/auth";
+import { ProfileButton } from "firebase-nextjs/client/components";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { BsGithub } from "react-icons/bs";
 import { CgNpm } from "react-icons/cg";
-import ContributeButton from "./contribute";
-import { ProfileButton } from "firebase-nextjs/client/components";
 
 export default function ContributeTopBarOld() {
   const { currentUser: user } = getUserCS();

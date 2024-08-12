@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "../ui/button";
+import publishComponentAction from "@/actions/publishComponent";
 import {
     Dialog,
     DialogClose,
@@ -11,11 +10,12 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
-import { Loader2 } from "lucide-react";
-import publishComponentAction from "@/actions/publishComponent";
+} from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from 'next/navigation'
+import { Loader2 } from "lucide-react";
+import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { Button } from "../ui/button";
 
 
 export default function PublishButton({ componentId }: { componentId: string }) {

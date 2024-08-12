@@ -1,18 +1,14 @@
 "use client";
 import { cn } from "@/lib/utils";
 import {
-    SandpackProvider,
-    SandpackLayout,
-    SandpackPreview,
     SandpackCodeEditor,
     SandpackFileExplorer,
-    useSandpack,
-    SandpackPreviewRef
+    SandpackLayout,
+    SandpackPreview,
+    SandpackProvider
 } from "@codesandbox/sandpack-react";
-import { useEffect, useState } from "react";
 import { githubLight } from "@codesandbox/sandpack-themes";
-import React from "react";
-import { EditorSelection } from "@codemirror/state";
+import { useState } from "react";
 
 
 export default function CustomSandpackEditor({height, ...props }: {height: string, [key: string]: any }) {

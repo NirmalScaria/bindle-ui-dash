@@ -1,8 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { getUserCS } from "firebase-nextjs/client/auth";
-import { ProfileButton } from "firebase-nextjs/client/components";
-import { User, UserRoundX } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
 import { BsGithub } from "react-icons/bs";

@@ -1,9 +1,8 @@
 "use client";
 
 import { PublishedComponent } from "@/models/component";
-import LocationIndicator from "../locationIndicator";
-import CustomSandpack from "../customSandpack";
 import InstallComponent from "../component-page/installComponent";
+import CustomSandpack from "../customSandpack";
 import MyCode from "../myCode";
 
 export default function ComponentPagePreview({ component, sandpackRef }: { component: PublishedComponent, sandpackRef: any }) {

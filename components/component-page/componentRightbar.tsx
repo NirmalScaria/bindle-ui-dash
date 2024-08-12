@@ -1,14 +1,14 @@
 "use client";
+import getContributor from "@/actions/getContributor";
+import { cn } from "@/lib/utils";
+import { Contributor } from "@/models/contributor";
+import { AppWindow, Bug } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { BsGithub, BsLinkedin, BsTwitterX } from "react-icons/bs";
+import { CgBulb } from "react-icons/cg";
 import { ScrollArea } from "../ui/scroll-area";
 import SidebarLink from "./sidebarLink";
-import { AppWindow, Bug, User2 } from "lucide-react";
-import { BsGithub, BsLinkedin, BsTwitterX } from "react-icons/bs";
-import { cn } from "@/lib/utils";
-import { CgBulb } from "react-icons/cg";
-import { Contributor } from "@/models/contributor";
-import { useEffect, useState } from "react";
-import getContributor from "@/actions/getContributor";
 
 export default function ComponentRightBar({ ownerId, examples }: { ownerId: string | null, examples: string[] }) {
     const [owner, setOwner] = useState<Contributor | null>(null);

@@ -1,14 +1,14 @@
 "use client";
 import { cn } from "@/lib/utils";
 import {
-    SandpackProvider,
+    SandpackCodeEditor,
+    SandpackFileExplorer,
     SandpackLayout,
     SandpackPreview,
-    SandpackCodeEditor,
-    SandpackFileExplorer
+    SandpackProvider
 } from "@codesandbox/sandpack-react";
-import { useState } from "react";
 import { githubLight } from "@codesandbox/sandpack-themes";
+import { useState } from "react";
 
 
 export default function CustomSandpack({ ...props }) {

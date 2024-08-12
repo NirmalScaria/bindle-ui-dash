@@ -2,9 +2,8 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { House } from "lucide-react";
-import SidebarLink from "./sidebarLink";
 import { getAppSS } from "firebase-nextjs/server/auth";
+import SidebarLink from "./sidebarLink";
 
 export default async function ComponentSidebar({ className }: { className?: string }) {
     return <div className={cn("flex flex-col z-10", className)}>

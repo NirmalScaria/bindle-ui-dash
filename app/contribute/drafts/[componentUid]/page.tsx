@@ -1,13 +1,11 @@
-import { Description, Heading, Heading2, Heading3 } from "@/components/design/Texts";
-import EditDocumentation from "@/components/edit-documentation/editDocumentation";
+import { Description, Heading, Heading3 } from "@/components/design/Texts";
+import { Badge } from "@/components/ui/badge";
 import { parseComponent } from "@/lib/parseComponent";
 import { Component } from "@/models/component";
 import { getAppSS } from "firebase-nextjs/server/auth";
-import { Roboto_Mono } from "next/font/google";
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link";
 import { ExternalLink } from "lucide-react";
-import { Card } from "@/components/ui/card";
+import { Roboto_Mono } from "next/font/google";
+import Link from "next/link";
 
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });

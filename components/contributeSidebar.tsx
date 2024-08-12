@@ -1,13 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CloudUpload, Component, Database, Filter, Fingerprint, House, LayoutPanelLeft, Menu, Paintbrush, Plus, Settings, X } from "lucide-react";
+import { Component, House, Menu, Plus, X } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname } from 'next/navigation';
 import { useState } from "react";
-import { BsGithub, BsLinkedin, BsTwitterX } from "react-icons/bs";
 
 const poppins = Poppins({ weight: ["300", "400", "500", "600"], subsets: ['latin'] });
 
