@@ -1,13 +1,4 @@
-import ComponentRightBar from "@/components/component-page/componentRightbar";
-import ComponentSidebar, { ComponentSidebarContent } from "@/components/component-page/componentSidebar";
-import InstallComponent from "@/components/component-page/installComponent";
-import CustomSandpack from "@/components/customSandpack";
-import DocsFooter from "@/components/docsFooter";
-import DocsTopbar from "@/components/docsTopbar";
-import LocationIndicator from "@/components/locationIndicator";
-import MyCode from "@/components/myCode";
 import { PublishedComponent } from "@/models/component";
-import { getAppSS } from "firebase-nextjs/server/auth";
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -16,26 +7,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ComponentHome() {
-  // merge the testComponent with the data from the database
-  // give the database data priority
-
-  return <>
-    <DocsTopbar sidebarContent={<ComponentSidebarContent />} />
-    <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-      <ComponentSidebar />
-    </div>
-    <div className="flex mt-[4rem] flex-col justify-between w-full flex-grow max-w-[60rem] lg:max-w-[min(55vw,60rem)] overflow-y-visible">
-      <div className="flex flex-col w-full min-h-screen">
-        <div className="flex flex-col m-5 gap-4 z-10">
-          
-        HIII
-        </div>
-        <DocsFooter />
-      </div>
-    </div>
-    <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-      <div className="h-screen mt-7 hidden lg:flex w-[min(280px,15vw)] pr-5" />
-    </div></>
+  return <div>HIII</div>
 }
 
 

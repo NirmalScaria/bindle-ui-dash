@@ -29,7 +29,7 @@ const pages = [
     }
 ]
 
-export default function ContributeSidebar() {
+export default function ContributeSidebarOld() {
     const pathname = usePathname()
     const [open, setOpen] = useState(false);
 
