@@ -28,14 +28,28 @@ export default async function ComponentHome({ params }: { params: { componentNam
     ...doc.data()
   }
   if (doc.data() == undefined) {
-    return <div className="flex flex-col m-5 gap-4 h-full justify-between max-w-[50rem]">
-      <LocationIndicator />
-      <div className="flex flex-col justify-center items-center text-center w-full">
-        <h1 className="text-4xl font-bold">Component Not Found</h1>
-        <p className="text-lg text-gray-500">The component you are looking for does not exist.</p>
+    return <>
+      <DocsTopbar sidebarContent={<ComponentSidebarContent />} />
+      <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
+        <ComponentSidebar />
       </div>
-      <div></div>
-    </div>
+      <div className="flex mt-[4rem] flex-col justify-between w-full flex-grow max-w-[60rem] lg:max-w-[min(55vw,60rem)] overflow-y-visible">
+        <div className="flex flex-col w-full min-h-screen">
+          <div className="flex flex-col m-5 gap-4 z-10 min-h-screen">
+            <LocationIndicator />
+
+            <div className="flex flex-col h-[50vh] justify-center items-center text-center w-full">
+              <h1 className="text-4xl font-bold">Component Not Found</h1>
+              <p className="text-lg text-gray-500">The component you are looking for does not exist.</p>
+            </div>
+            <div></div>
+          </div>
+          <DocsFooter />
+        </div>
+      </div>
+      <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
+        <ComponentRightBar ownerId={component.owner} examples={component.examples.map((example) => { return example.name })} />
+      </div></>
   }
   metadata.title = `${component.name} | Bindle-UI`
   metadata.description = component.description
