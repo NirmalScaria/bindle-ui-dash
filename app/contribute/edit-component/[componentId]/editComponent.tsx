@@ -60,10 +60,10 @@ export default function EditComponent({ component }: { component: Component }) {
             return;
         }
         remoteImports.forEach(async (imp) => {
-            const res = await fetch(`https://registry.npmjs.org/${imp}`);
-            const data = await res.json();
-            const version = "^" + data["dist-tags"].latest;
-            setImportVersions((prev) => [...prev, { name: imp as string, version }]);
+            // const res = await fetch(`https://registry.npmjs.org/${imp}`);
+            // const data = await res.json();
+            // const version = "^" + data["dist-tags"].latest;
+            setImportVersions((prev) => [...prev, { name: imp as string, version: "*" }]);
         })
         setCodeIsValid(true);
         setAnalysing(false);
@@ -306,11 +306,11 @@ function VersionSelection({ importVersions, setDependancyConfirmed, setConfigVal
         <span className="text-lg  font-bold">Specify Dependency Versions</span>
         <span className="text-sm text-gray-400">Follow the same format as specified in package.json. (ex: ^1.0.0, ~1.0.0)</span>
         <div className="flex flex-col w-full gap-1.5 mt-2">
-            {importVersions.map((imp) => <span key={imp.name} className="text-md text-gray-400 flex flex-row items-center">
+            {importVersions.map((imp) => <span key={imp.name} className="text-md flex flex-row items-center">
                 <div className="w-1/2">
                     {imp.name}
                 </div>
-                <Input onChange={() => { setDependancyConfirmed(false); setConfigValidated(false); }} id={`version-for-${imp.name}`} defaultValue={imp.version} className="bg-transparent inline max-w-[55rem] border border-white/30" />
+                <Input onChange={() => { setDependancyConfirmed(false); setConfigValidated(false); }} id={`version-for-${imp.name}`} defaultValue={imp.version} />
             </span>)}
         </div>
     </div>
