@@ -1,64 +1,67 @@
-import { BookAIcon, Component, Library, User2 } from "lucide-react";
-import Link from "next/link";
-import { ReactNode } from "react";
-import { MdAddBox } from "react-icons/md";
+import { PublishedComponent } from "@/models/component";
+import type { Metadata } from 'next';
 
-interface MainLink {
-    title: string;
-    description: string;
-    icon: ReactNode;
-    href: string;
+export const metadata: Metadata = {
+  title: "Bindle-UI : A mega library of UI components for Javascript and React",
+  description: "Bindle UI provides an ever growing set of UI components for Javascript and React",
+};
+
+export default async function ComponentHome() {
+  return <div>HIII</div>
 }
 
-const mainLinks = [
+
+const manualCode = `import { cn } from "@/lib/utils";
+
+interface MarqueeProps {
+  className?: string;
+  reverse?: boolean;
+  pauseOnHover?: boolean;
+  children?: React.ReactNode;
+  vertical?: boolean;
+  repeat?: number;
+  [key: string]: any;
+}
+
+export default function Marquee({
+  className,
+  reverse,
+  pauseOnHover = false,
+  children,
+  vertical = false,
+  repeat = 4,
+  ...props
+}: MarqueeProps) {
+  return (
+    <div>Placeholder </div>
+  );
+}
+`
+
+const testComponent: PublishedComponent = {
+  id: "marquee",
+  uid: "df",
+  location: "components/ui/marquee.tsx",
+  content: `import { Marquee } from "lucide-react";`,
+  owner: "dfksldkfj",
+  remoteDependancies: [
     {
-        title: "New Library",
-        description: "Create and publish a new library to the Bindle ecosystem.",
-        icon: <Library size={40} />,
-        href: "/contribute/new-library"
-    },
-    {
-        title: "New Component",
-        description: "Create and publish a new individual component to the Bindle ecosystem.",
-        icon: <MdAddBox size={40} />,
-        href: "/contribute/new-component"
-    },
-    {
-        title: "My Libraries",
-        description: "Manage your libraries and components. Add new components to existing libraries.",
-        icon: <BookAIcon size={40} />,
-        href: "/contribute/my-libraries"
-    },
-    {
-        title: "My Components",
-        description: "Manage your individual components. Edit, delete, or add new versions.",
-        icon: <Component size={40} />,
-        href: "/contribute/my-components"
-    },
-    {
-        title: "My Account",
-        description: "Manage your account settings. Change your password, email, or delete your account.",
-        icon: <User2 size={40} />,
-        href: "/contribute/my-account"
+      name: "react",
+      version: "^17.0.2",
     }
-]
-
-export default function ContributePage() {
-    return <div className="flex flex-col h-full justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 my-6">
-            {
-                mainLinks.map((link, i) => <MainLink key={i} link={link} />)
-            }
-        </div>
-    </div>
-}
-
-function MainLink({ link }: { link: MainLink }) {
-    return (
-        <Link href={link.href} className="w-full rounded-md border border-white/20 relative p-4 min-h-[200px] flex flex-col hover:bg-white/5 transition-all">
-            <div className="h-full w-full justify-center flex flex-row pt-10 pb-6 mb-3">{link.icon}</div>
-            <h2 className="text-white font-semibold text-xl mb-1">{link.title}</h2>
-            <p className="text-white/60 text-sm">{link.description}</p>
-        </Link>
-    )
+  ],
+  relativeImports: [],
+  tailwindConfig: "",
+  exports: ["Marquee"],
+  status: "component",
+  name: "Marquee",
+  description: "An infinite scrolling component that can be used to display text, images, or videos.",
+  installCommand: "auto",
+  manualCode: manualCode,
+  usageSampleCode: `<Marquee pauseOnHover className="[--duration:20s]">
+  {firstRow.map((review) => (
+    <ReviewCard key={review.username} {...review} />
+  ))}
+</Marquee>`,
+  examples: []
 }

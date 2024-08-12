@@ -201,8 +201,8 @@ export default function NewComponentPage() {
     <Description>Add the component details below and it will be published to bindle-ui. Users will be able to directly install and use it.</Description>
     <div className="flex flex-col w-full gap-5 mt-3 max-w-[55rem]">
       <div className="flex flex-col gap-1.5">
-        <span className="text-lg text-white font-bold">Component Id</span>
-        <Input placeholder="button" value={componentId} className="bg-transparent max-w-[55rem] border border-white/30" onChange={onComponentIdChange} />
+        <span className="text-lg  font-bold">Component Id</span>
+        <Input placeholder="button" value={componentId} className="bg-transparent max-w-[55rem] border" onChange={onComponentIdChange} />
         <span className="text-sm text-gray-400">This will be the unique identification name for the component. Users will use this name to install the component.</span>
         {
           nameValidityMessage && <div className="flex flex-row gap-2">
@@ -211,7 +211,7 @@ export default function NewComponentPage() {
         }
         {
           !nameValidated &&
-          <Button variant="secondary" className="mt-3" disabled={analysing} onClick={checkNameValidity}>
+          <Button className="mt-3" disabled={analysing} onClick={checkNameValidity}>
             {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
             Check Availability
           </Button>
@@ -219,12 +219,12 @@ export default function NewComponentPage() {
 
       </div>
       {nameValidated && <div className="flex flex-col gap-1.5">
-        <span className="text-lg text-white font-bold">Component Source Code</span>
-        <Textarea rows={14} spellCheck={false} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} onChange={onCodeChange} placeholder={placeHolderComponent} />
+        <span className="text-lg  font-bold">Component Source Code</span>
+        <Textarea rows={14} spellCheck={false} className={cn("bg-transparent max-w-[55rem] border ", robotoMono.className)} onChange={onCodeChange} placeholder={placeHolderComponent} />
         <span className="text-sm text-gray-400">This code will be copied to the users project upon installation. Try to keep imports and dependancies to minimum.</span>
         {
           localImportError && <><span className="text-red-500 text-sm">{localImportError}<br /></span>
-            <span className="text-white text-sm">
+            <span className=" text-sm">
               Read more about&nbsp;
               <Link href="/docs/relative-imports" target="_blank" className="text-blue-500 underline">
                 relative imports
@@ -234,25 +234,25 @@ export default function NewComponentPage() {
         }
         {
           !codeIsValid &&
-          <Button variant="secondary" className="mt-3" disabled={analysing} onClick={analyseCode}>
+          <Button className="mt-3" disabled={analysing} onClick={analyseCode}>
             {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
             Analyse Source Code
           </Button>}
         {
           codeIsValid && <>
             <VersionSelection importVersions={importVersions} setDependancyConfirmed={setDependancyConfirmed} setConfigValidated={setConfigValidated} />
-            {!dependancyConfirmed && <Button variant="secondary" className="mt-3" disabled={analysing} onClick={setDependancyVersions}>
+            {!dependancyConfirmed && <Button className="mt-3" disabled={analysing} onClick={setDependancyVersions}>
               {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
               Confirm Dependancy Versions
             </Button>}
             {dependancyConfirmed && <><div className="flex flex-col gap-1.5 mt-6">
-              <span className="text-lg text-white font-bold">Additional Tailwind Configurations (Optional)</span>
+              <span className="text-lg  font-bold">Additional Tailwind Configurations (Optional)</span>
               <span className="text-sm text-gray-400">Only add the fields that you want to add (like animations and keyframes). Leave other fields empty.</span>
-              <Textarea rows={10} id="additional-tailwind-config" onChange={onConfigChange} spellCheck={false} className={cn("bg-transparent max-w-[55rem] border border-white/30", robotoMono.className)} placeholder={placeHolderConfig} />
+              <Textarea rows={10} id="additional-tailwind-config" onChange={onConfigChange} spellCheck={false} className={cn("bg-transparent max-w-[55rem] border ", robotoMono.className)} placeholder={placeHolderConfig} />
             </div>
               {
                 !configValidated &&
-                <Button variant="secondary" className="mt-3" disabled={analysing} onClick={validateConfig}>
+                <Button className="mt-3" disabled={analysing} onClick={validateConfig}>
                   {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
                   Validate Tailwind Config
                 </Button>
@@ -260,12 +260,12 @@ export default function NewComponentPage() {
               {
                 configValidated &&
                 <>
-                  <span className="text-lg text-white font-bold mt-5">File Location</span>
-                  <Input placeholder="components/ui/Button.tsx" className="bg-transparent max-w-[55rem] border border-white/30" onChange={onFileLocationChange} />
+                  <span className="text-lg  font-bold mt-5">File Location</span>
+                  <Input placeholder="components/ui/Button.tsx" className="bg-transparent max-w-[55rem] border " onChange={onFileLocationChange} />
                   <span className="text-sm text-gray-400">The location to which the file will be copied. Must belong to either components/ or lib/ directory.</span>
                   {
                     !fileLocationValidated &&
-                    <Button variant="secondary" className="mt-3" disabled={analysing} onClick={() => {
+                    <Button className="mt-3" disabled={analysing} onClick={() => {
                       setAnalysing(true);
                       validateFileLocation({ location: fileLocation }).then((errors) => {
                         if (errors.length > 0) {
@@ -287,7 +287,7 @@ export default function NewComponentPage() {
                   }
                   {
                     fileLocationValidated &&
-                    <Button variant="secondary" className="mt-3" onClick={uploadComponent} disabled={analysing}>
+                    <Button className="mt-3" onClick={uploadComponent} disabled={analysing}>
                       {analysing && <Loader2 className="w-6 h-6 mr-4 animate-spin" />}
                       Save and Preview
                     </Button>
@@ -306,14 +306,14 @@ export default function NewComponentPage() {
 function VersionSelection({ importVersions, setDependancyConfirmed, setConfigValidated }
   : { importVersions: ImportVersion[], setDependancyConfirmed: (val: boolean) => void, setConfigValidated: (val: boolean) => void }) {
   return <div className="flex flex-col gap-1.5 mt-4">
-    <span className="text-lg text-white font-bold">Specify Dependency Versions</span>
+    <span className="text-lg  font-bold">Specify Dependency Versions</span>
     <span className="text-sm text-gray-400">Follow the same format as specified in package.json. (ex: ^1.0.0, ~1.0.0)</span>
     <div className="flex flex-col w-full gap-1.5 mt-2">
       {importVersions.map((imp) => <span key={imp.name} className="text-md text-gray-400 flex flex-row items-center">
         <div className="w-1/2">
           {imp.name}
         </div>
-        <Input onChange={() => { setDependancyConfirmed(false); setConfigValidated(false); }} id={`version-for-${imp.name}`} defaultValue={imp.version} className="bg-transparent inline max-w-[55rem] border border-white/30" />
+        <Input onChange={() => { setDependancyConfirmed(false); setConfigValidated(false); }} id={`version-for-${imp.name}`} defaultValue={imp.version} className="bg-transparent inline max-w-[55rem] border " />
       </span>)}
     </div>
   </div>
