@@ -1,10 +1,11 @@
 import { Command, PanelRightCloseIcon } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
-import { BsGithub, BsTwitterX, BsX } from "react-icons/bs";
+import { BsGithub, BsTwitterX } from "react-icons/bs";
+import ContributeButton from "./contributeButton";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 export default function DocsTopbar({ sidebarContent }: { sidebarContent: JSX.Element }) {
-    return <div className="flex mr-4 border-b border-white/40 -pr-2 flex-row items-center h-[4rem] w-full fixed px-2 lg:px-4 justify-between backdrop-blur bg-white/20 z-20">
+    return <div className="flex mr-4 border-b border-white/40 -pr-2 flex-row items-center h-[4rem] w-full fixed px-2 pl-5 lg:px-4 justify-between backdrop-blur bg-white/20 z-20">
         <Sheet>
             <SheetTrigger className="block lg:hidden">
                 <div className="p-2 cursor-pointer">
@@ -26,6 +27,7 @@ export default function DocsTopbar({ sidebarContent }: { sidebarContent: JSX.Ele
             <Link href="/components" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Showcase</Link>
         </div>
         <div className="flex-row flex gap-1 p-4 pl-2 items-center lg:w-auto w-full">
+            <ContributeButton  className="hidden lg:block"/>
             <div className="px-2 py-1.5 bg-black/5 rounded-md border border-black/10 text-sm text-black/50 flex lg:hidden flex-row w-full">
                 Search...
             </div>
