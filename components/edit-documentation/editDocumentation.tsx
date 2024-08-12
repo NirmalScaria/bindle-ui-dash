@@ -213,6 +213,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         </div>
         <div className="flex flex-row gap-2 w-full border-b border-black/10">
             <button onClick={() => {
+                if (!showPreview) return;
                 setShowPreview(false);
                 setTimeout(() => {
                     if (sandpackContainerRef.current) {
@@ -220,7 +221,10 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                     }
                 }, 0);
             }} className={cn("p-2 border-black", !showPreview ? "border-b-2" : "")}>Edit</button>
-            <button onClick={syncFiles} className={cn("p-2 border-black", showPreview ? "border-b-2" : "")}>Preview</button>
+            <button onClick={() => {
+                if (showPreview) return;
+                syncFiles();
+            }} className={cn("p-2 border-black", showPreview ? "border-b-2" : "")}>Preview</button>
         </div>
         {
             showPreview ? <div className="flex flex-col gap-1 w-full">
