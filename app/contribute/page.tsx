@@ -63,5 +63,6 @@ const testComponent: PublishedComponent = {
     <ReviewCard key={review.username} {...review} />
   ))}
 </Marquee>`,
-  examples: []
+  examples: [],
+  installCount: 0
 }
