@@ -107,7 +107,7 @@ export default function NewLibraryPage() {
       title: "Component saved",
       description: `Component saved successfully to drafts.`,
     })
-    router.push(`/contribute/edit-library/${libraryId}`);
+    router.push(`/contribute/libraries/${libraryId}`);
   }
 
 

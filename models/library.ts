@@ -3,8 +3,8 @@ import { Contributor } from "./contributor";
 export interface Library {
     name?: string;
     id: string;
-    owner?: Contributor;
-    ownerId: string;
+    ownerDetails: Contributor;
+    owner: string;
     status: "private" | "public";
     components?: string[];
 }
