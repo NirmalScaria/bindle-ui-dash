@@ -1,4 +1,5 @@
 import ComponentRightBar from "@/components/component-page/componentRightbar";
+import ComponentRightBarCS from "@/components/component-page/componentRightbarCS";
 import ComponentSidebar, { ComponentSidebarContent } from "@/components/component-page/componentSidebar";
 import InstallComponent from "@/components/component-page/installComponent";
 import CustomSandpack from "@/components/customSandpack";
@@ -48,7 +49,7 @@ export default async function ComponentHome({ params }: { params: { componentNam
         </div>
       </div>
       <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-        <ComponentRightBar />
+        <ComponentRightBarCS />
       </div></>
   }
   metadata.title = `${component.name} | Bindle-UI`
