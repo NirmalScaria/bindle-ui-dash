@@ -1,5 +1,5 @@
 import ContributeSidebar, { ContributeSidebarContent } from "@/components/contribute-page/contributeSidebar";
-import ContributeTopBar from "@/components/contributeTopBar";
+import ContributeTopBar from "@/components/contributeTopbar";
 import DocsFooter from "@/components/docsFooter";
 import DocsTopbar from "@/components/docsTopbar";
 import { Toaster } from "@/components/ui/toaster";
