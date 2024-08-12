@@ -48,19 +48,12 @@ export default async function ComponentHome({ params }: { params: { componentNam
         </div>
       </div>
       <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-        <ComponentRightBar ownerId={component.owner} examples={component.examples.map((example) => { return example.name })} />
+        <ComponentRightBar />
       </div></>
   }
   metadata.title = `${component.name} | Bindle-UI`
   metadata.description = component.description
-  return <>
-    <DocsTopbar sidebarContent={<ComponentSidebarContent />} />
-    <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-      <ComponentSidebar />
-    </div>
-    <div className="flex mt-[4rem] flex-col justify-between w-full flex-grow max-w-[60rem] lg:max-w-[min(55vw,60rem)] overflow-y-visible">
-      <div className="flex flex-col w-full min-h-screen">
-        <div className="flex flex-col m-5 gap-4 z-10">
+  return  <div className="flex flex-col m-5 gap-4 z-10">
           <LocationIndicator />
           <h1 className="text-4xl font-bold" id="introduction">{component.name}</h1>
           <p className="text-lg text-gray-500">{component.description}</p>
@@ -86,12 +79,7 @@ export default async function ComponentHome({ params }: { params: { componentNam
           </>
           }
         </div>
-        <DocsFooter />
-      </div>
-    </div>
-    <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-      <ComponentRightBar ownerId={component.owner} examples={component.examples.map((example) => { return example.name })} />
-    </div></>
+        
 }
 
 
