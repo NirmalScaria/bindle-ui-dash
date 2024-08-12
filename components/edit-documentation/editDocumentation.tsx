@@ -1,22 +1,6 @@
 "use client";
-import { cn } from "@/lib/utils";
-import { Component, ComponentSample, PublishedComponent } from "@/models/component";
-import { Sandpack, SandpackPreviewRef } from "@codesandbox/sandpack-react";
-import { Description } from "@radix-ui/react-toast";
-import { Roboto_Mono } from "next/font/google";
-import { Heading } from "../design/Texts";
-import { createRef, useMemo, useRef, useState } from "react";
-import ComponentPagePreview from "../preview-components/previewPage";
-import { parseComponent } from "@/lib/parseComponent";
-import CustomSandpack from "../customSandpack";
-import CustomSandpackEditor from "../customSandpackEditor";
-import React from "react";
-import { Button } from "../ui/button";
-import { Loader2 } from "lucide-react";
+import publishComponentAction from "@/actions/publishComponent";
 import saveDocumentationAction from "@/actions/saveDocumentation";
-import { useToast } from "../ui/use-toast";
-import { defaultFiles } from "@/lib/defaultExample";
-import { Input } from "../ui/input";
 import {
     Dialog,
     DialogContent,
@@ -25,10 +9,21 @@ import {
     DialogHeader,
     DialogTitle,
     DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import { Component, ComponentSample, PublishedComponent } from "@/models/component";
+import { SandpackPreviewRef } from "@codesandbox/sandpack-react";
 import { DialogClose } from "@radix-ui/react-dialog";
-import publishComponentAction from "@/actions/publishComponent";
+import { Loader2 } from "lucide-react";
+import { Roboto_Mono } from "next/font/google";
+import React, { createRef, useEffect, useMemo, useRef, useState } from "react";
+import CustomSandpackEditor from "../customSandpackEditor";
+import { Heading } from "../design/Texts";
+import ComponentPagePreview from "../preview-components/previewPage";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { useToast } from "../ui/use-toast";
 
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
@@ -43,6 +38,13 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
         ...defaultComponent,
         ...component
     });
+    const sandpackContainerRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        // This will run once after the component is mounted
+        if (sandpackContainerRef.current) {
+            sandpackContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, []);
     // -1 means creating new. Any other number means editting that index.
     const [edittingIndex, setEdittingIndex] = useState<number | null>(null);
     const [edittingExample, setEdittingExample] = useState<{ code: ComponentSample, ref: React.RefObject<SandpackPreviewRef | undefined> } | null>(null);
@@ -227,7 +229,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                     <Textarea value={newComponent.description} onChange={(e) => setNewComponent({ ...newComponent, description: e.target.value })} />
                 </div>
                 <label className="text-sm">Main demo. This will be the first thing the user see. Edit the code here to make the demo appear the way you want.</label>
-                <div className="w-full max-w-[55rem]">
+                <div className="w-full max-w-[55rem]" ref={sandpackContainerRef}>
                     {MemoizedMainEditor}
                 </div>
                 <label className="text-sm">Usage Sample Code. Give a brief idea about how to use the component after import. Do not include the whole render code. Just the component.</label>
