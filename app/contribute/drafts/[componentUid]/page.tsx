@@ -36,7 +36,7 @@ export default async function EditComponentDocumentation({ params, searchParams 
             View Component Page
         </Link>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
-            <Link href={`/contribute/edit-component/${component.id}`} className="p-5 gap-2 pt-10 flex flex-col border rounded-md hover:shadow-md transition-all">
+            <Link href={`/contribute/edit-draft/${component.uid}`} className="p-5 gap-2 pt-10 flex flex-col border rounded-md hover:shadow-md transition-all">
                 <Heading3>Edit Component</Heading3>
                 <Description>Make changes to the component's metadata and files.</Description>
             </Link>
