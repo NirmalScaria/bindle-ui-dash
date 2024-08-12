@@ -289,7 +289,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                         edittingIndex != null && <div className="flex flex-col gap-3 max-w-[55rem]">
                             <div className="flex flex-row gap-2">
                                 Example title:
-                                <Input defaultValue={edittingExampleName} placeholder="Default" className="text-white" onChange={(e) => {
+                                <Input defaultValue={edittingExampleName} placeholder="Default" onChange={(e) => {
                                     setEdittingExampleName(e.target.value)
                                 }} />
                             </div>

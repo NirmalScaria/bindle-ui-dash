@@ -3,7 +3,7 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { getAppSS, getUserSS } from "firebase-nextjs/server/auth";
-import { Plus } from "lucide-react";
+import { Plus, User2 } from "lucide-react";
 import Link from "next/link";
 import SidebarLink from "./sidebarLink";
 
@@ -82,6 +82,17 @@ export async function ContributeSidebarContent() {
                     )}
                 </div>
             }
+            <div className="flex flex-col">
+                <span className="font-semibold text-sm mb-3">
+                    Settings
+                </span>
+                <Link href="/contribute/my-account" className={cn("text-[0.9rem] py-[0.2rem]  hover:underline", "text-black/50")}>
+                    <div className="flex flex-row gap-1 items-center">
+                        <User2 size={12} strokeWidth={3} />
+                        Profile
+                    </div>
+                </Link>
+            </div>
         </div>
     </ScrollArea>
 }

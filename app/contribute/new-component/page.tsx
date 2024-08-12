@@ -64,10 +64,10 @@ export default function NewComponentPage() {
       return;
     }
     remoteImports.forEach(async (imp) => {
-      const res = await fetch(`https://registry.npmjs.org/${imp}`);
-      const data = await res.json();
-      const version = "^" + data["dist-tags"].latest;
-      setImportVersions((prev) => [...prev, { name: imp as string, version }]);
+      // const res = await fetch(`https://registry.npmjs.org/${imp}`);
+      // const data = await res.json();
+      // const version = "^" + data["dist-tags"].latest;
+      setImportVersions((prev) => [...prev, { name: imp as string, version: "*" }]);
     })
     setCodeIsValid(true);
     setAnalysing(false);
@@ -122,7 +122,7 @@ export default function NewComponentPage() {
       title: "Component saved",
       description: `Component saved successfully to drafts.`,
     })
-    router.push(`/contribute/edit-component-documentation/${docId}`);
+    router.push(`/contribute/edit-draft-documentation/${docId}`);
   }
 
   async function setDependancyVersions() {
