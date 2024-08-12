@@ -45,7 +45,7 @@ export default async function Home() {
             <LinkItem className="flex md:hidden" href='https://github.com/NirmalScaria/bindle-ui' text='GitHub' image={<BsGithub size={16} />} big={true} />
             <LinkItem className="flex md:hidden" href='https://npmjs.com/package/bindle-ui' text='NPM' image={<CgNpm size={16} />} big={true} />
             <LinkItem className="hidden md:flex" href='https://github.com/NirmalScaria/bindle-ui' text='Github' image={<div className="flex flex-row gap-1"><Star size={18} className="group-hover:fill-white transition-all" /></div>} primary={false} big={true} />
-            <LinkItem href='/install' text='Components' image={<ChevronRight size={18} />} primary={true} big={true} />
+            <LinkItem href='/components' text='Components' image={<ChevronRight size={18} />} primary={true} big={true} />
           </div>
         </div>
 
