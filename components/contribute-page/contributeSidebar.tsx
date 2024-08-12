@@ -29,7 +29,11 @@ export async function ContributeSidebarContent() {
     const librariesSnapshot = await librariesRef.get();
     const myLibraries = librariesSnapshot.docs.map(doc => doc.data());
     const draftsSnapshot = await draftsRef.get();
-    const myDrafts = draftsSnapshot.docs.map(doc => doc.data());
+    const myDrafts = draftsSnapshot.docs.map(doc => {
+        var newDraft = doc.data();
+        newDraft.uid = doc.id;
+        return newDraft;
+    });
     return <ScrollArea className="h-screen">
         <div className="flex flex-col gap-3  pb-[7rem]">
             <div className="flex flex-col">
@@ -74,11 +78,11 @@ export async function ContributeSidebarContent() {
                         My Drafts
                     </span>
                     {myDrafts.map((draft) =>
-                        <SidebarLink key={draft.id} name={draft.name ?? draft.id} href={`/components/${draft.id}`} />
+                        <SidebarLink key={draft.id} name={draft.name ?? draft.id} href={`/drafts/${draft.uid}`} />
                     )}
                 </div>
             }
-                </div>
+        </div>
     </ScrollArea>
 }
 
