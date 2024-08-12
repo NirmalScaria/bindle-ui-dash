@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Description, Heading, Heading3 } from "@/components/design/Texts";
 import ProfileEditor from "./profileEditor";
 import { getAppSS, getUserSS } from "firebase-nextjs/server/auth";
