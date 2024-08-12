@@ -335,7 +335,8 @@ const defaultComponent: PublishedComponent = {
     installCommand: "auto",
     manualCode: "",
     usageSampleCode: ``,
-    examples: []
+    examples: [],
+    installCount: 0
 }
 const usageSampleCodePlaceholder = `import {Button} from "@/components/ui/button"
         <Button variant="outline">Button</Button>

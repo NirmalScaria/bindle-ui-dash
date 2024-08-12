@@ -1,6 +1,6 @@
 "use server";
 
-import { Component } from '@/models/component';
+import { Component, PublishedComponent } from '@/models/component';
 import { getAppSS } from 'firebase-nextjs/server/auth';
 import type { NextApiResponse } from 'next';
 import { NextRequest, NextResponse } from 'next/server';
@@ -39,13 +39,21 @@ export async function GET(req: NextRequest, res: NextApiResponse<ResponseData>) 
     const app = await getAppSS();
     const db = app.firestore();
     const componentRef = db.collection('Components').doc(componentId);
-    const component: Component = (await componentRef.get()).data() as Component;
+    const component: PublishedComponent = (await componentRef.get()).data() as PublishedComponent;
     if (!component) {
         return NextResponse.json({ message: `Component ${componentId} not found. Make sure the name is correct.`, success: false })
     }
     // const useTypescript: boolean = params.get('useTypescript') === 'true'
     if (!componentId) {
         return NextResponse.json({ message: "Component name is required", success: false })
+    }
+    try {
+        await componentRef.update({
+            installCount: (component.installCount ?? 0) + 1
+        })
+    }
+    catch (e) {
+        console.error(e)
     }
     return NextResponse.json({ message: "OK", success: true, component: JSON.stringify(component) })
 }

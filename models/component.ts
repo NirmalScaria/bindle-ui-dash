@@ -34,6 +34,7 @@ export interface PublishedComponent {
     manualCode: string;
     usageSampleCode: string;
     examples: {name: string, code: ComponentSample}[];
+    installCount: number
 }
 
 export interface ComponentSample {
