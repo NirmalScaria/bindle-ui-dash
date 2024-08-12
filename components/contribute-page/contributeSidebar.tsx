@@ -23,12 +23,15 @@ export async function ContributeSidebarContent() {
     const user = await getUserSS();
     const ref = db.collection("Components").where('owner', '==', user?.uid).limit(20).select('id', 'name');
     const librariesRef = db.collection("Libraries").where('owner', '==', user?.uid).limit(20).select('id', 'name');
-    const snapshot = await ref.get();
-    const myComponents = snapshot.docs.map(doc => doc.data());
+    const draftsRef = db.collection("Drafts").where('owner', '==', user?.uid).limit(20).select('id', 'name');
+    const componentsSnapshot = await ref.get();
+    const myComponents = componentsSnapshot.docs.map(doc => doc.data());
     const librariesSnapshot = await librariesRef.get();
     const myLibraries = librariesSnapshot.docs.map(doc => doc.data());
+    const draftsSnapshot = await draftsRef.get();
+    const myDrafts = draftsSnapshot.docs.map(doc => doc.data());
     return <ScrollArea className="h-screen">
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3  pb-[7rem]">
             <div className="flex flex-col">
                 <span className="font-semibold text-sm mb-3">
                     Getting Started
@@ -51,7 +54,7 @@ export async function ContributeSidebarContent() {
                     <SidebarLink key={component.id} name={component.name ?? component.id} href={`/components/${component.id}`} />
                 )}
             </div>
-            <div className="flex flex-col pb-[7rem]">
+            <div className="flex flex-col">
                 <span className="font-semibold text-sm mb-3">
                     My Libraries
                 </span>
@@ -65,7 +68,17 @@ export async function ContributeSidebarContent() {
                     <SidebarLink key={library.id} name={library.name ?? library.id} href={`/components/${library.id}`} />
                 )}
             </div>
-        </div>
+            {
+                myDrafts.length > 0 && <div className="flex flex-col">
+                    <span className="font-semibold text-sm mb-3">
+                        My Drafts
+                    </span>
+                    {myDrafts.map((draft) =>
+                        <SidebarLink key={draft.id} name={draft.name ?? draft.id} href={`/components/${draft.id}`} />
+                    )}
+                </div>
+            }
+                </div>
     </ScrollArea>
 }
 
