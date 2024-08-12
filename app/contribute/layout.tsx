@@ -1,6 +1,6 @@
 import BottomBar from "@/components/bottomBar";
 import ContributeSidebarOld from "@/components/contributeSidebar";
-import ContributeTopBar from "@/components/contributeTopbar";
+import ContributeTopBarOld from "@/components/contributeTopbarOld";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
@@ -13,7 +13,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="flex flex-row">
                 <div className="md:pl-[280px] w-full">
                     <main className="bg-[#031525] flex flex-col pb-10 p-4 md:p-8 items-center">
-                        <ContributeTopBar />
+                        <ContributeTopBarOld />
                         {children}
                     </main>
                 </div>

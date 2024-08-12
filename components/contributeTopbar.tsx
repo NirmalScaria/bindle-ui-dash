@@ -1,37 +1,49 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { getUserCS } from "firebase-nextjs/client/auth";
+import { Command, PanelRightCloseIcon } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import Image from "next/image";
 import Link from "next/link";
-import { ReactNode } from "react";
-import { BsGithub } from "react-icons/bs";
-import { CgNpm } from "react-icons/cg";
-import ContributeButton from "./contribute";
+import { BsGithub, BsTwitterX, BsX } from "react-icons/bs";
 import { ProfileButton } from "firebase-nextjs/client/components";
-
-export default function ContributeTopBar() {
-  const { currentUser: user } = getUserCS();
-  return <div className="flex flex-row w-full justify-between items-center mb-4">
-    <div className="flex flex-row gap-2">
-      <div className="md:flex flex-row gap-2 hidden">
-        <LinkItem href='https://github.com/NirmalScaria/bindle-ui' text='GitHub' image={<BsGithub size={16} />} />
-        <LinkItem href='https://npmjs.com/package/bindle-ui' text='NPM' image={<CgNpm size={16} />} />
-      </div>
+export default function ContributeTopBar({ sidebarContent }: { sidebarContent: JSX.Element }) {
+    return <div className="flex mr-4 border-b border-white/40 -pr-2 flex-row items-center h-[4rem] w-full fixed px-2 lg:px-4 justify-between backdrop-blur bg-white/20 z-20">
+        <Sheet>
+            <SheetTrigger className="block lg:hidden">
+                <div className="p-2 cursor-pointer">
+                    <PanelRightCloseIcon />
+                </div>
+            </SheetTrigger>
+            <SheetContent side="left">
+                {sidebarContent}
+            </SheetContent>
+        </Sheet>
+        <div className=" flex-row gap-6 p-4 items-center hidden lg:flex">
+            <h1 className="text-md flex flex-row gap-2 justify-between w-full font-bold text-black/80 items-center">
+                <div className="flex flex-row gap-2 items-center">
+                    <Image alt="bindle-ui logo" className="rounded-md" width={25} height={25} src="/logo.png" />
+                    Bindle UI
+                </div>
+            </h1>
+            <Link href="/components" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Components</Link>
+            <Link href="/components" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Showcase</Link>
+        </div>
+        <div className="flex-row flex gap-1 p-4 pl-2 items-center lg:w-auto w-full">
+            <div className="px-2 py-1.5 bg-black/5 rounded-md border border-black/10 text-sm text-black/50 flex lg:hidden flex-row w-full">
+                Search...
+            </div>
+            <div className="px-2 py-1.5 bg-black/5 rounded-md border border-black/10 text-sm text-black/50 lg:flex hidden flex-row w-[300px] justify-between">
+                Search documentation...
+                <div className="text-xs bg-black/5 border border-black/10 flex flex-row items-center justify-center px-1.5 rounded-sm gap-1">
+                    <Command size={10} />
+                    K
+                </div>
+            </div>
+            <Link href="https://github.com/NirmalScaria/bindle-ui" className="p-2 transition-all hover:bg-black/5 rounded-md">
+                <BsGithub size={18} />
+            </Link>
+            <Link href="https://x.com/scaria0dev" className="p-2 transition-all hover:bg-black/5 rounded-md">
+                <BsTwitterX size={18} />
+            </Link>
+            <ProfileButton />
+        </div>
     </div>
-    <ProfileButton />
-  </div>
-}
-
-function LinkItem({ href, image, text, primary = false, big = false, className }: { href: string, text: string, image: ReactNode, primary?: boolean, big?: boolean, className?: string }) {
-  return (
-    <Link href={href} className={
-      cn(
-        "flex flex-row text-sm gap-2 items-center text-white/80 font-medium rounded-md border border-white/30 transition-all group",
-        primary ? "bg-white hover:bg-white/90 text-black" : "hover:bg-white/10",
-        big ? "p-2 px-4 " : "p-1 px-3 ",
-        className
-      )
-    }>
-      <span>{text}</span>
-      {image}
-    </Link>);
 }

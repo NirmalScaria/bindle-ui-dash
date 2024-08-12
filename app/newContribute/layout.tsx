@@ -1,4 +1,5 @@
 import ContributeSidebar, { ContributeSidebarContent } from "@/components/contribute-page/contributeSidebar";
+import ContributeTopBar from "@/components/contributeTopBar";
 import DocsFooter from "@/components/docsFooter";
 import DocsTopbar from "@/components/docsTopbar";
 import { Toaster } from "@/components/ui/toaster";
@@ -13,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="h-screen">
             <div className="h-full w-full flex flex-row lg:gap-10 justify-center items-start overflow-y-auto">
                 <>
-                    <DocsTopbar sidebarContent={<ContributeSidebarContent />} />
+                    <ContributeTopBar sidebarContent={<ContributeSidebarContent />} />
                     <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
                         <ContributeSidebar />
                     </div>
