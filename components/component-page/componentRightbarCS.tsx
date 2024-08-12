@@ -9,20 +9,37 @@ import { BsGithub, BsLinkedin, BsTwitterX } from "react-icons/bs";
 import { CgBulb } from "react-icons/cg";
 import { ScrollArea } from "../ui/scroll-area";
 import SidebarLink from "./sidebarLink";
+import { usePathname } from 'next/navigation'
+import getComponentDetails from "@/actions/getComponentDetails";
 
-export default function ComponentRightBar({ ownerId, examples }: { ownerId: string | null, examples: string[] }) {
+export default function ComponentRightBarCS() {
     const [owner, setOwner] = useState<Contributor | null>(null);
+    const [examples, setExamples] = useState<string[]>([])
+    const pathname = usePathname()
+    console.log("Path name : ", pathname)
     useEffect(() => {
-        if (ownerId != null) {
-            getContributor({ id: ownerId }).then((data) => {
+        if (pathname != null) {
+            getComponentDetails({ id: pathname.split('/')[pathname.split('/').length - 1] }).then((data) => {
+                console.log("Data is ", data)
                 if ("error" in data) {
                     return;
                 }
-                setOwner(data)
+                setOwner(data.owner ?? null)
+                setExamples(data.examples ?? [])
             })
-
         }
-    }, [ownerId])
+    }, [pathname])
+    // useEffect(() => {
+    //     if (owner?.id != null) {
+    //         getContributor({ id: owner.id }).then((data) => {
+    //             if ("error" in data) {
+    //                 return;
+    //             }
+    //             setOwner(data)
+    //         })
+
+    //     }
+    // }, [owner?.id])
     return <ScrollArea className="h-screen mt-7 hidden lg:flex w-[min(280px,15vw)] pr-5">
         <div className="flex flex-col gap-3 pb-[200px]">
             {owner != null && <div className="flex flex-col">
@@ -73,6 +90,9 @@ export default function ComponentRightBar({ ownerId, examples }: { ownerId: stri
                 <div className="flex flex-col pl-4">
                     {
                         examples.map((example, index) => {
+                            return <Link href={`#example`} className={cn("text-[0.9rem] py-[0.2rem]  hover:underline","text-black/50")}>
+                            {example}
+                        </Link>
                             return <SidebarLink key={index} name={example} href={`#${example}`} />
                         })
                     }
