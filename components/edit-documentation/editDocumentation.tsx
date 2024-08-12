@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/dialog"
 import { DialogClose } from "@radix-ui/react-dialog";
 import publishComponentAction from "@/actions/publishComponent";
+import { Textarea } from "../ui/textarea";
 
 
 const robotoMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "700"] });
@@ -196,41 +197,41 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
     ), [newComponent.mainDemo]);
     return <div className="flex flex-col h-full w-full items-start pt-4 gap-2">
         <div className="flex flex-row justify-between w-full">
-            <Heading>Edit component documentation</Heading>
+            <Heading>Edit documentation</Heading>
             <div className="flex flex-row gap-2">
-                <Button variant="secondary" onClick={uploadDocumentation} disabled={saving || publishing || showPreview}>
-                    {saving && <Loader2 className="mr-2 animate-spin" size={16} />}
-                    Save Documentation
-                </Button>
                 {newComponent.status != "published" && <Button variant="secondary" onClick={publishComponent} disabled={saving || publishing || showPreview}>
                     {publishing && <Loader2 className="mr-2 animate-spin" size={16} />}
                     Publish
                 </Button>}
+                <Button onClick={uploadDocumentation} disabled={saving || publishing || showPreview}>
+                    {saving && <Loader2 className="mr-2 animate-spin" size={16} />}
+                    Save Documentation
+                </Button>
             </div>
         </div>
-        <div className="flex flex-row gap-2 w-full border-b border-white/10">
-            <button onClick={() => setShowPreview(false)} className={cn("p-2", !showPreview ? "border-b-2" : "")}>Edit</button>
-            <button onClick={syncFiles} className={cn("p-2", showPreview ? "border-b-2" : "")}>Preview</button>
+        <div className="flex flex-row gap-2 w-full border-b border-black/10">
+            <button onClick={() => setShowPreview(false)} className={cn("p-2 border-black", !showPreview ? "border-b-2" : "")}>Edit</button>
+            <button onClick={syncFiles} className={cn("p-2 border-black", showPreview ? "border-b-2" : "")}>Preview</button>
         </div>
         {
-            showPreview ? <div className="flex flex-col gap-1 w-full bg-white text-black">
+            showPreview ? <div className="flex flex-col gap-1 w-full">
                 <ComponentPagePreview component={newComponent} sandpackRef={sandpackRef} />
-            </div> : <div className="flex flex-col gap-3 p-4 rounded-md w-full bg-white/5 border border-white/20  max-w-[55rem]">
+            </div> : <div className="flex flex-col gap-3 p-4 rounded-md w-full border border-black/20  max-w-[55rem]">
                 <span className="text-base mb-2">Component id: {newComponent.id}</span>
                 <div className="flex flex-col gap-1 w-full">
                     <label className="text-sm">Component Name</label>
-                    <input type="text" className="p-2 rounded-md bg-white/10" value={newComponent.name} onChange={(e) => setNewComponent({ ...newComponent, name: e.target.value })} />
+                    <Input type="text" value={newComponent.name} onChange={(e) => setNewComponent({ ...newComponent, name: e.target.value })} />
                 </div>
                 <div className="flex flex-col gap-1 w-full">
                     <label className="text-sm">Component Description. (Keep it under 20 words)</label>
-                    <textarea className="p-2 rounded-md bg-white/10" value={newComponent.description} onChange={(e) => setNewComponent({ ...newComponent, description: e.target.value })} />
+                    <Textarea value={newComponent.description} onChange={(e) => setNewComponent({ ...newComponent, description: e.target.value })} />
                 </div>
                 <label className="text-sm">Main demo. This will be the first thing the user see. Edit the code here to make the demo appear the way you want.</label>
                 <div className="w-full max-w-[55rem]">
                     {MemoizedMainEditor}
                 </div>
                 <label className="text-sm">Usage Sample Code. Give a brief idea about how to use the component after import. Do not include the whole render code. Just the component.</label>
-                <textarea className="h-[150px] p-2 rounded-md bg-white/10" value={newComponent.usageSampleCode} placeholder={usageSampleCodePlaceholder} onChange={(e) => setNewComponent({ ...newComponent, usageSampleCode: e.target.value })} />
+                <Textarea className="h-[150px]" value={newComponent.usageSampleCode} placeholder={usageSampleCodePlaceholder} onChange={(e) => setNewComponent({ ...newComponent, usageSampleCode: e.target.value })} />
                 <label className="text-sm">Example codes. Add examples that show different ways the component could be used.</label>
                 <div className="flex flex-col gap-3">
                     {
@@ -243,14 +244,14 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                                         <DialogTrigger><Button variant="destructive">Delete</Button></DialogTrigger>
                                         <DialogContent>
                                             <DialogHeader>
-                                                <DialogTitle className="text-black">Are you sure?</DialogTitle>
+                                                <DialogTitle className="text-white">Are you sure?</DialogTitle>
                                                 <DialogDescription>
                                                     This will delete the example permanently. The component code is unaffected.
                                                 </DialogDescription>
                                             </DialogHeader>
                                             <DialogFooter>
                                                 <DialogClose>
-                                                    <Button variant="outline" className="text-black">Cancel</Button>
+                                                    <Button variant="outline" className="text-white">Cancel</Button>
                                                 </DialogClose>
                                                 <Button variant="destructive" onClick={() => {
                                                     setExampleRefs(exampleRefs.filter((_, i) => i != index))
@@ -275,7 +276,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                         edittingIndex != null && <div className="flex flex-col gap-3 max-w-[55rem]">
                             <div className="flex flex-row gap-2">
                                 Example title:
-                                <Input defaultValue={edittingExampleName} placeholder="Default" className="text-black" onChange={(e) => {
+                                <Input defaultValue={edittingExampleName} placeholder="Default" className="text-white" onChange={(e) => {
                                     setEdittingExampleName(e.target.value)
                                 }} />
                             </div>
