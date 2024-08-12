@@ -15,7 +15,7 @@ export default async function saveDocumentationAction({ componentId, component, 
     if (currentComponent.owner !== user?.uid) {
         return { error: "You are not the owner of this component" };
     }
-    if (!(component.name.length < 2 || component.name.length > 30 || component.description.length < 4 || component.description.length > 120)) {
+    if (!(component.name.length < 2 || component.name.length > 30 || component.description.length < 4 || component.description.length > 120) && component.status != "published") {
         component.status = "documentation";
     }
     const response = await componentRef.set(component);

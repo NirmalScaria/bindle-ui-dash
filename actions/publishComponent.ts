@@ -8,7 +8,7 @@ export default async function publishComponentAction({ componentId }: { componen
     const app = await getAppSS();
     const db = app.firestore();
     var draft = db.collection("Drafts").doc(componentId);
-    const draftContent = (await draft.get()).data();
+    var draftContent = (await draft.get()).data();
     if (draftContent === undefined) {
         return { error: "Component not found" };
     }

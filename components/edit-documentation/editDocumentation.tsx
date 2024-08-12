@@ -257,14 +257,14 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
                                         <DialogTrigger><Button variant="destructive">Delete</Button></DialogTrigger>
                                         <DialogContent>
                                             <DialogHeader>
-                                                <DialogTitle className="text-white">Are you sure?</DialogTitle>
+                                                <DialogTitle>Are you sure?</DialogTitle>
                                                 <DialogDescription>
                                                     This will delete the example permanently. The component code is unaffected.
                                                 </DialogDescription>
                                             </DialogHeader>
                                             <DialogFooter>
                                                 <DialogClose>
-                                                    <Button variant="outline" className="text-white">Cancel</Button>
+                                                    <Button variant="outline">Cancel</Button>
                                                 </DialogClose>
                                                 <Button variant="destructive" onClick={() => {
                                                     setExampleRefs(exampleRefs.filter((_, i) => i != index))
