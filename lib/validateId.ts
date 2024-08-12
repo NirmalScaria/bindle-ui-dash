@@ -17,8 +17,12 @@ export default async function validateId({ id }: { id: string }) {
     }
     // check if document with id already exists
     const doc = await db.collection("Components").doc(id).get();
+    const libDoc = await db.collection("Libraries").doc(id).get();
     if (doc.exists) {
         errors.push("A component with same id already exists.");
+    }
+    if (libDoc.exists) {
+        errors.push("A library with same id already exists.");
     }
     return errors;
 }
