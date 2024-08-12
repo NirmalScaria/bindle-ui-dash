@@ -55,7 +55,7 @@ export async function ContributeSidebarContent() {
                     </div>
                 </Link>
                 {myComponents.map((component) =>
-                    <SidebarLink key={component.id} name={component.name ?? component.id} href={`/components/${component.id}`} />
+                    <SidebarLink key={component.id} name={component.name ?? component.id} href={`/contribute/components/${component.id}`} />
                 )}
             </div>
             <div className="flex flex-col">
@@ -69,7 +69,7 @@ export async function ContributeSidebarContent() {
                     </div>
                 </Link>
                 {myLibraries.map((library) =>
-                    <SidebarLink key={library.id} name={library.name ?? library.id} href={`/components/${library.id}`} />
+                    <SidebarLink key={library.id} name={library.name ?? library.id} href={`/contribute/libraries/${library.id}`} />
                 )}
             </div>
             {
@@ -78,7 +78,7 @@ export async function ContributeSidebarContent() {
                         My Drafts
                     </span>
                     {myDrafts.map((draft) =>
-                        <SidebarLink key={draft.id} name={draft.name ?? draft.id} href={`/drafts/${draft.uid}`} />
+                        <SidebarLink key={draft.id} name={draft.name ?? draft.id} href={`/contribute/drafts/${draft.uid}`} />
                     )}
                 </div>
             }

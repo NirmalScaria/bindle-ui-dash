@@ -13,7 +13,7 @@ export default async function EditComponentDocumentation({ params, searchParams 
   const db = app.firestore();
   const componentUid = params.componentUid;
   // @ts-ignore
-  var componentRef = db.collection('Components').doc(componentUid);
+  var componentRef = db.collection('Drafts').doc(componentUid);
   var component: Component = (await componentRef.get()).data() as Component;
   component.uid = componentUid;
   const { filesToAdd, dependencies } = await parseComponent({ component });
