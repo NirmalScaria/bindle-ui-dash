@@ -1,3 +1,4 @@
+import { Component, PublishedComponent } from "./component";
 import { Contributor } from "./contributor";
 
 export interface Library {
@@ -6,5 +7,6 @@ export interface Library {
     ownerDetails: Contributor;
     owner: string;
     status: "private" | "public";
-    components?: string[];
+    components?: PublishedComponent[];
+    drafts?: Component[];
 }
