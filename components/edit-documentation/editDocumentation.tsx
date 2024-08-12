@@ -212,7 +212,14 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
             </div>
         </div>
         <div className="flex flex-row gap-2 w-full border-b border-black/10">
-            <button onClick={() => setShowPreview(false)} className={cn("p-2 border-black", !showPreview ? "border-b-2" : "")}>Edit</button>
+            <button onClick={() => {
+                setShowPreview(false);
+                setTimeout(() => {
+                    if (sandpackContainerRef.current) {
+                        sandpackContainerRef.current.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }, 0);
+            }} className={cn("p-2 border-black", !showPreview ? "border-b-2" : "")}>Edit</button>
             <button onClick={syncFiles} className={cn("p-2 border-black", showPreview ? "border-b-2" : "")}>Preview</button>
         </div>
         {
