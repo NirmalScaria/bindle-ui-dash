@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 
 export default function LocationIndicator() {
   const path = usePathname()
-  var locationParts = path.split("/").filter(part => part !== "")
+  var locationParts = path.split(/[/.]+/).filter(part => part !== "")
   locationParts = locationParts.map(part => part[0].toUpperCase() + part.slice(1))
   return <Breadcrumb>
     <BreadcrumbList>
