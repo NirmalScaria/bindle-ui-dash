@@ -7,9 +7,14 @@ import MyCode from "../myCode";
 
 export default function InstallComponent({ component }: { component: PublishedComponent }) {
     const [isCLI, setIsCLI] = useState(true);
-    const [manualCodeExpanded, setManualCodeExpanded] = useState(false);
+    var componentId = component.id
+    // check if . exists in component.id
+    if (componentId.includes(".")) {
+        // replace . with /
+        componentId = "@" + componentId.replaceAll(".", "/")
+    }
 
-    const installCommand = component.installCommand == "auto" ? "npx bindle-ui add " + component.id : component.installCommand
+    const installCommand = component.installCommand == "auto" ? "npx bindle-ui add " + componentId : component.installCommand
     var remoteDependanciesCommand = ""
     var tailwindContent = ""
     if (component.remoteDependancies && component.remoteDependancies.length > 0) {

@@ -35,9 +35,12 @@ export async function GET(req: NextRequest, res: NextApiResponse<ResponseData>) 
     if (!params.has('componentId')) {
         return NextResponse.json({ message: "Component name is required", success: false })
     }
-    const componentId: string = params.get('componentId')!
+    var componentId: string = params.get('componentId')!
     const app = await getAppSS();
     const db = app.firestore();
+    if (componentId.startsWith('@')) {
+        componentId = componentId.replace('@', '').replace('/', '.')
+    }
     const componentRef = db.collection('Components').doc(componentId);
     const component: PublishedComponent = (await componentRef.get()).data() as PublishedComponent;
     if (!component) {
