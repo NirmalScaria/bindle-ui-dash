@@ -113,12 +113,10 @@ export default function EditLibrary({ library }: { library: Library }) {
                 {library.components?.map(component => {
                     return <ComponentPreview key={component.id} component={component} library={library} />
                 })}
-                {library.components?.length == 0 &&
-                    <Link href={`/contribute/libraries/${library.id}/new-component`} className="p-5 flex text-gray-700 hover:shadow-md transition-shadow font-medium gap-3 flex-col border justify-center rounded-md items-center min-h-[10rem]">
-                        <PlusCircle size={34} className="text-gray-500" />
-                        Create a New Component
-                    </Link>
-                }
+                <Link href={`/contribute/libraries/${library.id}/new-component`} className="p-5 flex text-gray-700 hover:shadow-md transition-shadow font-medium gap-3 flex-col border justify-center rounded-md items-center min-h-[10rem]">
+                    <PlusCircle size={34} className="text-gray-500" />
+                    Create a New Component
+                </Link>
             </div>
 
             {library.drafts && library.drafts.length > 0 && <><div className="flex flex-col gap-2">
