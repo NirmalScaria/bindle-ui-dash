@@ -15,12 +15,15 @@ export default async function EditComponentDocumentation({ params, searchParams 
   if (!library || !library.id) {
     return <div>Library not found</div>
   }
-  const componentsRef = db.collection('Components').where("__name__", ">=", `${library.id}.`).where("__name__", "<", `${library.id}.`);
+  const componentsRef = db.collection('Components').where("__name__", ">=", `${library.id}.`).where("__name__", "<=", `${library.id}.\uf8ff`);
   const components = (await componentsRef.get()).docs.map(doc => doc.data() as PublishedComponent);
   library.components = components
-  const draftsRef = db.collection('Drafts').where("__name__", ">=", `${library.id}.`).where("__name__", "<", `${library.id}.`);
-  const drafts = (await draftsRef.get()).docs.map(doc => doc.data() as Component);
+  const draftsRef = db.collection('Drafts').where("id", ">=", `${library.id}.`).where("id", "<=", `${library.id}.\uf8ff`);
+  const drafts = (await draftsRef.get()).docs.map(doc => {
+    const component = doc.data() as Component;
+    component.uid = doc.id;
+    return component;
+  });
   library.drafts = drafts
-  console.log(library)
   return <EditLibrary library={library} />
 }
