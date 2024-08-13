@@ -6,21 +6,98 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Component } from "@/models/component";
 import { Library } from "@/models/library";
-import { PlusCircle } from "lucide-react";
+import { Loader2, PlusCircle } from "lucide-react";
 import Link from "next/link";
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { DialogClose } from "@radix-ui/react-dialog";
+import { useState } from "react";
+import publishLibraryAction from "@/actions/publishLibrary";
+import { useToast } from "@/components/ui/use-toast";
+
+
+
 export default function EditLibrary({ library }: { library: Library }) {
+    const { toast } = useToast();
+    const [loading, setLoading] = useState(false);
+    const [published, setPublished] = useState(false);
+    async function publishLibrary() {
+        setLoading(true);
+        const resp = await publishLibraryAction({ libraryId: library.id });
+        if (resp.error) {
+            toast({
+                title: "Error publishing the library",
+                description: resp.error,
+            })
+            setLoading(false);
+            return;
+        }
+        setPublished(true);
+        setLoading(false);
+    }
     return <div className="flex flex-col h-full w-full items-start">
-        <div className="flex flex-row gap-2 items-center">
-            <Heading>
-                {library.name ?? library.id}
-            </Heading>
-            <div className="flex flex-col">
-                {library.status == "public" ?
-                    <Badge className="bg-green-500">Published</Badge> :
-                    <Badge className="bg-yellow-500">Private</Badge>
-                }
+        <div className="flex flex-row gap-2 items-center justify-between w-full">
+            <div className="flex flex-row gap-2 items-center">
+                <Heading>
+                    {library.name ?? library.id}
+                </Heading>
+                <div className="flex flex-col">
+                    {library.status == "public" ?
+                        <Badge className="bg-green-500">Published</Badge> :
+                        <Badge className="bg-yellow-500">Private</Badge>
+                    }
+                </div>
             </div>
+            {library.status != "public" && <Dialog>
+                <DialogTrigger><Button size="sm" variant="default">Publish</Button></DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        {published ? <>
+                            <DialogTitle>Library published successfully.</DialogTitle>
+                            <DialogDescription>
+                                The library has been published and is now available for the public.
+                            </DialogDescription>
+                        </>
+                            :
+                            <>
+                                <DialogTitle>Make the library Public?</DialogTitle>
+                                <DialogDescription>
+                                    This will publish the library for the public and this action cannot be undone. You will be able to add and edit the components later.
+                                </DialogDescription>
+                            </>
+                        }
+                    </DialogHeader>
+                    <DialogFooter>
+                        {published ? <>
+                            <Button size="sm" variant="default" onClick={() => {
+                                window.location.reload();
+                            }}>
+                                Done
+                            </Button>
+
+                        </> :
+                            <>
+                                <DialogClose>
+                                    <Button size="sm" variant="secondary">Cancel</Button>
+                                </DialogClose>
+                                <Button size="sm" variant="default" disabled={loading} onClick={publishLibrary} >
+                                    {loading && <Loader2 className="animate-spin mr-2" size={16} />}
+                                    Publish
+                                </Button>
+                            </>}
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>}
+
+
         </div>
         <Description>A library is a container of components. You can manage the library and its components from here.</Description>
         <div className="flex flex-col w-full gap-5 mt-5 max-w-[55rem]">
@@ -90,7 +167,7 @@ function ComponentPreview({ component, library }: { component: Component, librar
             </Button>
         </Link>
         <Link
-         href={component.status == "published" ? `/contribute/edit-component-documentation/${component.id}` : `/contribute/edit-draft-documentation/${component.uid}`} className="w-full">
+            href={component.status == "published" ? `/contribute/edit-component-documentation/${component.id}` : `/contribute/edit-draft-documentation/${component.uid}`} className="w-full">
             <Button className="w-full" size="sm" variant="default">
                 {component.status == "published" ? "Edit Documentation" : "Edit Documentation and Publish"}
             </Button>

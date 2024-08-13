@@ -24,7 +24,7 @@ export default function ContributeTopBar({ sidebarContent }: { sidebarContent: J
                 </div>
             </h1>
             <Link href="/components" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Components</Link>
-            <Link href="/components" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Showcase</Link>
+            <Link href="/contribute" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Contribute</Link>
         </div>
         <div className="flex-row flex gap-1 p-4 pl-2 items-center lg:w-auto w-full">
             <div className="px-2 py-1.5 bg-black/5 rounded-md border border-black/10 text-sm text-black/50 flex lg:hidden flex-row w-full">

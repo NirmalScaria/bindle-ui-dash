@@ -21,6 +21,9 @@ export async function ComponentSidebarContent() {
     const ref = db.collection("Components").limit(20).select('id', 'name');
     const snapshot = await ref.get();
     const components = snapshot.docs.map(doc => doc.data());
+    const libRef = db.collection("Libraries").limit(20).where("status", "==", "public").select('id', 'name');
+    const libSnapshot = await libRef.get();
+    const libraries = libSnapshot.docs.map(doc => doc.data());
     return <ScrollArea className="h-screen">
         <div className="flex flex-col gap-3">
             <div className="flex flex-col">
@@ -31,12 +34,20 @@ export async function ComponentSidebarContent() {
                 <SidebarLink name="Installation" href="/components/installation" />
                 <SidebarLink name="CLI" href="/components/cli" />
             </div>
-            <div className="flex flex-col pb-[7rem]">
+            <div className="flex flex-col">
                 <span className="font-semibold text-sm mb-3">
                     Components
                 </span>
                 {components.map((component) =>
                     <SidebarLink key={component.id} name={component.name ?? component.id} href={`/components/${component.id}`} />
+                )}
+            </div>
+            <div className="flex flex-col pb-[7rem]">
+                <span className="font-semibold text-sm mb-3">
+                    Libraries
+                </span>
+                {libraries.map((library) =>
+                    <SidebarLink key={library.id} name={library.name ?? library.id} href={`/libraries/${library.id}`} />
                 )}
             </div>
         </div>

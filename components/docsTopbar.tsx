@@ -24,7 +24,7 @@ export default function DocsTopbar({ sidebarContent }: { sidebarContent: JSX.Ele
                 </div>
             </h1>
             <Link href="/components" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Components</Link>
-            <Link href="/components" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Showcase</Link>
+            <Link href="/contribute" className="text-[0.95rem] transition-all text-gray-500 hover:text-gray-600">Contribute</Link>
         </div>
         <div className="flex-row flex gap-1 p-4 pl-2 items-center lg:w-auto w-full">
             <ContributeButton  className="hidden lg:block"/>
