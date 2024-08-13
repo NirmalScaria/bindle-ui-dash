@@ -90,7 +90,7 @@ export default function ComponentRightBarCS() {
                 <div className="flex flex-col pl-4">
                     {
                         examples.map((example, index) => {
-                            return <Link href={`#example`} className={cn("text-[0.9rem] py-[0.2rem]  hover:underline","text-black/50")}>
+                            return <Link href={`#${example}`} className={cn("text-[0.9rem] py-[0.2rem]  hover:underline","text-black/50")}>
                             {example}
                         </Link>
                             return <SidebarLink key={index} name={example} href={`#${example}`} />
