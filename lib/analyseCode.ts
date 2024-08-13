@@ -6,7 +6,7 @@ export async function analyseCodeOnServer(sourceCode: string) {
     const sourceFile = ts.createSourceFile('temp.ts', sourceCode, ts.ScriptTarget.ESNext, true);
 
     // Containers for results
-    var imports: string[] = [];
+    const imports: string[] = [];
     const exports: string[] = [];
 
     // Helper function to collect information
@@ -16,17 +16,32 @@ export async function analyseCodeOnServer(sourceCode: string) {
             const moduleSpecifier = (node.moduleSpecifier as ts.StringLiteral).text;
             imports.push(moduleSpecifier);
         }
+
+        // Check for export declarations
         if (
             ts.isExportAssignment(node) ||
-            ts.isExportDeclaration(node) ||
-            ts.isExportSpecifier(node)
+            ts.isExportDeclaration(node)
         ) {
-            if (node.name?.getText()) {
-                exports.push(node.name?.getText());
+            if (ts.isExportDeclaration(node) && node.exportClause) {
+                // Export with aliases or specific exports
+                const exportClause = node.exportClause;
+                if (ts.isNamedExports(exportClause)) {
+                    exportClause.elements.forEach(specifier => {
+                        if (specifier.propertyName) {
+                            exports.push(`${specifier.propertyName.text} as ${specifier.name.text}`);
+                        } else {
+                            exports.push(specifier.name.text);
+                        }
+                    });
+                }
+            } else if (ts.isExportDeclaration(node) && !node.exportClause) {
+                // Export all
+                const moduleSpecifier = node.moduleSpecifier as ts.StringLiteral;
+                exports.push(`* from ${moduleSpecifier.text}`);
             }
         }
 
-        // Check for inline exports (export const, export function, export class)
+        // Check for inline exports (export const, export function, export class, export interface, export type, export enum)
         if (
             ts.isVariableStatement(node) &&
             node.modifiers &&
@@ -40,7 +55,7 @@ export async function analyseCodeOnServer(sourceCode: string) {
         }
 
         if (
-            (ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node)) &&
+            (ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node) || ts.isEnumDeclaration(node)) &&
             node.modifiers &&
             node.modifiers.some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword)
         ) {
@@ -48,15 +63,31 @@ export async function analyseCodeOnServer(sourceCode: string) {
                 exports.push(node.name.text);
             }
         }
+
+        // Handle default exports (export default)
+        if (
+            (ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node)) &&
+            node.modifiers &&
+            node.modifiers.some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword) &&
+            node.modifiers.some(modifier => modifier.kind === ts.SyntaxKind.DefaultKeyword)
+        ) {
+            if (node.name && ts.isIdentifier(node.name)) {
+                exports.push('default ' + node.name.text);
+            } else {
+                exports.push('default anonymous function/class');
+            }
+        }
+
         // Visit each child node recursively
         ts.forEachChild(node, visit);
     }
 
     // Start the AST traversal
     visit(sourceFile);
-    var remoteImports = new Set()
-    var localImports = new Set()
-    var relativeImports = new Set()
+
+    const remoteImports = new Set<string>();
+    const localImports = new Set<string>();
+    const relativeImports = new Set<string>();
 
     imports.forEach(dep => {
         if (dep.startsWith("@@/")) {
@@ -69,13 +100,19 @@ export async function analyseCodeOnServer(sourceCode: string) {
         }
         if (dep.startsWith('@')) {
             remoteImports.add(dep.split('/')[0] + '/' + dep.split('/')[1]);
-            return
+            return;
         }
         remoteImports.add(dep.split('/')[0]);
     });
-    // convert the Set to Array
+
+    // Convert the Set to Array
     const remoteImportsArray = Array.from(remoteImports);
     const localImportsArray = Array.from(localImports);
 
-    return { remoteImports: remoteImportsArray, localImports: localImportsArray, exports, relativeImports: Array.from(relativeImports) };
+    return {
+        remoteImports: remoteImportsArray,
+        localImports: localImportsArray,
+        exports,
+        relativeImports: Array.from(relativeImports)
+    };
 }
