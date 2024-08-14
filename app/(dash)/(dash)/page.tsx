@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import InstallComponent from "@/components/component-page/installComponent";
 import CustomSandpack from "@/components/customSandpack";
 import { Description } from "@/components/design/Texts";
