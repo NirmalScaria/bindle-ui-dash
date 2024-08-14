@@ -3,6 +3,7 @@ import { Contributor } from "./contributor";
 
 export interface Library {
     name?: string;
+    description?: string;
     id: string;
     ownerDetails: Contributor;
     owner: string;

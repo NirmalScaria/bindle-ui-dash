@@ -47,7 +47,7 @@ export async function ComponentSidebarContent() {
                     Libraries
                 </span>
                 {libraries.map((library) =>
-                    <SidebarLink key={library.id} name={library.name ?? library.id} href={`/libraries/${library.id}`} />
+                    <SidebarLink key={library.id} name={library.name ?? library.id} href={`/library/${library.id}`} />
                 )}
             </div>
         </div>

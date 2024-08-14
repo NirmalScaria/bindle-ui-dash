@@ -1,13 +1,9 @@
-import LibrarySidebar from "@/components/library-page/librarySidebar";
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    return <div className="flex flex-col"><LibrarySidebar />
-        <div className="flex flex-col min-h-screen justify-between">
-            <div className="flex flex-row">
-                <div className="md:pl-[280px] w-full">
-                    {children}
-                </div>
-            </div>
+    return <div className="h-screen">
+        <div className="h-full w-full flex flex-row lg:gap-10 justify-center items-start overflow-y-auto">
+            {children}
         </div>
     </div>
 }

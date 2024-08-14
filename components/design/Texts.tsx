@@ -1,4 +1,5 @@
 
+import { cn } from '@/lib/utils'
 import React from 'react'
 export function Heading({ children }: { children?: React.ReactNode }) {
     return <h1 className="text-4xl font-bold">{children}</h1>
@@ -13,6 +14,6 @@ export function Heading3({ children }: { children?: React.ReactNode }) {
 }
 
 
-export function Description({ children }: { children?: React.ReactNode }) {
-    return <p className="text-md text-gray-500 my-2 max-w-[50rem]">{children}</p>
+export function Description({ children, className }: { children?: React.ReactNode, className? : string }) {
+    return <p className={cn("text-md text-gray-500 my-2 max-w-[50rem]", className)}>{children}</p>
 }
