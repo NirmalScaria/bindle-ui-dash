@@ -52,7 +52,7 @@ export default function LibraryRightbarCS() {
                                 {owner.id}
                             </Link>
                         </div>
-                        <div className="flex flex-row gap-1">
+                        <div className="grid grid-cols-2 gap-1">
                             {owner.github && owner.github != "" && <Link href={owner.github} target="_blank" className="border w-full hover:bg-gray-200 rounded-md transition-colors text-gray-500">
                                 <BsGithub size={15} className="m-1.5 text-gray-700" />
                             </Link>}

@@ -165,6 +165,7 @@ export default function EditDocumentation({ component, filesToAdd, dependancies 
             })
             setPublishing(false);
         }
+        window.location.replace("/contribute")
         setPublishing(false);
     }
     const sandpackRef = React.useRef<SandpackPreviewRef>();
