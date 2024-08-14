@@ -140,7 +140,7 @@ export default function EditLibrary({ library }: { library: Library }) {
                     Create a New Component
                 </Link>
                 {library.components?.map(component => {
-                    return <ComponentPreview key={component.id} component={component} library={library} />
+                    return <ComponentPreview key={component.id} component={component} />
                 })}
             </div>
 
@@ -155,7 +155,7 @@ export default function EditLibrary({ library }: { library: Library }) {
             </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                     {library.drafts?.map(component => {
-                        return <ComponentPreview key={component.id} component={component} library={library} />
+                        return <ComponentPreview key={component.id} component={component} />
                     })}
                 </div></>}
             <div className="flex flex-col gap-2 mt-4">
@@ -178,7 +178,7 @@ export default function EditLibrary({ library }: { library: Library }) {
     </div>
 }
 
-function ComponentPreview({ component, library }: { component: Component, library: Library }) {
+export function ComponentPreview({ component }: { component: Component }) {
     var message = "This component is in draft stage. Documentation and publishing are pending."
     if (component.status == "documentation") {
         message = "This component is in draft stage. Documentation is finished and publishing is pending."
