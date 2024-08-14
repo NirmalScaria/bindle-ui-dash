@@ -29,93 +29,81 @@ export default async function ComponentHome({ params }: { params: { componentNam
     ...doc.data()
   }
   if (doc.data() == undefined) {
-    return <>
-      <DocsTopbar sidebarContent={<ComponentSidebarContent />} />
-      <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-        <ComponentSidebar />
-      </div>
-      <div className="flex mt-[4rem] flex-col justify-between w-full flex-grow max-w-[60rem] lg:max-w-[min(55vw,60rem)] overflow-y-visible">
-        <div className="flex flex-col w-full min-h-screen">
-          <div className="flex flex-col m-5 gap-4 z-10 min-h-screen">
-            <LocationIndicator />
+    return <div className="flex flex-col m-5 gap-4 z-10 min-h-screen">
+      <LocationIndicator />
 
-            <div className="flex flex-col h-[50vh] justify-center items-center text-center w-full">
-              <h1 className="text-4xl font-bold">Component Not Found</h1>
-              <p className="text-lg text-gray-500">The component you are looking for does not exist.</p>
-            </div>
-            <div></div>
-          </div>
-          <DocsFooter />
-        </div>
+      <div className="flex flex-col h-[50vh] justify-center items-center text-center w-full">
+        <h1 className="text-4xl font-bold">Component Not Found</h1>
+        <p className="text-lg text-gray-500">The component you are looking for does not exist.</p>
       </div>
-      <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-        <ComponentRightBarCS />
-      </div></>
+      <div></div>
+    </div>
+
   }
   metadata.title = `${component.name} | Bindle-UI`
   metadata.description = component.description
-  return  <div className="flex flex-col m-5 gap-4 z-10">
-          <LocationIndicator />
-          <h1 className="text-4xl font-bold" id="introduction">{component.name}</h1>
-          <p className="text-lg text-gray-500">{component.description}</p>
-          <CustomSandpack component={component} />
-          <h2 className="text-3xl font-bold mt-4" id="installation">Installation</h2>
-          <hr />
-          <InstallComponent component={component} />
-          <h2 className="text-3xl font-bold mt-4" id="usage">Usage</h2>
-          <hr />
-          {component.usageSampleCode && <div className="flex flex-col max-h-[300px]">
-            <MyCode code={component.usageSampleCode} showLineNumbers={false} />
-          </div>}
-          {component.examples != undefined && component.examples.length != 0 && <> <h2 className="text-3xl font-bold mt-4">Examples</h2>
-            <hr />
-            {
-              component.examples.map((example, index) => {
-                return <div key={index} className="flex flex-col gap-4" id={example.name}>
-                  <h3 className="text-2xl font-bold">{example.name}</h3>
-                  <CustomSandpack files={example.code.files} />
-                </div>
-              })
-            }
-          </>
-          }
-        </div>
-        
+  return <div className="flex flex-col m-5 gap-4 z-10">
+    <LocationIndicator />
+    <h1 className="text-4xl font-bold" id="introduction">{component.name}</h1>
+    <p className="text-lg text-gray-500">{component.description}</p>
+    <CustomSandpack component={component} />
+    <h2 className="text-3xl font-bold mt-4" id="installation">Installation</h2>
+    <hr />
+    <InstallComponent component={component} />
+    <h2 className="text-3xl font-bold mt-4" id="usage">Usage</h2>
+    <hr />
+    {component.usageSampleCode && <div className="flex flex-col max-h-[300px]">
+      <MyCode code={component.usageSampleCode} showLineNumbers={false} />
+    </div>}
+    {component.examples != undefined && component.examples.length != 0 && <> <h2 className="text-3xl font-bold mt-4">Examples</h2>
+      <hr />
+      {
+        component.examples.map((example, index) => {
+          return <div key={index} className="flex flex-col gap-4" id={example.name}>
+            <h3 className="text-2xl font-bold">{example.name}</h3>
+            <CustomSandpack files={example.code.files} />
+          </div>
+        })
+      }
+    </>
+    }
+  </div>
+
 }
 
 
-const manualCode = `import { cn } from "@/lib/utils";
+const manualCode = `import {cn} from "@/lib/utils";
 
-interface MarqueeProps {
-  className?: string;
-  reverse?: boolean;
-  pauseOnHover?: boolean;
-  children?: React.ReactNode;
-  vertical?: boolean;
-  repeat?: number;
-  [key: string]: any;
+      interface MarqueeProps {
+        className ?: string;
+      reverse?: boolean;
+      pauseOnHover?: boolean;
+      children?: React.ReactNode;
+      vertical?: boolean;
+      repeat?: number;
+      [key: string]: any;
 }
 
-export default function Marquee({
-  className,
-  reverse,
-  pauseOnHover = false,
-  children,
-  vertical = false,
-  repeat = 4,
+      export default function Marquee({
+        className,
+        reverse,
+        pauseOnHover = false,
+        children,
+        vertical = false,
+        repeat = 4,
   ...props
 }: MarqueeProps) {
   return (
-    <div>Placeholder </div>
-  );
+      <div>Placeholder </div>
+      );
 }
-`
+      `
 
 const testComponent: PublishedComponent = {
   id: "marquee",
   uid: "df",
   location: "components/ui/marquee.tsx",
-  content: `import { Marquee } from "lucide-react";`,
+  content: `import {Marquee} from "lucide-react";`,
   owner: "dfksldkfj",
   remoteDependancies: [
     {
@@ -132,10 +120,10 @@ const testComponent: PublishedComponent = {
   installCommand: "auto",
   manualCode: manualCode,
   usageSampleCode: `<Marquee pauseOnHover className="[--duration:20s]">
-  {firstRow.map((review) => (
-    <ReviewCard key={review.username} {...review} />
-  ))}
-</Marquee>`,
+        {firstRow.map((review) => (
+          <ReviewCard key={review.username} {...review} />
+        ))}
+      </Marquee>`,
   examples: [],
   installCount: 0
 }
