@@ -40,9 +40,7 @@ export async function ContributeSidebarContent() {
                 <span className="font-semibold text-sm mb-3">
                     Getting Started
                 </span>
-                <SidebarLink name="Introduction" href="/components" />
-                <SidebarLink name="Installation" href="/components/installation" />
-                <SidebarLink name="CLI" href="/components/cli" />
+                <SidebarLink name="Dashboard" href="/contribute" />
             </div>
             <div className="flex flex-col">
                 <span className="font-semibold text-sm mb-3">
