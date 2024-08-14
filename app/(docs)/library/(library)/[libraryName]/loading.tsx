@@ -8,7 +8,7 @@ export default function Loading() {
             <BreadcrumbList>
 
                 <BreadcrumbItem>
-                    <BreadcrumbLink>Components</BreadcrumbLink>
+                    <BreadcrumbLink>Library</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
