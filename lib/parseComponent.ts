@@ -73,7 +73,7 @@ export async function parseComponent({ component }: { component: Component }) {
 var appCode = `import "./tailwind.config.ts";
 export default function App() {
   return (
-    <div className="flex flex-col items-center justify-center p-4 h-screen text-center">
+    <div className="flex flex-col items-center justify-center p-4 h-screen">
       Your components have been imported. <br/>
       Edit the code to try them out.
     </div>
