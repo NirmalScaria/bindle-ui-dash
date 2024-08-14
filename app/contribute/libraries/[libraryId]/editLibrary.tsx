@@ -22,13 +22,20 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { useState } from "react";
 import publishLibraryAction from "@/actions/publishLibrary";
 import { useToast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import saveLibraryAction from "@/actions/saveLibrary";
 
 
 
 export default function EditLibrary({ library }: { library: Library }) {
     const { toast } = useToast();
     const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
     const [published, setPublished] = useState(false);
+    const [libraryName, setLibraryName] = useState(library.name ?? "");
+    const [libraryDescription, setLibraryDescription] = useState(library.description ?? "");
     async function publishLibrary() {
         setLoading(true);
         const resp = await publishLibraryAction({ libraryId: library.id });
@@ -42,6 +49,24 @@ export default function EditLibrary({ library }: { library: Library }) {
         }
         setPublished(true);
         setLoading(false);
+    }
+    async function saveLibraryDetails() {
+        setSaving(true);
+        const newLibrary = { ...library, name: libraryName, description: libraryDescription };
+        const resp = await saveLibraryAction({ library: newLibrary });
+        if (resp.error) {
+            toast({
+                title: "Error saving the library",
+                description: resp.error,
+            })
+            setSaving(false);
+            return;
+        }
+        toast({
+            title: "Library saved",
+            description: "The library details have been saved successfully.",
+        })
+        setSaving(false);
     }
     return <div className="flex flex-col h-full w-full items-start">
         <div className="flex flex-row gap-2 items-center justify-between w-full">
@@ -133,7 +158,22 @@ export default function EditLibrary({ library }: { library: Library }) {
                         return <ComponentPreview key={component.id} component={component} library={library} />
                     })}
                 </div></>}
-
+            <div className="flex flex-col gap-2 mt-4">
+                <Heading3>Details</Heading3>
+                <Description>Here you can edit the details of the library. They appear on the main page of the library.</Description>
+                <Separator />
+                <div className="grid w-full items-center gap-1.5 mt-4">
+                    <Label htmlFor="library-name">Library Name</Label>
+                    <Input type="text" id="library-name" className="w-full" placeholder="Library Name" value={libraryName} onChange={(e) => { setLibraryName(e.target.value) }} />
+                </div>
+                <div className="grid w-full items-center gap-1.5 mt-2">
+                    <Label htmlFor="library-name">Library Description</Label>
+                    <Textarea id="library-description" className="w-full" placeholder="Library Description" value={libraryDescription} onChange={(e) => { setLibraryDescription(e.target.value) }} />
+                </div>
+                <Button size="sm" disabled={saving} variant="default" className="mt-2" onClick={saveLibraryDetails}>
+                    {saving && <Loader2 className="animate-spin" size={16} />}
+                    Save Changes</Button>
+            </div>
         </div>
     </div>
 }
