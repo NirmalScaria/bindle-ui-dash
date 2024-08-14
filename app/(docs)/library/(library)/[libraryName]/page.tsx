@@ -1,17 +1,15 @@
-import ComponentRightBar from "@/components/component-page/componentRightbar";
 import ComponentRightBarCS from "@/components/component-page/componentRightbarCS";
 import ComponentSidebar, { ComponentSidebarContent } from "@/components/component-page/componentSidebar";
-import InstallComponent from "@/components/component-page/installComponent";
 import CustomSandpack from "@/components/customSandpack";
 import { Description, Heading3 } from "@/components/design/Texts";
 import DocsFooter from "@/components/docsFooter";
 import DocsTopbar from "@/components/docsTopbar";
 import LocationIndicator from "@/components/locationIndicator";
-import MyCode from "@/components/myCode";
 import { PublishedComponent } from "@/models/component";
 import { Library } from "@/models/library";
 import { getAppSS } from "firebase-nextjs/server/auth";
 import type { Metadata } from 'next';
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Bindle-UI : A mega library of UI components for Javascript and React",
@@ -64,11 +62,13 @@ export default async function ComponentHome({ params }: { params: { libraryName:
     <hr />
     <div className="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1" id="components">
       {components.map((component) => (
-        <div className="flex flex-col my-3" id = {component.name}>
-          <Heading3>{component.name}</Heading3>
+        <div className="flex flex-col my-3" id={component.name}>
+          <Link href={`/components/${component.id}`} className="hover:underline">
+            <Heading3>{component.name}</Heading3>
+          </Link>
           <Description className="mt-4">{component.description}</Description>
           <CustomSandpack component={component} />
-          <hr/>
+          <hr />
         </div>
       ))}
     </div>
