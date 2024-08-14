@@ -13,7 +13,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="flex flex-col m-5 gap-4 z-10">
                     {children}
                 </div>
-
             </div>
         </div >
         <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
