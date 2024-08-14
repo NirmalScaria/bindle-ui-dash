@@ -1,6 +1,7 @@
 import ComponentRightBar from "@/components/component-page/componentRightbar"
 import ComponentRightBarCS from "@/components/component-page/componentRightbarCS"
 import ComponentSidebar, { ComponentSidebarContent } from "@/components/component-page/componentSidebar"
+import LibraryRightbarCS from "@/components/component-page/libraryRightbarCS"
 import DocsFooter from "@/components/docsFooter"
 import DocsTopbar from "@/components/docsTopbar"
 
@@ -17,7 +18,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
             </div>
         </div>
         <div className="sticky top-[4rem] h-[calc(100vh-4rem)]">
-            <ComponentRightBarCS />
+            <LibraryRightbarCS />
         </div>
     </>
 }

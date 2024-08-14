@@ -11,19 +11,17 @@ import { ScrollArea } from "../ui/scroll-area";
 import SidebarLink from "./sidebarLink";
 import { usePathname } from 'next/navigation'
 import getComponentDetails from "@/actions/getComponentDetails";
+import getLibraryDetails from "@/actions/getLibraryDetails";
 
-export default function ComponentRightBarCS() {
+export default function LibraryRightbarCS() {
     const [owner, setOwner] = useState<Contributor | null>(null);
-    const [examples, setExamples] = useState<string[]>([])
+    const [components, setComponents] = useState<string[]>([])
     const pathname = usePathname()
     useEffect(() => {
         if (pathname != null) {
-            getComponentDetails({ id: pathname.split('/')[pathname.split('/').length - 1] }).then((data) => {
-                if ("error" in data) {
-                    return;
-                }
+            getLibraryDetails({ id: pathname.split('/')[pathname.split('/').length - 1] }).then((data) => {
                 setOwner(data.owner ?? null)
-                setExamples(data.examples ?? [])
+                setComponents(data.components ?? [])
             })
         }
     }, [pathname])
@@ -82,15 +80,13 @@ export default function ComponentRightBarCS() {
             </span>
             <div className="flex flex-col">
                 <SidebarLink name="Introduction" href="#introduction" />
-                <SidebarLink name="Installation" href="#installation" />
-                <SidebarLink name="Usage" href="#usage" />
-                <SidebarLink name="Examples" href="#examples" />
+                <SidebarLink name="Components" href="#components" />
                 <div className="flex flex-col pl-4">
                     {
-                        examples.map((example, index) => {
-                            return <Link href={`#${example}`} className={cn("text-[0.9rem] py-[0.2rem]  hover:underline","text-black/50")}>
-                            {example}
-                        </Link>
+                        components.map((example, index) => {
+                            return <Link href={`#${example}`} className={cn("text-[0.9rem] py-[0.2rem]  hover:underline", "text-black/50")}>
+                                {example}
+                            </Link>
                             return <SidebarLink key={index} name={example} href={`#${example}`} />
                         })
                     }

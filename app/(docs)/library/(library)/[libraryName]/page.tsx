@@ -62,9 +62,9 @@ export default async function ComponentHome({ params }: { params: { libraryName:
     <h1 className="text-4xl font-bold" id="introduction">{library.name}</h1>
     <p className="text-lg text-gray-500">{library.description}</p>
     <hr />
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1" id="components">
       {components.map((component) => (
-        <div className="flex flex-col my-3">
+        <div className="flex flex-col my-3" id = {component.name}>
           <Heading3>{component.name}</Heading3>
           <Description className="mt-4">{component.description}</Description>
           <CustomSandpack component={component} />
