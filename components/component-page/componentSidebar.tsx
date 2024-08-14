@@ -32,7 +32,7 @@ export async function ComponentSidebarContent() {
                 </span>
                 <SidebarLink name="Introduction" href="/components" />
                 <SidebarLink name="Installation" href="/installation" />
-                <SidebarLink name="CLI" href="/components/cli" />
+                <SidebarLink name="Contributing" href="/contributing" />
             </div>
             <div className="flex flex-col">
                 <span className="font-semibold text-sm mb-3">
