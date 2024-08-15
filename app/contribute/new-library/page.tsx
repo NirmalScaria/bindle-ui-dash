@@ -134,7 +134,7 @@ export default function NewLibraryPage() {
     <div className="flex flex-col w-full gap-5 mt-3 max-w-[55rem]">
       <div className="flex flex-col gap-1.5">
         <span className="text-lg  font-bold">Library Id</span>
-        <Input placeholder="button" value={libraryId} className="bg-transparent max-w-[55rem] border" onChange={onComponentIdChange} />
+        <Input placeholder="shadcn-ui" value={libraryId} className="bg-transparent max-w-[55rem] border" onChange={onComponentIdChange} />
         <span className="text-sm text-gray-400">This will be the unique identification name for the library. Users will use this name to access the library.</span>
         {
           nameValidityMessage && <div className="flex flex-row gap-2">
