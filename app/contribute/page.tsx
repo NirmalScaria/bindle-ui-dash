@@ -41,7 +41,7 @@ export default async function ComponentHome() {
             <Separator />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-            <Link href={`/contribute/new-component`} className="p-5 flex text-gray-700 hover:shadow-md transition-shadow font-medium gap-3 flex-col border justify-center rounded-md items-center min-h-[10rem]">
+            <Link href={`/contribute/new-library`} className="p-5 flex text-gray-700 hover:shadow-md transition-shadow font-medium gap-3 flex-col border justify-center rounded-md items-center min-h-[10rem]">
               <PlusCircle size={34} className="text-gray-500" />
               Create a New Library
             </Link>
